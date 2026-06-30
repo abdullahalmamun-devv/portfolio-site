@@ -35,8 +35,8 @@ export function Nav() {
           </ul>
 
           <a
-            href="/resume.pdf"
-            download
+            href="/Abdullah_Resume.pdf"
+            download="Abdullah_Resume.pdf"
             className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition-all hover:bg-primary/20 hover:shadow-glow sm:px-4 sm:text-sm"
           >
             <Download className="h-3.5 w-3.5" />
