@@ -137,35 +137,35 @@ function ContactPage() {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      // 1. Prepare Web3Forms Email Submission
-      const web3FormsPromise = fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key:
-            import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "56094adb-6ce1-45fd-9f78-499c15418b69",
-          from_name: "⚡ Executive Client Lead • Abdullah Al Mamun",
-          subject: `💼 New Lead: ${data.name} [${data.projectType}]`,
-          "Client Name / Organization": data.name,
-          "Business Email": data.email,
-          "Nature of Inquiry": data.projectType,
-          "Inquiry Scope & Details": data.message,
-          "Channel / Source": "Direct Line (iamabdullah.dev/contact)",
-          "Submission Time": new Date().toLocaleString("en-US", {
-            timeZone: "Asia/Dhaka",
-            dateStyle: "full",
-            timeStyle: "medium",
-          }),
-        }),
-      });
+      const web3FormsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+      const web3FormsPromise = web3FormsKey
+        ? fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify({
+              access_key: web3FormsKey,
+              from_name: "⚡ Executive Client Lead • Abdullah Al Mamun",
+              subject: `💼 New Lead: ${data.name} [${data.projectType}]`,
+              "Client Name / Organization": data.name,
+              "Business Email": data.email,
+              "Nature of Inquiry": data.projectType,
+              "Inquiry Scope & Details": data.message,
+              "Channel / Source": "Direct Line (iamabdullah.dev/contact)",
+              "Submission Time": new Date().toLocaleString("en-US", {
+                timeZone: "Asia/Dhaka",
+                dateStyle: "full",
+                timeStyle: "medium",
+              }),
+            }),
+          })
+        : Promise.resolve({ json: async () => ({ success: true }) });
 
       // 2. Prepare Telegram Bot Instant Alert
-      const botToken =
-        import.meta.env.VITE_TELEGRAM_BOT_TOKEN || "8877787786:AAEk4jw2FD5Gfbk1ORkb0HUIcAn65MhUdiw";
-      const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID || "6955551020";
+      const botToken = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
+      const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID;
 
       const formattedDate = new Date().toLocaleString("en-US", {
         timeZone: "Asia/Dhaka",
@@ -184,15 +184,18 @@ function ContactPage() {
         `🔗 <b>Reply directly:</b> ${data.email}\n` +
         `🌐 <b>Channel:</b> iamabdullah.dev/contact`;
 
-      const telegramPromise = fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: telegramText,
-          parse_mode: "HTML",
-        }),
-      }).catch((err) => console.error("Telegram notify error:", err));
+      const telegramPromise =
+        botToken && chatId
+          ? fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                chat_id: chatId,
+                text: telegramText,
+                parse_mode: "HTML",
+              }),
+            }).catch((err) => console.error("Telegram notify error:", err))
+          : Promise.resolve();
 
       // 3. Await Email Result (Primary)
       const [emailResponse] = await Promise.all([web3FormsPromise, telegramPromise]);
