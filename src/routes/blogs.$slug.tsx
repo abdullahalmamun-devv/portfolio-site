@@ -164,7 +164,7 @@ function BlogPostDetail() {
         />
       </div>
 
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-12">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-12 pb-24 sm:pb-12">
         {/* Back Link & Breadcrumb */}
         <div className="flex flex-wrap items-center justify-between gap-3 pb-5 sm:pb-6 border-b border-white/[0.08]">
           <Link
@@ -227,7 +227,7 @@ function BlogPostDetail() {
             </span>
           </div>
 
-          <h1 className="mt-3 sm:mt-4 text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight sm:leading-[1.15]">
+          <h1 className="mt-3 sm:mt-4 text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight sm:leading-[1.15] break-words">
             {post.title}
           </h1>
 
@@ -280,9 +280,9 @@ function BlogPostDetail() {
         </header>
 
         {/* Content Layout with Sidebar TOC */}
-        <div className="mt-6 sm:mt-8 grid gap-8 lg:gap-10 lg:grid-cols-12">
+        <div className="mt-6 sm:mt-8 grid gap-8 lg:gap-10 lg:grid-cols-12 min-w-0">
           {/* Main Article Content */}
-          <main className="lg:col-span-8 space-y-6 sm:space-y-8">
+          <main className="lg:col-span-8 space-y-6 sm:space-y-8 min-w-0">
             {/* Executive Summary Card */}
             <div className="rounded-xl border border-white/10 bg-black/40 p-4 sm:p-5">
               <h3 className="font-mono text-xs uppercase tracking-wider text-blue-400 font-semibold flex items-center gap-2">
@@ -357,7 +357,7 @@ function BlogPostDetail() {
                 )}
 
                 {section.codeBlock && (
-                  <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#090b10] max-w-full">
+                  <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#090b10] max-w-full min-w-0">
                     <div className="flex items-center justify-between border-b border-white/[0.08] bg-black/50 px-3 sm:px-4 py-2 text-xs">
                       <div className="flex items-center gap-2 min-w-0">
                         <Code2 className="h-3.5 w-3.5 text-blue-400 shrink-0" />
