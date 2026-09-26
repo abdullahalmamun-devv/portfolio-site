@@ -1,0 +1,44 @@
+# robots.txt — iamabdullah.dev
+# Last updated: September 2026
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://iamabdullah.dev/sitemap.xml
+
+# Block AI training crawlers (optional — keeps content for search only)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# As a condition of accessing this website, you agree to abide by the following
+# content signals:
+#
+# (a)  If a content-signal = yes, you may collect content for the corresponding use.
+# (b)  If a content-signal = no, you may not collect content for the corresponding use.
+# (c)  If the website operator does not include a content signal for a
+#      corresponding use, the website operator neither grants nor restricts
+#      permission via content signal with respect to the corresponding use.
+#
+# search:   building a search index and providing search results
+# ai-input: inputting content into AI models (e.g., RAG, grounding)
+# ai-train: training or fine-tuning AI models
+#
+# ANY RESTRICTIONS EXPRESSED VIA CONTENT SIGNALS ARE EXPRESS RESERVATIONS OF
+# RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN UNION DIRECTIVE 2019/790 ON COPYRIGHT
+# AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET.

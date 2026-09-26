@@ -44,9 +44,9 @@ export const Route = createFileRoute("/ventures")({
         content:
           "Operating leadership, product strategy, and technical architecture across 4 live platforms.",
       },
-      { property: "og:url", content: "/ventures" },
+      { property: "og:url", content: "https://iamabdullah.dev/ventures" },
     ],
-    links: [{ rel: "canonical", href: "/ventures" }],
+    links: [{ rel: "canonical", href: "https://iamabdullah.dev/ventures" }],
   }),
   component: VenturesPage,
 });

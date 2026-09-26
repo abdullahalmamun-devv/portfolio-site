@@ -33,9 +33,9 @@ export const Route = createFileRoute("/skills")({
         content:
           "A disciplined, battle-tested technology stack with automated testing, Linux hardening, and observability.",
       },
-      { property: "og:url", content: "/skills" },
+      { property: "og:url", content: "https://iamabdullah.dev/skills" },
     ],
-    links: [{ rel: "canonical", href: "/skills" }],
+    links: [{ rel: "canonical", href: "https://iamabdullah.dev/skills" }],
   }),
   component: SkillsPage,
 });

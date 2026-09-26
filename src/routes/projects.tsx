@@ -44,9 +44,9 @@ export const Route = createFileRoute("/projects")({
         content:
           "Hard-won engineering post-mortems, telemetry, and architectural blueprints for production systems.",
       },
-      { property: "og:url", content: "/projects" },
+      { property: "og:url", content: "https://iamabdullah.dev/projects" },
     ],
-    links: [{ rel: "canonical", href: "/projects" }],
+    links: [{ rel: "canonical", href: "https://iamabdullah.dev/projects" }],
   }),
   component: ProjectsPage,
 });

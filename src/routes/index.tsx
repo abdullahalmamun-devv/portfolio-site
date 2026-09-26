@@ -27,24 +27,24 @@ import { ArchitectureDiagram } from "../components/ArchitectureDiagram";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Abdullah Al Mamun — Senior Full-Stack Engineer, Systems Architect & Tech Founder" },
+      { title: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder" },
       {
         name: "description",
         content:
-          "Available for global remote engineering roles & high-ticket contracts. Founder of SubsDrop, Co-Founder of QuickMation, Operator of Pro Trainer IT. Specializing in high-throughput backend, Redis caching, payment rails, and enterprise AI automation.",
+          "Full-stack developer & founder of SubsDrop, QuickMation, MoneTrix. Hire me for Node.js, Next.js, server architecture & enterprise automation projects.",
       },
       {
         property: "og:title",
-        content: "Abdullah Al Mamun — Senior Full-Stack Engineer & Tech Founder",
+        content: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder",
       },
       {
         property: "og:description",
         content:
           "Available for global remote contracts. Founder of SubsDrop & QuickMation, architecting production systems with zero downtime.",
       },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://iamabdullah.dev/" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://iamabdullah.dev/" }],
   }),
   component: HomePage,
 });

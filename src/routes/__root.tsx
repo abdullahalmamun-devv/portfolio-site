@@ -86,18 +86,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Abdullah Al Mamun — Tech Founder & Full-Stack Systems Architect" },
+      { title: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder" },
       {
         name: "description",
         content:
-          "Founder & CEO of SubsDrop (subsdrop.com) and Operator of Pro Trainer IT (protrainerit.com). Full-stack engineer & server architect based in Bangladesh.",
+          "Full-stack developer & founder of SubsDrop, QuickMation, MoneTrix. Hire me for Node.js, Next.js, server architecture & enterprise automation projects.",
       },
       { name: "author", content: "Abdullah Al Mamun" },
       { property: "og:site_name", content: "Abdullah Al Mamun" },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://iamabdullah.dev/og-image.png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://iamabdullah.dev/og-image.png" },
     ],
     links: [
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -109,28 +116,59 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     scripts: [
       {
         type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Person",
-          name: "Abdullah Al Mamun",
-          alternateName: "Abdullah",
-          jobTitle: "Tech Founder & Full-Stack Systems Architect",
-          url: "https://iamabdullah.dev",
-          sameAs: [
-            "https://github.com/abdullahalmamun-devv",
-            "https://www.linkedin.com/in/abdullah-al-mamun-b07295329/",
-            "https://subsdrop.com",
-            "https://www.protrainerit.com",
-          ],
-          worksFor: [
-            { "@type": "Organization", name: "SubsDrop", url: "https://subsdrop.com" },
-            {
-              "@type": "Organization",
-              name: "Pro Trainer IT",
-              url: "https://www.protrainerit.com",
+        children: JSON.stringify([
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Abdullah Al Mamun",
+            url: "https://iamabdullah.dev",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "https://iamabdullah.dev/blogs?q={search_term_string}",
+              "query-input": "required name=search_term_string",
             },
-          ],
-        }),
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "Abdullah Al Mamun",
+            alternateName: "Abdullah",
+            jobTitle: "Full-Stack Developer & Tech Founder",
+            url: "https://iamabdullah.dev",
+            email: "hello@iamabdullah.dev",
+            sameAs: [
+              "https://github.com/abdullahalmamun-devv",
+              "https://www.linkedin.com/in/abdullah-al-mamun-b07295329/",
+              "https://subsdrop.com",
+              "https://www.protrainerit.com",
+              "https://quickmation.online",
+              "https://www.monetrix.shop",
+            ],
+            worksFor: [
+              { "@type": "Organization", name: "SubsDrop", url: "https://subsdrop.com" },
+              { "@type": "Organization", name: "QuickMation", url: "https://quickmation.online" },
+              {
+                "@type": "Organization",
+                name: "Pro Trainer IT",
+                url: "https://www.protrainerit.com",
+              },
+              { "@type": "Organization", name: "MoneTrix", url: "https://www.monetrix.shop" },
+            ],
+            knowsAbout: [
+              "Full-Stack Web Development",
+              "Node.js",
+              "Next.js",
+              "React",
+              "Server Architecture",
+              "Redis Caching",
+              "MongoDB",
+              "Linux Server Administration",
+              "Server-Side Tracking",
+              "Meta CAPI",
+              "Enterprise AI Automation",
+            ],
+          },
+        ]),
       },
     ],
   }),

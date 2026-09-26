@@ -39,9 +39,9 @@ export const Route = createFileRoute("/contact")({
         content:
           "Direct communication channel for senior engineering advisory, architecture, and partnerships.",
       },
-      { property: "og:url", content: "/contact" },
+      { property: "og:url", content: "https://iamabdullah.dev/contact" },
     ],
-    links: [{ rel: "canonical", href: "/contact" }],
+    links: [{ rel: "canonical", href: "https://iamabdullah.dev/contact" }],
   }),
   component: ContactPage,
 });
