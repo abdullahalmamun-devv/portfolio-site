@@ -96,10 +96,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "Abdullah Al Mamun" },
       { property: "og:type", content: "website" },
       { property: "og:image", content: "https://iamabdullah.dev/og-image.png" },
+      { property: "og:image:secure_url", content: "https://iamabdullah.dev/og-image.png" },
+      { property: "og:image:type", content: "image/png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder" },
+      {
+        name: "twitter:description",
+        content:
+          "Full-stack developer & founder of SubsDrop, QuickMation, MoneTrix. Hire me for Node.js, Next.js, server architecture & enterprise automation projects.",
+      },
       { name: "twitter:image", content: "https://iamabdullah.dev/og-image.png" },
+      { name: "twitter:image:alt", content: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder" },
     ],
     links: [
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
