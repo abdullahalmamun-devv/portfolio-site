@@ -143,17 +143,17 @@ function BlogsPage() {
   return (
     <>
       <Toaster />
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-6 sm:py-16 pb-32 sm:pb-16 w-full max-w-full min-w-0">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-6 sm:py-16">
         {/* Header */}
         <Reveal>
-          <div className="max-w-3xl min-w-0">
+          <div className="max-w-3xl">
             <span className="font-mono text-xs font-semibold tracking-widest uppercase text-blue-400">
               FIELD NOTES &amp; ARCHITECTURAL BLUEPRINTS
             </span>
-            <h1 className="mt-2 text-2xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl leading-tight sm:leading-none break-words">
+            <h1 className="mt-2 text-2xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl leading-tight sm:leading-none">
               Engineering Logs &amp; Production Post-Mortems
             </h1>
-            <p className="mt-3 sm:mt-4 text-xs sm:text-base md:text-lg text-zinc-300 leading-relaxed break-words">
+            <p className="mt-3 sm:mt-4 text-xs sm:text-base md:text-lg text-zinc-300 leading-relaxed">
               Real-world systems blueprints, zero-day incident containment, high-concurrency caching
               strategies, and infrastructure decisions written by{" "}
               <strong className="text-white">Abdullah Al Mamun</strong>. No generic tutorials—only
