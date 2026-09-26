@@ -178,13 +178,9 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-white/[0.06] pt-5 text-[11px] text-zinc-400">
+        <div className="mt-8 border-t border-white/[0.06] pt-5 text-[11px] text-zinc-400">
           <div>
-            © {new Date().getFullYear()} Abdullah Al Mamun. Built with Next.js, Node.js, Redis &amp;
-            Linux VPS.
-          </div>
-          <div className="font-mono text-[10px] text-emerald-400">
-            Available for Global Remote Roles &amp; High-Ticket Contracts
+            © {new Date().getFullYear()} Abdullah Al Mamun. All rights reserved.
           </div>
         </div>
       </div>
