@@ -1,33 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Briefcase,
-  GraduationCap,
-  ArrowUpRight,
-  ShieldCheck,
-  CreditCard,
-  Server,
-  Users,
-  TrendingUp,
-  CheckCircle2,
-  ExternalLink,
-  MapPin,
-  Phone,
-  ArrowRight,
-  Globe,
-  Tv,
-  Bot,
-  ShoppingBag,
-  Cpu,
-  Layers,
-  Lock,
-  LineChart,
-  ShieldAlert,
-  Mail,
-  Github,
-} from "lucide-react";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { SectionHeader } from "../components/SectionHeader";
-import { Reveal, StaggerGroup, StaggerItem } from "../components/Reveal";
-import { TechChip } from "../components/TechChip";
+import { Reveal } from "../components/Reveal";
 
 export const Route = createFileRoute("/ventures")({
   head: () => ({
@@ -52,7 +26,11 @@ export const Route = createFileRoute("/ventures")({
       { property: "og:image:alt", content: "Ventures & Live Platforms — Abdullah Al Mamun" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Ventures & Live Platforms — Abdullah Al Mamun" },
-      { name: "twitter:description", content: "Operating leadership, product strategy, and technical architecture across 4 live platforms." },
+      {
+        name: "twitter:description",
+        content:
+          "Operating leadership, product strategy, and technical architecture across 4 live platforms.",
+      },
       { name: "twitter:image", content: "https://iamabdullah.dev/og-image.png" },
     ],
     links: [{ rel: "canonical", href: "https://iamabdullah.dev/ventures" }],
@@ -153,685 +131,378 @@ export const Route = createFileRoute("/ventures")({
 
 function VenturesPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-6 sm:py-12">
+    <div className="mx-auto max-w-5xl px-4 sm:px-6 py-8 sm:py-16">
       <SectionHeader
-        eyebrow="Commercial Portfolio"
-        title="Four Live Platforms. One Systems Architect & Builder."
-        description="I combine product strategy, operational management, and hands-on system engineering. Every platform listed below is live, generating value, and backed by production code."
+        title="Four Operating Platforms. Built from Ground Up."
+        description="I combine product strategy, operational management, and hands-on system engineering. Every platform listed below is live, generating real commercial value, and backed by production code."
       />
 
-      {/* DETAILED VENTURE DOSSIERS */}
-      <div className="mt-6 sm:mt-8 space-y-6 sm:space-y-8">
+      <div className="mt-8 sm:mt-12 space-y-8 sm:space-y-12">
         {/* VENTURE 1: SUBSDROP */}
-        <div className="rounded-xl border border-white/10 bg-[#111318] p-4 sm:p-6 lg:p-7 shadow-lg">
-          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 pb-5 border-b border-white/[0.08]">
-            <div className="flex items-start gap-3 sm:gap-4">
-              <div className="flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-500/10 text-blue-400">
-                <Briefcase className="h-5 w-5 sm:h-7 sm:w-7" />
-              </div>
+        <Reveal>
+          <article className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/80 p-5 sm:p-8 lg:p-9 transition-colors hover:border-white/15 shadow-xl">
+            <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.06]">
               <div>
-                <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-                  <h2 className="text-xl sm:text-3xl font-extrabold text-white">SubsDrop</h2>
-                  <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-emerald-400">
-                    LIVE PLATFORM
-                  </span>
-                  <a
-                    href="https://subsdrop.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 font-mono text-xs text-blue-400 hover:text-blue-300 underline underline-offset-4"
-                  >
-                    https://subsdrop.com <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-                <p className="mt-1 text-sm font-medium text-blue-400">
-                  Role: Founder &amp; Chief Executive Officer
-                </p>
-                <div className="mt-2 flex items-center gap-2 text-xs text-zinc-400">
-                  <MapPin className="h-3.5 w-3.5 text-zinc-400" />
-                  Dhaka, Bangladesh • Serving Nationwide &amp; International Customers
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">SubsDrop</h2>
+                <div className="mt-1 flex flex-wrap items-center gap-2 font-mono text-xs text-zinc-400">
+                  <span className="text-zinc-200">Founder &amp; Chief Executive Officer</span>
+                  <span>•</span>
+                  <span>Digital Subscription Hub &amp; Media CDN</span>
                 </div>
               </div>
-            </div>
+              <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+                <a
+                  href="https://subsdrop.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-500 shadow-sm"
+                >
+                  Visit subsdrop.com <ArrowUpRight className="h-3.5 w-3.5" />
+                </a>
+              </div>
+            </header>
 
-            <div className="flex flex-wrap items-center gap-2">
-              <a
-                href="https://subsdrop.com"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-blue-500 shadow-sm"
-              >
-                Visit SubsDrop.com <ArrowUpRight className="h-3.5 w-3.5" />
-              </a>
+            <div className="mt-6 flex flex-wrap items-center gap-3 text-xs font-mono text-zinc-500">
+              <span>Ecosystem utilities:</span>
               <a
                 href="https://tv.subsdrop.com"
                 target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-semibold text-zinc-200 transition-colors hover:bg-white/10"
+                rel="noopener noreferrer"
+                className="text-zinc-400 hover:text-white underline underline-offset-4"
               >
-                <Tv className="h-3.5 w-3.5 text-emerald-400" /> tv.subsdrop.com
+                tv.subsdrop.com ↗
               </a>
+              <span>•</span>
               <a
                 href="https://temp.subsdrop.com"
                 target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-blue-500/30 bg-blue-500/10 px-3.5 py-2 text-xs font-semibold text-blue-300 transition-colors hover:bg-blue-500/20"
+                rel="noopener noreferrer"
+                className="text-zinc-400 hover:text-white underline underline-offset-4"
               >
-                <Mail className="h-3.5 w-3.5 text-blue-400" /> temp.subsdrop.com
+                temp.subsdrop.com ↗
               </a>
             </div>
-          </div>
 
-          <div className="mt-5 grid gap-5 lg:grid-cols-3">
-            <div className="lg:col-span-2 space-y-6">
-              <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-300 font-mono">
-                  The Problem &amp; Architecture
+            <div className="mt-6 grid gap-8 lg:grid-cols-12">
+              <div className="lg:col-span-7 space-y-4">
+                <h3 className="font-mono text-xs uppercase tracking-wider text-zinc-400 font-semibold">
+                  Overview &amp; Architecture
                 </h3>
-                <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
+                <p className="text-sm text-zinc-300 leading-relaxed">
                   Navigating digital subscriptions in Bangladesh has historically been broken due to
-                  dual-currency card barriers, high conversion fees, and manual delays. SubsDrop is
+                  dual-currency card limits, high foreign exchange fees, and manual delays. SubsDrop is
                   engineered as Bangladesh’s #1 digital subscription hub, allowing thousands of
                   professionals and teams to access 25+ essential tools (Canva Pro, ChatGPT Plus,
                   Grammarly, Envato Elements) with instant automated delivery.
                 </p>
-                <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
+                <p className="text-sm text-zinc-300 leading-relaxed">
                   As CEO and Lead Architect, I engineered the platform on Next.js 15, Node.js, and
                   ioredis, deploying our automated credential vault, WebSocket live updates,
-                  Cloudflare R2 media CDN (media.subsdrop.com), Live TV streaming (tv.subsdrop.com),
-                  our open-source temporary email service (temp.subsdrop.com), and multi-rail
-                  payment reconciliation over bKash, Nagad, Rocket, and global cards.
+                  Cloudflare R2 media CDN, high-speed temporary email service, and multi-rail payment
+                  reconciliation over bKash, Nagad, and global cards.
                 </p>
-                <div className="mt-3 flex flex-wrap gap-3">
+
+                <div className="pt-2">
                   <Link
                     to="/blogs/$slug"
                     params={{ slug: "singleflight-redis-cache-stampede-prevention-nodejs" }}
-                    className="inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 underline underline-offset-4 font-mono transition-colors"
+                    className="inline-flex items-center gap-1.5 font-mono text-xs text-blue-400 hover:text-blue-300 transition-colors"
                   >
-                    → How I engineered 22ms P99 reads for SubsDrop
+                    Read Post-Mortem: Slashing SubsDrop P99 Latency to 22ms <ArrowRight className="h-3 w-3" />
                   </Link>
                 </div>
               </div>
 
-              <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-300 font-mono">
-                  Key Production Highlights
-                </h3>
-                <div className="mt-3 grid gap-3 sm:grid-cols-3">
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-white">
-                      <CreditCard className="h-4 w-4 text-blue-400" />
-                      Idempotent Payments
+              <aside className="lg:col-span-5 rounded-xl border border-white/[0.06] bg-black/40 p-5 flex flex-col justify-between">
+                <div>
+                  <h4 className="font-mono text-xs uppercase tracking-wider text-zinc-400 font-semibold pb-3 border-b border-white/[0.06]">
+                    Technical Specifications
+                  </h4>
+                  <dl className="mt-4 space-y-3 text-xs font-mono">
+                    <div>
+                      <dt className="text-zinc-500">Frontend &amp; App</dt>
+                      <dd className="text-zinc-200 mt-0.5">Next.js 15, TypeScript, Tailwind</dd>
                     </div>
-                    <p className="mt-1 text-xs text-zinc-400">
-                      UddoktaPay &amp; IT Pay BD integrated with Redis distributed locks preventing
-                      duplicate order credits.
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-white">
-                      <Server className="h-4 w-4 text-emerald-400" />
-                      Automated Vault
+                    <div>
+                      <dt className="text-zinc-500">Cache &amp; Real-time</dt>
+                      <dd className="text-zinc-200 mt-0.5">ioredis, WebSockets (ws 8.20)</dd>
                     </div>
-                    <p className="mt-1 text-xs text-zinc-400">
-                      Automated token, invite, and license key distribution pipeline delivering to
-                      users under 30 seconds.
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-white">
-                      <Mail className="h-4 w-4 text-purple-400" />
-                      Open-Source TempMail
+                    <div>
+                      <dt className="text-zinc-500">Database &amp; Media CDN</dt>
+                      <dd className="text-zinc-200 mt-0.5">MongoDB, Cloudflare R2</dd>
                     </div>
-                    <p className="mt-1 text-xs text-zinc-400">
-                      High-performance disposable mail utility deployed at temp.subsdrop.com with
-                      DNS MX routing.
-                    </p>
-                  </div>
+                    <div>
+                      <dt className="text-zinc-500">Payment Gateways</dt>
+                      <dd className="text-zinc-200 mt-0.5">Stripe, SSLCommerz, EPS, UddoktaPay, bKash &amp; Nagad</dd>
+                    </div>
+                  </dl>
                 </div>
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-white/[0.08] bg-black/40 p-5 flex flex-col justify-between">
-              <div>
-                <h4 className="font-mono text-xs uppercase tracking-wider text-blue-400 font-semibold">
-                  Technical Architecture
-                </h4>
-                <div className="mt-3.5 space-y-2.5 text-xs">
-                  <div>
-                    <span className="text-zinc-400 block">Frontend &amp; App:</span>
-                    <span className="font-mono text-white font-medium">
-                      Next.js 15, TypeScript, Tailwind
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">Cache &amp; Queue:</span>
-                    <span className="font-mono text-white font-medium">
-                      ioredis 5.8, WebSockets (ws 8.20)
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">Database &amp; Storage:</span>
-                    <span className="font-mono text-white font-medium">
-                      MongoDB, AWS S3 / Cloudflare R2
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">Payments:</span>
-                    <span className="font-mono text-white font-medium">
-                      UddoktaPay, IT Pay BD, Stripe
-                    </span>
-                  </div>
+                <div className="mt-5 pt-3.5 border-t border-white/[0.06] text-[11px] font-mono text-zinc-500">
+                  Status: Active Production • Zero Downtime
                 </div>
-              </div>
-              <div className="mt-5 pt-3.5 border-t border-white/[0.08]">
-                <a
-                  href="https://subsdrop.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between text-xs font-mono text-blue-400 hover:underline"
-                >
-                  <span>subsdrop.com</span>
-                  <ExternalLink className="h-3 w-3" />
-                </a>
-              </div>
+              </aside>
             </div>
-          </div>
-        </div>
+          </article>
+        </Reveal>
 
         {/* VENTURE 2: QUICKMATION */}
-        <div className="rounded-xl border border-white/10 bg-[#111318] p-4 sm:p-6 lg:p-7 shadow-lg">
-          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 pb-5 border-b border-white/[0.08]">
-            <div className="flex items-start gap-3 sm:gap-4">
-              <div className="flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl border border-purple-500/30 bg-purple-500/10 text-purple-400">
-                <Bot className="h-5 w-5 sm:h-7 sm:w-7" />
-              </div>
+        <Reveal>
+          <article className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/80 p-5 sm:p-8 lg:p-9 transition-colors hover:border-white/15 shadow-xl">
+            <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.06]">
               <div>
-                <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-                  <h2 className="text-xl sm:text-3xl font-extrabold text-white">QuickMation</h2>
-                  <span className="rounded-full border border-purple-500/30 bg-purple-500/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-purple-400">
-                    AGENCY &amp; PLATFORM
-                  </span>
-                  <a
-                    href="https://quickmation.online"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 font-mono text-xs text-purple-400 hover:text-purple-300 underline underline-offset-4"
-                  >
-                    https://quickmation.online <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-                <p className="mt-1 text-sm font-medium text-purple-400">
-                  Role: Co-Founder &amp; Automation Architect
-                </p>
-                <div className="mt-2 flex items-center gap-2 text-xs text-zinc-400">
-                  <Globe className="h-3.5 w-3.5 text-zinc-400" />
-                  Global AI &amp; Enterprise Automation Agency
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">QuickMation</h2>
+                <div className="mt-1 flex flex-wrap items-center gap-2 font-mono text-xs text-zinc-400">
+                  <span className="text-zinc-200">Co-Founder &amp; Automation Architect</span>
+                  <span>•</span>
+                  <span>Enterprise AI &amp; Workflow Microservices</span>
                 </div>
               </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              <a
-                href="https://quickmation.online"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg bg-purple-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-purple-500 shadow-sm"
-              >
-                Visit QuickMation.online <ArrowUpRight className="h-3.5 w-3.5" />
-              </a>
-            </div>
-          </div>
-
-          <div className="mt-5 grid gap-5 lg:grid-cols-3">
-            <div className="lg:col-span-2 space-y-5">
-              <div>
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-300 font-mono">
-                  Custom AI Automation Without Vendor Lock-in
-                </h3>
-                <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
-                  Most automation agencies simply connect generic Zapier or n8n nodes and bill
-                  clients exorbitant ongoing SaaS fees. At QuickMation, we architect custom
-                  enterprise automation engines alongside self-hosted n8n instances so clients own
-                  their data, control latency, and pay zero markup on API calls.
-                </p>
-                <p className="mt-2.5 text-sm text-zinc-400 leading-relaxed">
-                  We engineer omnichannel message bots across Facebook Messenger, Instagram DM,
-                  TikTok, and custom web chatbots, alongside bespoke business automation software
-                  for education, industrial supply chains, and e-commerce.
-                </p>
-                <div className="mt-3 flex flex-wrap gap-3">
-                  <Link
-                    to="/blogs/$slug"
-                    params={{ slug: "building-proprietary-ai-automation-engines-vs-saas-tax" }}
-                    className="inline-flex items-center gap-1 text-xs text-purple-400 hover:text-purple-300 underline underline-offset-4 font-mono transition-colors"
-                  >
-                    → Why we build proprietary automation engines
-                  </Link>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-300 font-mono">
-                  Core Automation Capabilities
-                </h3>
-                <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-white">
-                      <Bot className="h-4 w-4 text-purple-400" />
-                      Omnichannel AI Assistants
-                    </div>
-                    <p className="mt-1 text-xs text-zinc-400">
-                      Context-aware bots handling customer inquiries, lead qualification, and
-                      appointment booking.
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-white">
-                      <Cpu className="h-4 w-4 text-blue-400" />
-                      Custom Automation Microservices
-                    </div>
-                    <p className="mt-1 text-xs text-zinc-400">
-                      Proprietary workflow engines in Node.js &amp; Prisma replacing expensive SaaS
-                      connectors.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-white/[0.08] bg-black/40 p-5 flex flex-col justify-between">
-              <div>
-                <h4 className="font-mono text-xs uppercase tracking-wider text-purple-400 font-semibold">
-                  Agency Stack
-                </h4>
-                <div className="mt-3.5 space-y-2.5 text-xs">
-                  <div>
-                    <span className="text-zinc-400 block">Framework:</span>
-                    <span className="font-mono text-white font-medium">
-                      Next.js 16.2, TypeScript
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">Database &amp; ORM:</span>
-                    <span className="font-mono text-white font-medium">PostgreSQL, Prisma 7.8</span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">3D Graphics:</span>
-                    <span className="font-mono text-white font-medium">
-                      Three.js, React Three Fiber
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">Automation:</span>
-                    <span className="font-mono text-white font-medium">
-                      Custom Node.js, Self-Hosted n8n
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-5 pt-3.5 border-t border-white/[0.08]">
+              <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
                 <a
                   href="https://quickmation.online"
                   target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between text-xs font-mono text-purple-400 hover:underline"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-zinc-200 transition-colors hover:bg-white/10 hover:text-white"
                 >
-                  <span>quickmation.online</span>
-                  <ExternalLink className="h-3 w-3" />
+                  Visit quickmation.online <ArrowUpRight className="h-3.5 w-3.5" />
                 </a>
               </div>
+            </header>
+
+            <div className="mt-6 grid gap-8 lg:grid-cols-12">
+              <div className="lg:col-span-7 space-y-4">
+                <h3 className="font-mono text-xs uppercase tracking-wider text-zinc-400 font-semibold">
+                  Overview &amp; Architecture
+                </h3>
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  Most automation agencies cobble together generic Zapier or n8n cloud connectors and bill
+                  clients exorbitant recurring subscription fees. At QuickMation, we architect custom
+                  enterprise automation engines alongside dedicated, self-hosted n8n instances so clients own
+                  their data, eliminate SaaS task markups, and achieve sub-100ms response latencies.
+                </p>
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  We engineer context-aware omnichannel AI assistants across Telegram, Facebook Messenger,
+                  Instagram DM, TikTok, and web chat, alongside bespoke Python scraping and headless browser
+                  automation pipelines (Playwright/Selenium) for business workflows, education, and e-commerce.
+                </p>
+
+                <div className="pt-2">
+                  <Link
+                    to="/blogs/$slug"
+                    params={{ slug: "building-proprietary-ai-automation-engines-vs-saas-tax" }}
+                    className="inline-flex items-center gap-1.5 font-mono text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                  >
+                    Read Field Note: Eliminating the SaaS Tax in Automation <ArrowRight className="h-3 w-3" />
+                  </Link>
+                </div>
+              </div>
+
+              <aside className="lg:col-span-5 rounded-xl border border-white/[0.06] bg-black/40 p-5 flex flex-col justify-between">
+                <div>
+                  <h4 className="font-mono text-xs uppercase tracking-wider text-zinc-400 font-semibold pb-3 border-b border-white/[0.06]">
+                    Technical Specifications
+                  </h4>
+                  <dl className="mt-4 space-y-3 text-xs font-mono">
+                    <div>
+                      <dt className="text-zinc-500">App Framework</dt>
+                      <dd className="text-zinc-200 mt-0.5">Next.js 16.2, TypeScript</dd>
+                    </div>
+                    <div>
+                      <dt className="text-zinc-500">Database &amp; ORM</dt>
+                      <dd className="text-zinc-200 mt-0.5">PostgreSQL, Prisma 7.8</dd>
+                    </div>
+                    <div>
+                      <dt className="text-zinc-500">Automation Engine</dt>
+                      <dd className="text-zinc-200 mt-0.5">Python (Telegram/Playwright), Node.js, n8n</dd>
+                    </div>
+                    <div>
+                      <dt className="text-zinc-500">3D Visuals</dt>
+                      <dd className="text-zinc-200 mt-0.5">Three.js, React Three Fiber</dd>
+                    </div>
+                  </dl>
+                </div>
+                <div className="mt-5 pt-3.5 border-t border-white/[0.06] text-[11px] font-mono text-zinc-500">
+                  Delivery: Custom Self-Hosted Engines
+                </div>
+              </aside>
             </div>
-          </div>
-        </div>
+          </article>
+        </Reveal>
 
         {/* VENTURE 3: PRO TRAINER IT */}
-        <div className="rounded-xl border border-white/10 bg-[#111318] p-4 sm:p-6 lg:p-7 shadow-lg">
-          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 pb-5 border-b border-white/[0.08]">
-            <div className="flex items-start gap-3 sm:gap-4">
-              <div className="flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">
-                <GraduationCap className="h-5 w-5 sm:h-7 sm:w-7" />
-              </div>
+        <Reveal>
+          <article className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/80 p-5 sm:p-8 lg:p-9 transition-colors hover:border-white/15 shadow-xl">
+            <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.06]">
               <div>
-                <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-                  <h2 className="text-xl sm:text-3xl font-extrabold text-white">Pro Trainer IT</h2>
-                  <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-blue-400">
-                    ACADEMY
-                  </span>
-                  <a
-                    href="https://www.protrainerit.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 font-mono text-xs text-emerald-400 hover:text-emerald-300 underline underline-offset-4"
-                  >
-                    https://protrainerit.com <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-                <p className="mt-1 text-sm font-medium text-emerald-400">
-                  Role: Operator, Systems Lead &amp; Scaling Strategist
-                </p>
-                <div className="mt-2 flex items-center gap-2 text-xs text-zinc-400">
-                  <MapPin className="h-3.5 w-3.5 text-zinc-400" />
-                  HQ: মহারাজপুর ঘোড়াস্ট্যান্ড, চাঁপাইনবাবগঞ্জ সদর - ৬৩০০ • Reaching Nationwide
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Pro Trainer IT</h2>
+                <div className="mt-1 flex flex-wrap items-center gap-2 font-mono text-xs text-zinc-400">
+                  <span className="text-zinc-200">Operator &amp; Systems Lead</span>
+                  <span>•</span>
+                  <span>National IT Academy &amp; Video LMS Platform</span>
                 </div>
               </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              <a
-                href="https://www.protrainerit.com"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-emerald-500 shadow-sm"
-              >
-                Visit ProTrainerIT.com <ArrowUpRight className="h-3.5 w-3.5" />
-              </a>
-              <a
-                href="tel:01628786666"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-semibold text-zinc-200 transition-colors hover:bg-white/10 font-mono"
-              >
-                <Phone className="h-3.5 w-3.5 text-emerald-400" /> 01628-786666
-              </a>
-            </div>
-          </div>
-
-          <div className="mt-5 grid gap-5 lg:grid-cols-3">
-            <div className="lg:col-span-2 space-y-5">
-              <div>
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-300 font-mono">
-                  Democratizing Practical Engineering Education
-                </h3>
-                <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
-                  Pro Trainer IT originated as a dedicated physical learning academy in Maharajpur,
-                  Chapainawabganj. I am scaling its transformation into a hybrid and online platform
-                  reaching software engineers, developers, and operators across all 64 districts of
-                  Bangladesh.
-                </p>
-                <p className="mt-2.5 text-sm text-zinc-400 leading-relaxed">
-                  The platform is built on Next.js 16 with secure AWS S3 presigned video delivery
-                  for courses, live student dashboards, automated enrollment verification, and
-                  hands-on capstone mentor pipelines.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-300 font-mono">
-                  Curriculum &amp; Operations
-                </h3>
-                <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-white">
-                      <Users className="h-4 w-4 text-emerald-400" />
-                      Live Batches &amp; Mentoring
-                    </div>
-                    <p className="mt-1 text-xs text-zinc-400">
-                      Cohorts in Full-Stack MERN, Python &amp; Machine Learning, DevOps, and UI/UX
-                      Design.
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-2 text-xs font-semibold text-white">
-                      <Server className="h-4 w-4 text-blue-400" />
-                      High-Performance LMS Platform
-                    </div>
-                    <p className="mt-1 text-xs text-zinc-400">
-                      S3 presigned video streaming, interactive quizzes, and automated certificate
-                      verification.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-white/[0.08] bg-black/40 p-5 flex flex-col justify-between">
-              <div>
-                <h4 className="font-mono text-xs uppercase tracking-wider text-emerald-400 font-semibold">
-                  Platform Stack
-                </h4>
-                <div className="mt-3.5 space-y-2.5 text-xs">
-                  <div>
-                    <span className="text-zinc-400 block">Framework:</span>
-                    <span className="font-mono text-white font-medium">Next.js 16.1, React 19</span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">Video Streaming:</span>
-                    <span className="font-mono text-white font-medium">AWS S3 Presigned URLs</span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">Database &amp; State:</span>
-                    <span className="font-mono text-white font-medium">
-                      MongoDB, Mongoose 9, Zustand
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">Testing:</span>
-                    <span className="font-mono text-white font-medium">
-                      Vitest automated suites
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-5 pt-3.5 border-t border-white/[0.08]">
+              <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
                 <a
                   href="https://www.protrainerit.com"
                   target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between text-xs font-mono text-emerald-400 hover:underline"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-zinc-200 transition-colors hover:bg-white/10 hover:text-white"
                 >
-                  <span>protrainerit.com</span>
-                  <ExternalLink className="h-3 w-3" />
+                  Visit protrainerit.com <ArrowUpRight className="h-3.5 w-3.5" />
                 </a>
               </div>
+            </header>
+
+            <div className="mt-6 grid gap-8 lg:grid-cols-12">
+              <div className="lg:col-span-7 space-y-4">
+                <h3 className="font-mono text-xs uppercase tracking-wider text-zinc-400 font-semibold">
+                  Overview &amp; Architecture
+                </h3>
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  Pro Trainer IT is a premier technical academy scaling practical software engineering
+                  education across all 64 districts of Bangladesh. The organization conducts intensive live
+                  cohorts in Full-Stack MERN, Python &amp; Machine Learning, and Cloud DevOps.
+                </p>
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  As Systems Lead, I architected the proprietary LMS infrastructure on Next.js 16 and AWS S3,
+                  implementing presigned URL video streaming with token verification to prevent unauthorized
+                  leeching, alongside student dashboards, automated enrollment verification, and Vitest-backed
+                  code assessment pipelines.
+                </p>
+
+                <div className="pt-2">
+                  <Link
+                    to="/blogs/$slug"
+                    params={{ slug: "surviving-react2shell-cve-2025-55182-vps-recovery" }}
+                    className="inline-flex items-center gap-1.5 font-mono text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                  >
+                    Read RCA: Surviving a Zero-Day React2Shell Attack on Pro Trainer IT <ArrowRight className="h-3 w-3" />
+                  </Link>
+                </div>
+              </div>
+
+              <aside className="lg:col-span-5 rounded-xl border border-white/[0.06] bg-black/40 p-5 flex flex-col justify-between">
+                <div>
+                  <h4 className="font-mono text-xs uppercase tracking-wider text-zinc-400 font-semibold pb-3 border-b border-white/[0.06]">
+                    Technical Specifications
+                  </h4>
+                  <dl className="mt-4 space-y-3 text-xs font-mono">
+                    <div>
+                      <dt className="text-zinc-500">Core Framework</dt>
+                      <dd className="text-zinc-200 mt-0.5">Next.js 16.1, React 19</dd>
+                    </div>
+                    <div>
+                      <dt className="text-zinc-500">Video Ingress &amp; CDN</dt>
+                      <dd className="text-zinc-200 mt-0.5">AWS S3 Presigned URLs (Secure Tokens)</dd>
+                    </div>
+                    <div>
+                      <dt className="text-zinc-500">Data &amp; State</dt>
+                      <dd className="text-zinc-200 mt-0.5">MongoDB, Mongoose 9, Zustand</dd>
+                    </div>
+                    <div>
+                      <dt className="text-zinc-500">Test Harness</dt>
+                      <dd className="text-zinc-200 mt-0.5">Vitest Automated Suites</dd>
+                    </div>
+                  </dl>
+                </div>
+                <div className="mt-5 pt-3.5 border-t border-white/[0.06] text-[11px] font-mono text-zinc-500">
+                  Reach: 64 Districts Nationwide
+                </div>
+              </aside>
             </div>
-          </div>
-        </div>
+          </article>
+        </Reveal>
 
         {/* VENTURE 4: MONETRIX */}
-        <div className="rounded-xl border border-white/10 bg-[#111318] p-4 sm:p-6 lg:p-7 shadow-lg">
-          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 pb-5 border-b border-white/[0.08]">
-            <div className="flex items-start gap-3 sm:gap-4">
-              <div className="flex h-11 w-11 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-400">
-                <ShoppingBag className="h-5 w-5 sm:h-7 sm:w-7" />
-              </div>
+        <Reveal>
+          <article className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/80 p-5 sm:p-8 lg:p-9 transition-colors hover:border-white/15 shadow-xl">
+            <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.06]">
               <div>
-                <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-                  <h2 className="text-xl sm:text-3xl font-extrabold text-white">MoneTrix</h2>
-                  <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-amber-400">
-                    SAAS PRODUCT
-                  </span>
-                  <a
-                    href="https://www.monetrix.shop"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 font-mono text-xs text-amber-400 hover:text-amber-300 underline underline-offset-4"
-                  >
-                    https://www.monetrix.shop <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-                <p className="mt-1 text-sm font-medium text-amber-400">
-                  Role: Lead Architect &amp; Creator
-                </p>
-                <div className="mt-2 flex items-center gap-2 text-xs text-zinc-400">
-                  <Globe className="h-3.5 w-3.5 text-zinc-400" />
-                  E-Commerce &amp; Automated Delivery SaaS for Digital Product Sellers
+                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">MoneTrix</h2>
+                <div className="mt-1 flex flex-wrap items-center gap-2 font-mono text-xs text-zinc-400">
+                  <span className="text-zinc-200">Architect &amp; Creator</span>
+                  <span>•</span>
+                  <span>Digital Goods E-Commerce &amp; Automated Delivery</span>
                 </div>
               </div>
-            </div>
+              <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+                <a
+                  href="https://www.monetrix.shop"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-zinc-200 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  Visit monetrix.shop <ArrowUpRight className="h-3.5 w-3.5" />
+                </a>
+              </div>
+            </header>
 
-            <div className="flex flex-wrap items-center gap-2">
-              <a
-                href="https://www.monetrix.shop"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg bg-amber-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-amber-500 shadow-sm"
-              >
-                Visit MoneTrix.shop <ArrowUpRight className="h-3.5 w-3.5" />
-              </a>
-            </div>
-          </div>
-
-          <div className="mt-5 grid gap-5 lg:grid-cols-3">
-            <div className="lg:col-span-2 space-y-5">
-              <div>
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-amber-400 font-mono flex items-center gap-2">
-                  <Lock className="h-4 w-4" />
-                  Backend Infrastructure &amp; Security Architecture
+            <div className="mt-6 grid gap-8 lg:grid-cols-12">
+              <div className="lg:col-span-7 space-y-4">
+                <h3 className="font-mono text-xs uppercase tracking-wider text-zinc-400 font-semibold">
+                  Overview &amp; Architecture
                 </h3>
-                <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
-                  Selling digital templates, software licenses, graphics bundles, and media files
-                  requires a resilient, zero-compromise security posture. I designed a 3-tier
-                  hardened architecture to protect our customer transactions and persistent data:
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  Selling digital templates, software licenses, graphics bundles, and media files requires a
+                  resilient, zero-compromise security posture. I designed a hardened architecture with an
+                  isolated private MongoDB VPC (0.0.0.0 closed, strict server-level UFW firewall allowing port
+                  27017 only from our app server) and a hardened Payment Proxy gateway for local MFS checkout.
                 </p>
-                <div className="mt-3 flex flex-wrap gap-3">
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  To ensure 100% accurate marketing attribution without losing conversion telemetry to iOS 14.5+
+                  ATT restrictions or ad-blockers, I deployed a server-side Google Tag Manager (sGTM) container
+                  on Stape with Meta Conversions API (CAPI) and deterministic event_id deduplication.
+                </p>
+
+                <div className="pt-2 flex flex-col sm:flex-row gap-3">
                   <Link
                     to="/blogs/$slug"
                     params={{ slug: "engineering-server-side-meta-capi-sgtm-tracking" }}
-                    className="inline-flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300 underline underline-offset-4 font-mono transition-colors"
+                    className="inline-flex items-center gap-1.5 font-mono text-xs text-blue-400 hover:text-blue-300 transition-colors"
                   >
-                    → Our server-side tracking architecture
+                    Read: Server-Side Meta CAPI &amp; sGTM Pipeline <ArrowRight className="h-3 w-3" />
                   </Link>
                   <Link
                     to="/blogs/$slug"
                     params={{ slug: "air-gapping-mongodb-production-ufw-payment-proxy" }}
-                    className="inline-flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300 underline underline-offset-4 font-mono transition-colors"
+                    className="inline-flex items-center gap-1.5 font-mono text-xs text-blue-400 hover:text-blue-300 transition-colors"
                   >
-                    → Database security design
+                    Read: Air-Gapping MongoDB in Production <ArrowRight className="h-3 w-3" />
                   </Link>
                 </div>
-                <div className="mt-3.5 grid gap-3 sm:grid-cols-3">
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-white">
-                      <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                      1. Isolated Database Setup
-                    </div>
-                    <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
-                      MongoDB is deployed in a strictly isolated private environment with zero
-                      exposure to public networks (0.0.0.0 completely closed).
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-white">
-                      <span className="flex h-1.5 w-1.5 rounded-full bg-blue-400" />
-                      2. Strict Firewall Rules
-                    </div>
-                    <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
-                      Server-level UFW firewall drops all inbound traffic on port 27017 except
-                      connections from our dedicated application server's static IP, dropping breach
-                      risks to near zero.
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-white">
-                      <span className="flex h-1.5 w-1.5 rounded-full bg-amber-400" />
-                      3. Payment Proxy Architecture
-                    </div>
-                    <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
-                      All local gateway checkouts &amp; webhooks pass through a secure payment
-                      proxy. Transactions validate via proxy before hitting 3rd-party gateways;
-                      webhook callbacks are verified before DB updates.
-                    </p>
-                  </div>
-                </div>
               </div>
 
-              <div>
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-amber-400 font-mono flex items-center gap-2">
-                  <LineChart className="h-4 w-4" />
-                  Tracking &amp; Data Analytics (Marketing) Architecture
-                </h3>
-                <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
-                  To ensure 100% accurate marketing data and optimize ROAS without losing
-                  conversions to iOS 14.5+ restrictions or ad-blockers, I implemented an advanced
-                  tracking pipeline:
-                </p>
-                <div className="mt-3.5 grid gap-3 sm:grid-cols-3">
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-white">
-                      <span className="flex h-1.5 w-1.5 rounded-full bg-purple-400" />
-                      1. Server-Side Tracking (sGTM &amp; CAPI)
+              <aside className="lg:col-span-5 rounded-xl border border-white/[0.06] bg-black/40 p-5 flex flex-col justify-between">
+                <div>
+                  <h4 className="font-mono text-xs uppercase tracking-wider text-zinc-400 font-semibold pb-3 border-b border-white/[0.06]">
+                    Technical Specifications
+                  </h4>
+                  <dl className="mt-4 space-y-3 text-xs font-mono">
+                    <div>
+                      <dt className="text-zinc-500">Core Framework</dt>
+                      <dd className="text-zinc-200 mt-0.5">Next.js 16.2, React 19</dd>
                     </div>
-                    <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
-                      Hosted a Google Tag Manager server container via Stape, integrating Meta
-                      Conversions API (CAPI) to stream direct server-to-server events bypassing
-                      ad-blockers.
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-white">
-                      <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                      2. Event Deduplication
+                    <div>
+                      <dt className="text-zinc-500">Database &amp; Isolation</dt>
+                      <dd className="text-zinc-200 mt-0.5">Isolated VPC MongoDB, UFW Firewall</dd>
                     </div>
-                    <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
-                      Dual-stream browser Pixel &amp; server CAPI hits are tagged with deterministic{" "}
-                      <code className="text-amber-300 font-mono text-[11px]">event_id</code> hashes,
-                      preventing any double-counting of Add to Cart or Purchase events.
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-white">
-                      <span className="flex h-1.5 w-1.5 rounded-full bg-blue-400" />
-                      3. Custom Data Layer &amp; GA4
+                    <div>
+                      <dt className="text-zinc-500">Payment Ingress</dt>
+                      <dd className="text-zinc-200 mt-0.5">Stripe, SSLCommerz, EPS, MFS (HMAC Proxy)</dd>
                     </div>
-                    <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
-                      Engineered a custom e-commerce DataLayer capturing granular user journey
-                      behavior and syncing structured event data directly into Google Analytics 4
-                      (GA4).
-                    </p>
-                  </div>
+                    <div>
+                      <dt className="text-zinc-500">Attribution &amp; Tracking</dt>
+                      <dd className="text-zinc-200 mt-0.5">sGTM (Stape), Meta CAPI, GA4 DataLayer</dd>
+                    </div>
+                  </dl>
                 </div>
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-white/[0.08] bg-black/40 p-5 flex flex-col justify-between">
-              <div>
-                <h4 className="font-mono text-xs uppercase tracking-wider text-amber-400 font-semibold">
-                  Product &amp; Security Stack
-                </h4>
-                <div className="mt-3.5 space-y-2.5 text-xs">
-                  <div>
-                    <span className="text-zinc-400 block">Framework:</span>
-                    <span className="font-mono text-white font-medium">Next.js 16.2, React 19</span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">DB &amp; Security:</span>
-                    <span className="font-mono text-white font-medium">
-                      Isolated VPC Mongo, UFW IP Whitelist
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">Payment Proxy:</span>
-                    <span className="font-mono text-white font-medium">
-                      Hardened Webhook Ingress (HMAC)
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">Tracking &amp; CAPI:</span>
-                    <span className="font-mono text-white font-medium">
-                      sGTM (Stape), Meta CAPI, GA4 DataLayer
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-zinc-400 block">Secure Storage:</span>
-                    <span className="font-mono text-white font-medium">
-                      AWS S3 Presigner (Anti-Leech)
-                    </span>
-                  </div>
+                <div className="mt-5 pt-3.5 border-t border-white/[0.06] text-[11px] font-mono text-zinc-500">
+                  Security: 0.0.0.0 Ingress Dropped
                 </div>
-              </div>
-              <div className="mt-5 pt-3.5 border-t border-white/[0.08]">
-                <a
-                  href="https://www.monetrix.shop"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-between text-xs font-mono text-amber-400 hover:underline"
-                >
-                  <span>monetrix.shop</span>
-                  <ExternalLink className="h-3 w-3" />
-                </a>
-              </div>
+              </aside>
             </div>
-          </div>
-        </div>
+          </article>
+        </Reveal>
       </div>
     </div>
   );

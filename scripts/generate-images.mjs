@@ -69,6 +69,13 @@ const POSTS = [
     lines: ["A 28KB Disposable Email", "Platform — DNS MX Routing", "& Real-Time Ingress"],
     footer: "IAMABDULLAH.DEV / FIELD NOTES",
   },
+  {
+    slug: "stop-sharing-env-files-inboxes-envlink-guide",
+    eyebrow: "DEVELOPER SECURITY & SECRETS",
+    accent: AMBER,
+    lines: ["Stop Sharing .env in Inboxes", "Secure Secrets with", "EnvLink CLI"],
+    footer: "IAMABDULLAH.DEV / FIELD NOTES",
+  },
 ];
 
 function drawtext({ text, y, size, color, font = ARIAL, x = 90, extra = [] }) {

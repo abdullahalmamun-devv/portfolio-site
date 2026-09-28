@@ -22,8 +22,9 @@ interface StaticRoute {
 const STATIC_ROUTES: StaticRoute[] = [
   { path: "/", changefreq: "weekly", priority: "1.0", lastmod: "2026-09-28" },
   { path: "/ventures", changefreq: "monthly", priority: "0.8", lastmod: "2025-09-18" },
-  { path: "/projects", changefreq: "monthly", priority: "0.8", lastmod: "2025-09-18" },
+  { path: "/case-studies", changefreq: "monthly", priority: "0.8", lastmod: "2025-09-18" },
   { path: "/skills", changefreq: "monthly", priority: "0.7", lastmod: "2025-09-18" },
+  { path: "/tools", changefreq: "monthly", priority: "0.8", lastmod: "2026-09-29" },
   { path: "/blogs", changefreq: "weekly", priority: "0.9" }, // Dynamically calculated from latest blog post
   { path: "/contact", changefreq: "yearly", priority: "0.6", lastmod: "2025-06-01" },
 ];

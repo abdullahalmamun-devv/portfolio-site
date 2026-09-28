@@ -1,50 +1,35 @@
-import { motion, type HTMLMotionProps } from "framer-motion";
-import type { ReactNode } from "react";
+import type { ReactNode, HTMLAttributes } from "react";
 
-type RevealProps = HTMLMotionProps<"div"> & {
+type RevealProps = HTMLAttributes<HTMLDivElement> & {
   children: ReactNode;
   delay?: number;
   y?: number;
 };
 
-export function Reveal({ children, delay = 0, y = 24, ...rest }: RevealProps) {
+export function Reveal({ children, delay, y, ...rest }: RevealProps) {
+  return <div {...rest}>{children}</div>;
+}
+
+export function StaggerGroup({
+  children,
+  className,
+  ...rest
+}: HTMLAttributes<HTMLDivElement> & { children: ReactNode; className?: string }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-      {...rest}
-    >
+    <div className={className} {...rest}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
-export function StaggerGroup({ children, className }: { children: ReactNode; className?: string }) {
+export function StaggerItem({
+  children,
+  className,
+  ...rest
+}: HTMLAttributes<HTMLDivElement> & { children: ReactNode; className?: string }) {
   return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
-      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08 } } }}
-    >
+    <div className={className} {...rest}>
       {children}
-    </motion.div>
-  );
-}
-
-export function StaggerItem({ children, className }: { children: ReactNode; className?: string }) {
-  return (
-    <motion.div
-      className={className}
-      variants={{
-        hidden: { opacity: 0, y: 24 },
-        show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-      }}
-    >
-      {children}
-    </motion.div>
+    </div>
   );
 }

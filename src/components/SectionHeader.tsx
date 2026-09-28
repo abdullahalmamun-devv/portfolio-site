@@ -6,25 +6,27 @@ export function SectionHeader({
   description,
   badge,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   description?: string;
   badge?: string;
 }) {
   return (
     <Reveal className="max-w-3xl">
-      <div className="flex items-center gap-2">
-        <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
-        <span className="font-mono text-xs font-semibold tracking-wider uppercase text-blue-400">
-          {eyebrow}
-        </span>
-        {badge && (
-          <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] text-zinc-400">
-            {badge}
+      {eyebrow ? (
+        <div className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+          <span className="font-mono text-xs font-semibold tracking-wider uppercase text-blue-400">
+            {eyebrow}
           </span>
-        )}
-      </div>
-      <h1 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">
+          {badge && (
+            <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] text-zinc-400">
+              {badge}
+            </span>
+          )}
+        </div>
+      ) : null}
+      <h1 className={`${eyebrow ? "mt-2" : ""} text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl`}>
         {title}
       </h1>
       {description ? (

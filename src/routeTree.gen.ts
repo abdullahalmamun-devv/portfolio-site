@@ -10,9 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VenturesRouteImport } from './routes/ventures'
+import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as SkillsRouteImport } from './routes/skills'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CaseStudiesRouteImport } from './routes/case-studies'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogsIndexRouteImport } from './routes/blogs.index'
@@ -21,6 +23,11 @@ import { Route as BlogsSlugRouteImport } from './routes/blogs.$slug'
 const VenturesRoute = VenturesRouteImport.update({
   id: '/ventures',
   path: '/ventures',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SkillsRoute = SkillsRouteImport.update({
@@ -36,6 +43,11 @@ const ProjectsRoute = ProjectsRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseStudiesRoute = CaseStudiesRouteImport.update({
+  id: '/case-studies',
+  path: '/case-studies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogRoute = BlogRouteImport.update({
@@ -62,9 +74,11 @@ const BlogsSlugRoute = BlogsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
+  '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
   '/projects': typeof ProjectsRoute
   '/skills': typeof SkillsRoute
+  '/tools': typeof ToolsRoute
   '/ventures': typeof VenturesRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/blogs/': typeof BlogsIndexRoute
@@ -72,9 +86,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
+  '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
   '/projects': typeof ProjectsRoute
   '/skills': typeof SkillsRoute
+  '/tools': typeof ToolsRoute
   '/ventures': typeof VenturesRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/blogs': typeof BlogsIndexRoute
@@ -83,9 +99,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
+  '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
   '/projects': typeof ProjectsRoute
   '/skills': typeof SkillsRoute
+  '/tools': typeof ToolsRoute
   '/ventures': typeof VenturesRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/blogs/': typeof BlogsIndexRoute
@@ -95,9 +113,11 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/blog'
+    | '/case-studies'
     | '/contact'
     | '/projects'
     | '/skills'
+    | '/tools'
     | '/ventures'
     | '/blogs/$slug'
     | '/blogs/'
@@ -105,9 +125,11 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/blog'
+    | '/case-studies'
     | '/contact'
     | '/projects'
     | '/skills'
+    | '/tools'
     | '/ventures'
     | '/blogs/$slug'
     | '/blogs'
@@ -115,9 +137,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/blog'
+    | '/case-studies'
     | '/contact'
     | '/projects'
     | '/skills'
+    | '/tools'
     | '/ventures'
     | '/blogs/$slug'
     | '/blogs/'
@@ -126,9 +150,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BlogRoute: typeof BlogRoute
+  CaseStudiesRoute: typeof CaseStudiesRoute
   ContactRoute: typeof ContactRoute
   ProjectsRoute: typeof ProjectsRoute
   SkillsRoute: typeof SkillsRoute
+  ToolsRoute: typeof ToolsRoute
   VenturesRoute: typeof VenturesRoute
   BlogsSlugRoute: typeof BlogsSlugRoute
   BlogsIndexRoute: typeof BlogsIndexRoute
@@ -141,6 +167,13 @@ declare module '@tanstack/react-router' {
       path: '/ventures'
       fullPath: '/ventures'
       preLoaderRoute: typeof VenturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/skills': {
@@ -162,6 +195,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-studies': {
+      id: '/case-studies'
+      path: '/case-studies'
+      fullPath: '/case-studies'
+      preLoaderRoute: typeof CaseStudiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog': {
@@ -198,9 +238,11 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlogRoute: BlogRoute,
+  CaseStudiesRoute: CaseStudiesRoute,
   ContactRoute: ContactRoute,
   ProjectsRoute: ProjectsRoute,
   SkillsRoute: SkillsRoute,
+  ToolsRoute: ToolsRoute,
   VenturesRoute: VenturesRoute,
   BlogsSlugRoute: BlogsSlugRoute,
   BlogsIndexRoute: BlogsIndexRoute,

@@ -6,9 +6,9 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  ScrollRestoration,
 } from "@tanstack/react-router";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 import "@fontsource/space-grotesk/400.css";
 import "@fontsource/space-grotesk/600.css";
@@ -19,6 +19,13 @@ import "@fontsource/inter/600.css";
 import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/silkscreen/400.css";
 import "@fontsource/silkscreen/700.css";
+
+import spaceGrotesk700Woff2 from "@fontsource/space-grotesk/files/space-grotesk-latin-700-normal.woff2?url";
+import spaceGrotesk600Woff2 from "@fontsource/space-grotesk/files/space-grotesk-latin-600-normal.woff2?url";
+import inter400Woff2 from "@fontsource/inter/files/inter-latin-400-normal.woff2?url";
+import inter500Woff2 from "@fontsource/inter/files/inter-latin-500-normal.woff2?url";
+import inter600Woff2 from "@fontsource/inter/files/inter-latin-600-normal.woff2?url";
+import silkscreen400Woff2 from "@fontsource/silkscreen/files/silkscreen-latin-400-normal.woff2?url";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -126,6 +133,48 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
     links: [
+      {
+        rel: "preload",
+        href: spaceGrotesk700Woff2,
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "preload",
+        href: spaceGrotesk600Woff2,
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "preload",
+        href: inter400Woff2,
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "preload",
+        href: inter500Woff2,
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "preload",
+        href: inter600Woff2,
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "preload",
+        href: silkscreen400Woff2,
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "icon", href: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
@@ -215,6 +264,7 @@ function RootShell({ children }: { children: ReactNode }) {
       </head>
       <body>
         {children}
+        <ScrollRestoration />
         <Scripts />
       </body>
     </html>
@@ -222,21 +272,7 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function AnimatedOutlet() {
-  const router = useRouter();
-  const key = router.state.location.pathname;
-  return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={key}
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <Outlet />
-      </motion.div>
-    </AnimatePresence>
-  );
+  return <Outlet />;
 }
 
 function RootComponent() {
@@ -244,9 +280,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="relative min-h-screen ambient-bg flex flex-col justify-between overflow-x-hidden w-full max-w-full">
+      <div className="relative min-h-screen ambient-bg flex flex-col justify-between overflow-x-clip w-full max-w-full">
         <Nav />
-        <main className="pt-20 sm:pt-24 flex-grow w-full max-w-full overflow-x-hidden">
+        <main className="pt-20 sm:pt-24 flex-grow w-full max-w-full">
           <AnimatedOutlet />
         </main>
         <Footer />

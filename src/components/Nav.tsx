@@ -1,24 +1,22 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
-import { Download, Menu, X, ArrowUpRight, Github, Linkedin, Layers, BookOpen } from "lucide-react";
+import { Menu, X, ArrowUpRight, Github, Linkedin, Layers, BookOpen } from "lucide-react";
 
 const links = [
   { to: "/", label: "Overview" },
   { to: "/ventures", label: "Ventures" },
-  { to: "/projects", label: "Systems & Post-Mortems" },
-  { to: "/skills", label: "Stack & Testing" },
-  { to: "/blogs", label: "Blogs" },
+  { to: "/case-studies", label: "Case Studies" },
+  { to: "/skills", label: "Skills" },
+  { to: "/tools", label: "Tools" },
+  { to: "/blogs", label: "Articles" },
 ] as const;
 
 export function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!mobileMenuOpen) return;
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
@@ -37,7 +35,7 @@ export function Nav() {
       {/* Mobile Dark Backdrop Scrim */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/85 backdrop-blur-sm md:hidden animate-in fade-in duration-200"
+          className="fixed inset-0 z-40 bg-black/85 backdrop-blur-sm md:hidden"
           onClick={() => setMobileMenuOpen(false)}
           aria-hidden="true"
         />
@@ -97,14 +95,6 @@ export function Nav() {
               >
                 <Linkedin className="h-4 w-4" />
               </a>
-              <a
-                href="/Abdullah_Resume.pdf"
-                download="Abdullah_Al_Mamun_Resume.pdf"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-zinc-200 transition-colors hover:border-white/20 hover:bg-white/[0.08]"
-              >
-                <Download className="h-3.5 w-3.5 text-zinc-400" />
-                Resume
-              </a>
               <Link
                 to="/contact"
                 className="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-500 shadow-sm"
@@ -129,7 +119,7 @@ export function Nav() {
 
           {/* Mobile Dropdown Menu: 100% Opaque Solid Card for Total Contrast & Readability */}
           {mobileMenuOpen && (
-            <div className="relative z-50 mt-2 rounded-2xl border border-white/15 bg-[#0b0d12] p-3.5 sm:p-4 md:hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] ring-1 ring-white/10 animate-in fade-in slide-in-from-top-3 duration-200 max-h-[calc(100vh-90px)] overflow-y-auto">
+            <div className="relative z-50 mt-2 rounded-2xl border border-white/15 bg-[#0b0d12] p-3.5 sm:p-4 md:hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] ring-1 ring-white/10 max-h-[calc(100vh-90px)] overflow-y-auto">
               <ul className="space-y-1.5">
                 {links.map((l) => (
                   <li key={l.to}>
@@ -175,14 +165,6 @@ export function Nav() {
                     LinkedIn
                   </a>
                 </div>
-                <a
-                  href="/Abdullah_Resume.pdf"
-                  download="Abdullah_Al_Mamun_Resume.pdf"
-                  className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2.5 text-xs font-semibold text-zinc-200 hover:bg-white/[0.08] hover:text-white transition-colors"
-                >
-                  <Download className="h-4 w-4 text-zinc-400" />
-                  Download Resume PDF
-                </a>
                 <Link
                   to="/contact"
                   onClick={() => setMobileMenuOpen(false)}
@@ -247,8 +229,7 @@ export function Nav() {
 
                     {/* Online indicator dot */}
                     <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+                      <span className="rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
                     </span>
                   </div>
                   <span className="mt-1 text-[10px] font-semibold text-zinc-300 tracking-wider transition-colors group-hover:text-emerald-400">
@@ -265,7 +246,7 @@ export function Nav() {
                 className="flex flex-col items-center justify-center py-1 transition-colors text-center gap-1 group w-full"
               >
                 <BookOpen className="h-5 w-5 transition-transform group-hover:scale-110 group-active:scale-95" />
-                <span className="text-[11px] font-medium leading-none tracking-tight">Blogs</span>
+                <span className="text-[11px] font-medium leading-none tracking-tight">Articles</span>
               </Link>
             </div>
           </nav>

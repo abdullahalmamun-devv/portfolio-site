@@ -1,22 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Server,
-  Database,
-  Terminal,
-  CreditCard,
-  Layers,
-  Cpu,
-  CheckCircle2,
-  ShieldCheck,
-  Zap,
-  FlaskConical,
-  Activity,
-  Bot,
-  Lock,
-  LineChart,
-  ArrowRight,
-  ArrowUpRight,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "../components/SectionHeader";
 import { Reveal } from "../components/Reveal";
 
@@ -43,7 +26,11 @@ export const Route = createFileRoute("/skills")({
       { property: "og:image:alt", content: "Technical Stack & Capabilities — Abdullah Al Mamun" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Technical Stack & Capabilities — Abdullah Al Mamun" },
-      { name: "twitter:description", content: "A disciplined, battle-tested technology stack with automated testing, Linux hardening, and observability." },
+      {
+        name: "twitter:description",
+        content:
+          "A disciplined, battle-tested technology stack with automated testing, Linux hardening, and observability.",
+      },
       { name: "twitter:image", content: "https://iamabdullah.dev/og-image.png" },
     ],
     links: [{ rel: "canonical", href: "https://iamabdullah.dev/skills" }],
@@ -72,12 +59,11 @@ export const Route = createFileRoute("/skills")({
 const skillGroups = [
   {
     category: "Backend & Systems Engineering",
-    icon: Server,
-    description: "Building resilient microservices, idempotent handlers, and background workers.",
+    description: "Resilient microservices, idempotent transaction handlers, and background workers.",
     skills: [
       {
-        name: "Node.js & TypeScript",
-        role: "Primary runtime for asynchronous microservices, type-safe domain models & contract interfaces",
+        name: "Node.js, TypeScript & Python",
+        role: "Primary runtimes for asynchronous microservices, task daemons, type-safe domain models & contract interfaces",
       },
       {
         name: "Next.js 15 & 16 (App Router)",
@@ -96,15 +82,15 @@ const skillGroups = [
         role: "Cryptographic HMAC-SHA256 signature verification and background ledger reconciliation",
       },
       {
-        name: "DNS MX Routing & Custom Domains",
+        name: "DNS MX Routing & Domains",
         role: "Multi-domain email routing (smtp.catchmail.io MX) and programmatic DNS configuration",
       },
       {
-        name: "Vanilla JS / Zero-Runtime Bloat",
-        role: "High-performance <30KB web utilities (Vite 8) delivering instant cold loads without framework weight",
+        name: "Vanilla JS / Zero Bloat",
+        role: "High-performance <30KB web utilities (Vite 8) delivering instant cold loads without runtime weight",
       },
     ],
-    caseStudy: { to: "/projects", hash: "tempmail-open-source", label: "28KB Ingress Platform" },
+    caseStudy: { to: "/case-studies", hash: "tempmail-open-source", label: "28KB Ingress Platform" },
     fieldNote: {
       slug: "architecting-ultra-lightweight-disposable-email-platform-28kb",
       label: "28KB Email Engine",
@@ -112,31 +98,34 @@ const skillGroups = [
   },
   {
     category: "VPC Security, Firewalls & Payment Proxy",
-    icon: Lock,
-    description: "Air-gapped database environments, firewall rules, and hardened payment proxies.",
+    description: "Air-gapped database environments, strict firewall rules, and hardened payment proxies.",
     skills: [
       {
-        name: "Private VPC Database Isolation",
-        role: "MongoDB bound to non-public subnets with zero 0.0.0.0 exposure",
+        name: "Private VPC DB Isolation",
+        role: "MongoDB bound exclusively to non-public subnets with zero 0.0.0.0 exposure",
       },
       {
-        name: "UFW App IP Whitelisting",
-        role: "Firewall packet filtering allowing port 27017 access exclusively from app server static IP",
+        name: "UFW Static IP Whitelisting",
+        role: "Packet filtering allowing port 27017 ingress exclusively from app server static IP",
+      },
+      {
+        name: "Payment Gateways & Dual Rails",
+        role: "Production integrations for Stripe (Elements & Webhooks), SSLCommerz, EPS, UddoktaPay, bKash & Nagad",
       },
       {
         name: "Hardened Payment Proxy",
-        role: "Reverse proxy validating checkout requests & webhooks before internal database updates",
+        role: "Reverse proxy validating checkout requests & webhooks before internal database commits",
       },
       {
-        name: "CVE Remediation & Recovery",
-        role: "Zero-day RCE remediation (React2Shell CVE-2025-55182) without database loss",
+        name: "CVE Incident Remediation",
+        role: "Zero-day RCE remediation (React2Shell CVE-2025-55182) without database loss or downtime",
       },
       {
         name: "Docker Resource Capping",
         role: "Strict CPU/RAM container limits preventing rogue processes from freezing host servers",
       },
     ],
-    caseStudy: { to: "/projects", hash: "cve-react2shell-postmortem", label: "React2Shell Incident" },
+    caseStudy: { to: "/case-studies", hash: "cve-react2shell-postmortem", label: "React2Shell Incident" },
     fieldNote: {
       slug: "air-gapping-mongodb-production-ufw-payment-proxy",
       label: "Air-Gapping MongoDB",
@@ -144,9 +133,7 @@ const skillGroups = [
   },
   {
     category: "Marketing Engineering & Server-Side Tracking",
-    icon: LineChart,
-    description:
-      "Bypassing ad-blockers & iOS restrictions for 100% accurate conversion attribution.",
+    description: "Bypassing browser ad-blockers and iOS ATT restrictions for 100% conversion attribution.",
     skills: [
       {
         name: "Server-Side GTM (sGTM)",
@@ -154,55 +141,62 @@ const skillGroups = [
       },
       {
         name: "Meta Conversions API (CAPI)",
-        role: "Direct server event dispatch bypassing Safari ITP and browser ad-blockers",
+        role: "Direct server event dispatch bypassing Safari ITP and browser privacy extensions",
       },
       {
-        name: "Event Deduplication",
-        role: "Deterministic unique event_id generation matching browser pixel & server CAPI with 0 double-counts",
+        name: "Deterministic Event Dedup",
+        role: "Unique event_id generation matching browser pixel & server CAPI with 0 double-counts",
       },
       {
-        name: "Custom E-Commerce DataLayer",
+        name: "E-Commerce DataLayer",
         role: "Capturing view_item, add_to_cart, begin_checkout, and purchase events into GA4",
       },
       {
-        name: "Data Privacy & SHA-256 Hashing",
-        role: "Client-side normalization and SHA-256 cryptographic hashing of customer PII",
+        name: "PII Cryptographic Hashing",
+        role: "Client-side normalization and SHA-256 cryptographic hashing of customer data",
       },
     ],
-    caseStudy: { to: "/projects", hash: "server-side-meta-capi", label: "sGTM & Meta CAPI" },
+    caseStudy: { to: "/case-studies", hash: "server-side-meta-capi", label: "sGTM & Meta CAPI" },
     fieldNote: {
       slug: "engineering-server-side-meta-capi-sgtm-tracking",
       label: "CAPI Deduplication Guide",
     },
   },
   {
-    category: "AI & Enterprise Automation",
-    icon: Bot,
-    description: "Omnichannel bots, custom workflow microservices, and LLM integrations.",
+    category: "AI, Python & Enterprise Automation",
+    description: "Python automation daemons, Telegram bots, browser scraping, and self-hosted microservices.",
     skills: [
       {
-        name: "Proprietary Automation Engines",
-        role: "Custom Node.js/Prisma microservices bypassing high SaaS costs of Zapier/n8n cloud",
+        name: "Python Automation & Telegram Bots",
+        role: "Asynchronous Python engines (aiogram, Telethon), multi-account task bots & background daemons",
+      },
+      {
+        name: "Headless Browser Automation",
+        role: "Playwright, Selenium & anti-bot bypass pipelines for dynamic DOM extraction and automated workflows",
+      },
+      {
+        name: "Universal API Automation",
+        role: "Reverse-engineering private endpoints, OAuth/HMAC signing, and high-throughput async request workers",
+      },
+      {
+        name: "Proprietary Workflow Engines",
+        role: "Custom Python & Node.js/Prisma microservices eliminating recurring SaaS vendor tax (Zapier/n8n)",
       },
       {
         name: "Omnichannel Social Bots",
-        role: "Meta Graph API (FB Messenger, Instagram DM) and TikTok conversational assistants",
+        role: "Meta Graph API (FB Messenger, Instagram DM), Telegram, and TikTok automated conversational agents",
       },
       {
         name: "Self-Hosted n8n & Docker",
-        role: "Custom webhook pipelines, queue runners, and enterprise task automation",
+        role: "Dedicated webhook pipelines, queue runners, and private enterprise task automation",
       },
       {
-        name: "Gemini CLI & Structured LLMs",
-        role: "Deterministic JSON schema generation enforced via strict Zod validation",
-      },
-      {
-        name: "Custom Web Chatbots",
-        role: "Context-aware embedded assistants connected directly to client databases & CRMs",
+        name: "Structured LLM Orchestration",
+        role: "Deterministic JSON schema generation enforced via strict Zod & Pydantic validation",
       },
     ],
     caseStudy: {
-      to: "/projects",
+      to: "/case-studies",
       hash: "quickmation-automation-engine",
       label: "QuickMation Engine",
     },
@@ -212,8 +206,7 @@ const skillGroups = [
     },
   },
   {
-    category: "Databases, Caching & Cloud Storage",
-    icon: Database,
+    category: "Databases, Multi-Tier Caching & Cloud",
     description: "Sub-millisecond read paths, structured schema design, and secure asset vaults.",
     skills: [
       {
@@ -230,47 +223,46 @@ const skillGroups = [
       },
       {
         name: "AWS S3 & Cloudflare R2",
-        role: "Presigned URL generation (S3 presigner 3.10), asset anti-leech vaults & media CDNs",
+        role: "Presigned URL generation, anti-leech token vaults & global media distribution",
       },
       {
-        name: "Singleflight Request Coalescing",
-        role: "Eliminating cache stampedes during concurrent traffic bursts",
+        name: "Singleflight Coalescing",
+        role: "Eliminating cache stampedes and thundering herd problems during peak spikes",
       },
     ],
-    caseStudy: { to: "/projects", hash: "caching-fabric", label: "Redis Caching Fabric" },
+    caseStudy: { to: "/case-studies", hash: "caching-fabric", label: "Redis Caching Fabric" },
     fieldNote: {
       slug: "singleflight-redis-cache-stampede-prevention-nodejs",
       label: "Singleflight 22ms P99",
     },
   },
   {
-    category: "Automated Testing & CI/CD",
-    icon: FlaskConical,
-    description: "Ensuring zero regression, financial ledger correctness, and deployment safety.",
+    category: "Automated Testing & Reliability Harness",
+    description: "Financial ledger correctness, continuous integration gates, and zero-regression deployments.",
     skills: [
       {
         name: "Vitest & Jest",
-        role: "Automated unit test suites for pricing math, authentication & domain business logic",
+        role: "Automated unit test suites for pricing algorithms, auth guards & domain logic",
       },
       {
         name: "Supertest Integration Tests",
         role: "End-to-end HTTP integration tests for webhook ingestion & checkout APIs",
       },
       {
-        name: "GitHub Actions Pipelines",
-        role: "Automated CI workflows: linting, type-checking & test runners on every Pull Request",
+        name: "GitHub Actions CI/CD",
+        role: "Automated CI pipelines: linting, type-checking & test runners on every Pull Request",
       },
       {
-        name: "Docker Compose Test Runners",
-        role: "Spinning isolated Redis and Mongo instances in CI runners for realistic tests",
+        name: "Docker Test Containers",
+        role: "Spinning isolated Redis and Mongo instances in CI runners for deterministic tests",
       },
       {
         name: "Branch Protection & PR Gates",
-        role: "Enforcing test passes and peer review before production deployment",
+        role: "Strict status checks enforcing test passes before production deployment",
       },
     ],
     caseStudy: {
-      to: "/projects",
+      to: "/case-studies",
       hash: "monetrix-vpc-proxy",
       label: "Idempotent Payment Testing",
     },
@@ -279,98 +271,88 @@ const skillGroups = [
 
 function SkillsPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-6 sm:py-12">
+    <div className="mx-auto max-w-5xl px-4 sm:px-6 py-8 sm:py-16">
       <SectionHeader
-        eyebrow="The Arsenal"
-        title="Battle-Tested Technology Stack &amp; Capabilities"
-        description="Every tool in this list was selected because it delivers uptime, security, and measurable commercial speed. Backed by automated test suites and incident experience."
+        eyebrow="Technical Stack & Architecture"
+        title="Battle-Tested Engineering Capabilities"
+        description="Every tool and methodology in this matrix was selected for verified uptime, security, and measurable performance. Backed by automated test harnesses and live production experience."
       />
 
       {/* Grid of Skill Categories */}
-      <div className="mt-6 sm:mt-8 grid gap-4 sm:gap-5 lg:grid-cols-2">
-        {skillGroups.map((group) => {
-          const Icon = group.icon;
-          return (
-            <div
-              key={group.category}
-              className="rounded-xl border border-white/10 bg-[#111318] p-4 sm:p-6 shadow-lg flex flex-col justify-between"
-            >
+      <div className="mt-8 sm:mt-12 grid gap-6 sm:gap-8 lg:grid-cols-2">
+        {skillGroups.map((group) => (
+          <Reveal key={group.category}>
+            <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/70 p-6 sm:p-7 flex flex-col justify-between hover:border-white/15 transition-all shadow-xl h-full">
               <div>
-                <div className="flex items-center gap-3 pb-3.5 border-b border-white/[0.08]">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-blue-400">
-                    <Icon className="h-4.5 w-4.5" />
-                  </div>
-                  <div>
-                    <h2 className="text-base sm:text-lg font-bold text-white">{group.category}</h2>
-                    <p className="text-xs text-zinc-400">{group.description}</p>
-                  </div>
+                <div>
+                  <h2 className="text-lg font-bold tracking-tight text-white">{group.category}</h2>
+                  <p className="mt-1 text-xs text-zinc-400 leading-relaxed">{group.description}</p>
                 </div>
 
-                <div className="mt-4 space-y-2.5">
+                <div className="mt-5 divide-y divide-white/[0.06] border-y border-white/[0.06]">
                   {group.skills.map((skill) => (
                     <div
                       key={skill.name}
-                      className="rounded-lg border border-white/[0.05] bg-black/20 p-2.5 transition-colors hover:border-white/10"
+                      className="py-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 group"
                     >
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono text-xs font-semibold text-white">
-                          {skill.name}
-                        </span>
-                        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                      </div>
-                      <p className="mt-1 text-xs text-zinc-400 leading-normal">{skill.role}</p>
+                      <span className="font-mono text-xs font-semibold text-white shrink-0 group-hover:text-blue-300 transition-colors">
+                        {skill.name}
+                      </span>
+                      <span className="text-xs text-zinc-400 sm:text-right leading-relaxed sm:max-w-[280px]">
+                        {skill.role}
+                      </span>
                     </div>
                   ))}
                 </div>
-
-                {/* Contextual Case Study & Field Note Links */}
-                {(group.caseStudy || group.fieldNote) && (
-                  <div className="mt-4 pt-3 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-2">
-                    {group.caseStudy && (
-                      <Link
-                        to={group.caseStudy.to}
-                        hash={group.caseStudy.hash}
-                        className="inline-flex items-center gap-1 font-mono text-[11px] text-blue-400 hover:text-blue-300 transition-colors"
-                      >
-                        <span>Case Study: {group.caseStudy.label}</span>
-                        <ArrowUpRight className="h-3 w-3" />
-                      </Link>
-                    )}
-                    {group.fieldNote && (
-                      <Link
-                        to="/blogs/$slug"
-                        params={{ slug: group.fieldNote.slug }}
-                        className="inline-flex items-center gap-1 font-mono text-[11px] text-emerald-400 hover:text-emerald-300 transition-colors"
-                      >
-                        <span>Field Note: {group.fieldNote.label}</span>
-                        <ArrowRight className="h-3 w-3" />
-                      </Link>
-                    )}
-                  </div>
-                )}
               </div>
+
+              {/* Contextual Case Study & Field Note Links */}
+              {(group.caseStudy || group.fieldNote) && (
+                <div className="mt-5 pt-3.5 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-2">
+                  {group.caseStudy && (
+                    <Link
+                      to={group.caseStudy.to}
+                      hash={group.caseStudy.hash}
+                      className="inline-flex items-center gap-1 font-mono text-[11px] text-zinc-400 hover:text-white transition-colors"
+                    >
+                      <span>Case Study: {group.caseStudy.label}</span>
+                      <ArrowUpRight className="h-3 w-3" />
+                    </Link>
+                  )}
+                  {group.fieldNote && (
+                    <Link
+                      to="/blogs/$slug"
+                      params={{ slug: group.fieldNote.slug }}
+                      className="inline-flex items-center gap-1 font-mono text-[11px] text-blue-400 hover:text-blue-300 transition-colors"
+                    >
+                      <span>Field Note: {group.fieldNote.label}</span>
+                      <ArrowRight className="h-3 w-3" />
+                    </Link>
+                  )}
+                </div>
+              )}
             </div>
-          );
-        })}
+          </Reveal>
+        ))}
       </div>
 
-      {/* PRODUCTION ENGINEERING DISCIPLINE CHECKLIST */}
-      <Reveal className="mt-8 sm:mt-10">
-        <div className="rounded-xl border border-white/10 bg-[#0e1015] p-5 sm:p-7 shadow-lg">
+      {/* PRODUCTION ENGINEERING DISCIPLINE STANDARDS */}
+      <Reveal className="mt-12 sm:mt-16">
+        <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/70 p-6 sm:p-8 shadow-xl">
           <div className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-emerald-400">
               Standard Operating Procedure
             </span>
           </div>
-          <h3 className="mt-2 text-xl sm:text-2xl font-bold text-white">
+          <h3 className="mt-2 text-xl sm:text-2xl font-bold tracking-tight text-white">
             Production Quality Standards on Every Deployment
           </h3>
-          <p className="mt-1.5 text-sm text-zinc-400">
-            Before any service is labeled operational, it must pass these non-negotiable checks:
+          <p className="mt-1.5 text-xs sm:text-sm text-zinc-400">
+            Before any service is labeled operational, it must pass these non-negotiable architectural gates:
           </p>
 
-          <div className="mt-5 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 title: "Air-Gapped Private DB",
@@ -381,7 +363,7 @@ function SkillsPage() {
                 desc: "Client-side never communicates secrets; reverse proxy cryptographically signs and validates webhooks.",
               },
               {
-                title: "Server-Side Tracking (Meta CAPI)",
+                title: "Server-Side Tracking (CAPI)",
                 desc: "sGTM + Stape container dispatching server-to-server conversions with unique event_id deduplication.",
               },
               {
@@ -396,15 +378,13 @@ function SkillsPage() {
                 title: "Process Auto-Healing",
                 desc: "PM2 / systemd watchers restarting hung or memory-leaking processes in <1s.",
               },
-            ].map((check) => (
+            ].map((check, index) => (
               <div
                 key={check.title}
-                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3.5"
+                className="rounded-xl border border-white/[0.05] bg-black/40 p-4 transition-colors hover:border-white/10"
               >
-                <div className="flex items-center gap-2 text-xs font-bold text-zinc-200">
-                  <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                  {check.title}
-                </div>
+                <div className="font-mono text-[11px] text-zinc-500">0{index + 1}</div>
+                <div className="mt-1 text-sm font-semibold text-white">{check.title}</div>
                 <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">{check.desc}</p>
               </div>
             ))}

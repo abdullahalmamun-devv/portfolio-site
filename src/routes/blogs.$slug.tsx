@@ -2,25 +2,11 @@ import { useState, useEffect } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { postImagePath, postOgImagePath, postLastmod, absUrl } from "../lib/seo";
 import {
-  Calendar,
-  Clock,
   ArrowLeft,
   ArrowRight,
-  Share2,
   Copy,
   Check,
-  Code2,
   ExternalLink,
-  ShieldAlert,
-  Flame,
-  CheckCircle2,
-  Sparkles,
-  BookOpen,
-  Send,
-  Linkedin,
-  Github,
-  Mail,
-  HelpCircle,
 } from "lucide-react";
 import { toast } from "sonner";
 import { blogPosts, BlogPost } from "../data/blogPosts";
@@ -92,6 +78,8 @@ export const Route = createFileRoute("/blogs/$slug")({
       meta: [
         { title: `${post.title} — Abdullah Al Mamun` },
         { name: "description", content: post.seo.metaDescription },
+        { name: "keywords", content: post.seo.keywords.join(", ") },
+        { name: "author", content: "Abdullah Al Mamun" },
         { property: "og:title", content: post.title },
         { property: "og:description", content: post.subtitle },
         { property: "og:type", content: "article" },
@@ -151,27 +139,31 @@ export const Route = createFileRoute("/blogs/$slug")({
 const PROJECT_CTA: Record<string, { anchor: string; label: string }> = {
   "surviving-react2shell-cve-2025-55182-vps-recovery": {
     anchor: "cve-react2shell-postmortem",
-    label: "React2Shell incident case study",
+    label: "React2Shell Incident Post-Mortem",
   },
   "air-gapping-mongodb-production-ufw-payment-proxy": {
     anchor: "monetrix-vpc-proxy",
-    label: "MongoDB isolation & payment proxy case study",
+    label: "Air-Gapped MongoDB & Payment Proxy Case Study",
   },
   "engineering-server-side-meta-capi-sgtm-tracking": {
     anchor: "server-side-meta-capi",
-    label: "server-side tracking case study",
+    label: "Server-Side Meta CAPI Architecture",
   },
   "singleflight-redis-cache-stampede-prevention-nodejs": {
     anchor: "caching-fabric",
-    label: "Redis caching fabric case study",
+    label: "Redis Caching & Singleflight Case Study",
   },
   "building-proprietary-ai-automation-engines-vs-saas-tax": {
     anchor: "quickmation-automation-engine",
-    label: "AI automation engine case study",
+    label: "Proprietary Automation Engine Case Study",
   },
   "architecting-ultra-lightweight-disposable-email-platform-28kb": {
     anchor: "tempmail-open-source",
-    label: "TempMail architecture case study",
+    label: "TempMail Ingress Architecture Case Study",
+  },
+  "stop-sharing-env-files-inboxes-envlink-guide": {
+    anchor: "monetrix-vpc-proxy",
+    label: "Production Ingress & Security Case Study",
   },
 };
 
@@ -182,6 +174,7 @@ function BlogPostDetail() {
   const [copiedCodeIdx, setCopiedCodeIdx] = useState<number | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -193,9 +186,31 @@ function BlogPostDetail() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // IntersectionObserver for active Table of Contents section highlighting
+  useEffect(() => {
+    if (!post) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-80px 0% -60% 0%" }
+    );
+
+    post.sections.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [post]);
 
   if (!post) {
     return (
@@ -215,25 +230,15 @@ function BlogPostDetail() {
   const copyCode = (idx: number, code: string) => {
     navigator.clipboard.writeText(code);
     setCopiedCodeIdx(idx);
+    toast.success("Code snippet copied");
     setTimeout(() => setCopiedCodeIdx(null), 2000);
   };
 
   const copyArticleLink = () => {
     navigator.clipboard.writeText(window.location.href);
     setCopiedLink(true);
-    toast.success("Article link copied to clipboard");
+    toast.success("Article link copied");
     setTimeout(() => setCopiedLink(false), 2000);
-  };
-
-  const shareOnTwitter = () => {
-    const text = encodeURIComponent(`${post.title} by @abdullahalmamun_dev`);
-    const url = encodeURIComponent(window.location.href);
-    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, "_blank");
-  };
-
-  const shareOnLinkedIn = () => {
-    const url = encodeURIComponent(window.location.href);
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, "_blank");
   };
 
   const currentIndex = blogPosts.findIndex((p) => p.slug === slug);
@@ -248,173 +253,87 @@ function BlogPostDetail() {
       <Toaster />
 
       {/* Reading Progress Indicator */}
-      <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-white/[0.05]">
+      <div className="fixed top-0 left-0 right-0 z-50 h-0.5 bg-white/[0.04]">
         <div
-          className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 transition-all duration-150"
+          className="h-full bg-blue-500 transition-all duration-150"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
 
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-12 pb-24 sm:pb-12">
-        {/* Back Link & Breadcrumb */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-5 sm:pb-6 border-b border-white/[0.08]">
+      <article className="mx-auto max-w-5xl px-4 sm:px-6 py-8 sm:py-16">
+        {/* Navigation Breadcrumb Bar */}
+        <div>
           <Link
             to="/blogs"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-500 hover:text-white transition-colors"
           >
-            <ArrowLeft className="h-3.5 w-3.5" /> Back to all articles
+            <ArrowLeft className="h-3 w-3" /> Back to Field Notes
           </Link>
-
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <button
-              type="button"
-              onClick={copyArticleLink}
-              className="inline-flex items-center gap-1 rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-mono text-zinc-300 hover:bg-white/10"
-            >
-              {copiedLink ? (
-                <Check className="h-3 w-3 text-emerald-400" />
-              ) : (
-                <Copy className="h-3 w-3" />
-              )}
-              {copiedLink ? "Link Copied" : "Copy Link"}
-            </button>
-            <button
-              type="button"
-              onClick={shareOnTwitter}
-              aria-label="Share on X"
-              className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-white text-xs font-bold"
-            >
-              𝕏
-            </button>
-            <button
-              type="button"
-              onClick={shareOnLinkedIn}
-              aria-label="Share on LinkedIn"
-              className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10 hover:text-blue-400"
-            >
-              <Linkedin className="h-3.5 w-3.5" />
-            </button>
-          </div>
         </div>
 
         {/* Article Header */}
-        <header className="mt-6 sm:mt-8">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-2.5 py-0.5 font-mono text-[10px] sm:text-[11px] font-semibold text-blue-400 uppercase tracking-wider">
-              {post.categoryLabel}
-            </span>
-            {post.featured && (
-              <span className="rounded-full border border-red-500/30 bg-red-500/10 px-2.5 py-0.5 font-mono text-[10px] sm:text-[11px] font-semibold text-red-400">
-                FEATURED POST-MORTEM
-              </span>
-            )}
-            <span className="text-zinc-600 hidden sm:inline">•</span>
-            <span className="flex items-center gap-1 font-mono text-[11px] sm:text-xs text-zinc-400">
-              <Calendar className="h-3.5 w-3.5" /> {post.date}
-            </span>
-            <span className="text-zinc-600 hidden sm:inline">•</span>
-            <span className="flex items-center gap-1 font-mono text-[11px] sm:text-xs text-zinc-400">
-              <Clock className="h-3.5 w-3.5" /> {post.readTime}
-            </span>
+        <header className="mt-8 space-y-4 pb-8 border-b border-white/[0.08]">
+          <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-zinc-500">
+            <span className="text-blue-400 font-medium">{post.categoryLabel}</span>
+            <span>•</span>
+            <span>{post.date}</span>
+            <span>•</span>
+            <span>{post.readTime}</span>
           </div>
 
-          <h1 className="mt-3 sm:mt-4 text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight sm:leading-[1.15] break-words">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight sm:leading-[1.15]">
             {post.title}
           </h1>
 
-          <p className="mt-2.5 sm:mt-3 text-sm sm:text-lg text-zinc-300 leading-relaxed max-w-3xl">
+          <p className="text-base sm:text-lg text-zinc-400 leading-relaxed font-normal max-w-3xl">
             {post.subtitle}
           </p>
 
-          {/* Article Header Image (in-article visual + image SEO) */}
-          <figure className="mt-5 sm:mt-6">
-            <img
-              src={postImagePath(post.slug)}
-              alt={post.imageAlt}
-              width={1200}
-              height={675}
-              loading="eager"
-              className="w-full rounded-xl border border-white/[0.08] bg-[#0c0e14]"
-            />
-          </figure>
-
-          {/* Author Byline */}
-          <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row sm:items-center justify-between border-y border-white/[0.08] py-3.5 sm:py-4 gap-3">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl border border-blue-500/30 bg-blue-500/10 font-bold text-white font-display text-sm sm:text-base">
-                A
-              </div>
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  <span className="text-xs sm:text-sm font-semibold text-white truncate">
-                    Abdullah Al Mamun
-                  </span>
-                  <span className="rounded bg-emerald-500/10 border border-emerald-500/30 px-1.5 py-0.5 font-mono text-[9px] sm:text-[10px] text-emerald-400">
-                    AUTHOR &amp; OPERATOR
-                  </span>
-                </div>
-                <p className="text-[11px] sm:text-xs text-zinc-400 truncate">
-                  Founder &amp; Systems Architect (SubsDrop, QuickMation, Pro Trainer IT, MoneTrix)
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 self-start sm:self-auto">
-              <a
-                href="https://github.com/abdullahalmamun-devv"
-                target="_blank"
-                rel="noreferrer"
-                className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-300 hover:text-white"
-                aria-label="Author GitHub"
-              >
-                <Github className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/abdullah-al-mamun-b07295329/"
-                target="_blank"
-                rel="noreferrer"
-                className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-300 hover:text-blue-400"
-                aria-label="Author LinkedIn"
-              >
-                <Linkedin className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              </a>
-            </div>
+          <div className="pt-2 font-mono text-xs text-zinc-400">
+            By <span className="text-zinc-200">Abdullah Al Mamun</span> • Systems Architect &amp; Founder
           </div>
         </header>
 
-        {/* Content Layout with Sidebar TOC */}
-        <div className="mt-6 sm:mt-8 grid gap-8 lg:gap-10 lg:grid-cols-12 min-w-0">
+        {/* Hero Figure */}
+        <figure className="mt-8">
+          <img
+            src={postImagePath(post.slug)}
+            alt={post.imageAlt}
+            width={1200}
+            height={675}
+            loading="eager"
+            className="w-full rounded-xl border border-white/[0.08] bg-[#0c0e14] object-cover"
+          />
+        </figure>
+
+        {/* 2-Column Content Layout with Sticky Sidebar TOC */}
+        <div className="mt-10 sm:mt-14 grid gap-10 lg:grid-cols-12 min-w-0">
           {/* Main Article Content */}
-          <main className="lg:col-span-8 space-y-6 sm:space-y-8 min-w-0">
-            {/* Executive Summary Card */}
-            <div className="rounded-xl border border-white/10 bg-black/40 p-4 sm:p-5">
-              <h3 className="font-mono text-xs uppercase tracking-wider text-blue-400 font-semibold flex items-center gap-2">
-                <BookOpen className="h-4 w-4" /> Executive Summary &amp; Scope
-              </h3>
-              <p className="mt-2 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+          <div className="lg:col-span-8 space-y-10 min-w-0">
+            {/* Executive Abstract (Clean Blockquote Lead) */}
+            <div className="border-l-2 border-zinc-700 pl-4 sm:pl-5 py-1">
+              <p className="text-[15px] sm:text-[17px] text-zinc-200 leading-[1.8] font-normal italic">
                 {post.summary}
               </p>
             </div>
 
             {/* Mobile Table of Contents Accordion */}
-            <details className="lg:hidden rounded-xl border border-white/10 bg-[#111318] p-3.5 group">
-              <summary className="font-mono text-xs uppercase tracking-wider text-zinc-300 font-semibold cursor-pointer list-none flex items-center justify-between">
-                <span className="flex items-center gap-2">
-                  <BookOpen className="h-3.5 w-3.5 text-blue-400" />
-                  Table of Contents ({post.toc.length} sections)
-                </span>
+            <details className="lg:hidden rounded-xl border border-white/[0.08] bg-[#0c0e14] p-4 group">
+              <summary className="font-mono text-xs uppercase tracking-wider text-zinc-400 font-semibold cursor-pointer list-none flex items-center justify-between">
+                <span>Table of Contents ({post.toc.length} sections)</span>
                 <span className="text-zinc-500 text-[10px] group-open:rotate-180 transition-transform">
                   ▼
                 </span>
               </summary>
-              <nav className="mt-3 space-y-1.5 border-t border-white/[0.06] pt-3">
-                {post.toc.map((item) => (
+              <nav className="mt-3 space-y-2 border-t border-white/[0.06] pt-3">
+                {post.toc.map((item, idx) => (
                   <a
                     key={item.id}
                     href={`#${item.id}`}
-                    className="block text-xs text-zinc-400 hover:text-blue-400 py-1 transition-colors leading-snug"
+                    className="block font-mono text-xs text-zinc-400 hover:text-white transition-colors leading-snug"
                   >
-                    {item.title}
+                    <span className="text-zinc-600 mr-2">0{idx + 1}.</span>
+                    {item.title.replace(/^[0-9]+\.\s*/, "")}
                   </a>
                 ))}
               </nav>
@@ -425,156 +344,170 @@ function BlogPostDetail() {
               <section
                 key={section.id}
                 id={section.id}
-                className="scroll-mt-24 space-y-3.5 sm:space-y-4"
+                className="scroll-mt-28 space-y-5"
               >
-                <h2 className="text-lg sm:text-2xl font-bold text-white tracking-tight border-b border-white/[0.06] pb-2">
+                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white pt-2">
                   {section.title}
                 </h2>
 
-                {section.paragraphs.map((p, pIdx) => (
-                  <p key={pIdx} className="text-xs sm:text-base text-zinc-300 leading-relaxed">
-                    {p}
-                  </p>
-                ))}
+                <div className="space-y-4">
+                  {section.paragraphs.map((p, pIdx) => (
+                    <p
+                      key={pIdx}
+                      className="text-[15px] sm:text-[16px] text-zinc-300 leading-[1.8] font-normal"
+                    >
+                      {p}
+                    </p>
+                  ))}
+                </div>
 
+                {/* Clean Architectural Alert Note */}
                 {section.alert && (
-                  <div
-                    className={`rounded-xl border p-3.5 sm:p-4 ${
-                      section.alert.type === "security"
-                        ? "border-amber-500/40 bg-amber-500/[0.05] text-amber-200"
-                        : "border-blue-500/40 bg-blue-500/[0.05] text-blue-200"
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider font-mono">
-                      {section.alert.type === "security" ? (
-                        <ShieldAlert className="h-4 w-4 text-amber-400" />
-                      ) : (
-                        <Sparkles className="h-4 w-4 text-blue-400" />
-                      )}
+                  <div className="my-6 border-l-2 border-blue-500/60 pl-4 py-1.5 space-y-1 bg-white/[0.01] rounded-r-lg">
+                    <div className="font-mono text-xs font-semibold text-blue-400 uppercase tracking-wider">
                       {section.alert.title}
                     </div>
-                    <p className="mt-1.5 text-xs text-zinc-300 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                       {section.alert.content}
                     </p>
                   </div>
                 )}
 
+                {/* Clean Code Block */}
                 {section.codeBlock && (
-                  <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#090b10] max-w-full min-w-0">
-                    <div className="flex items-center justify-between border-b border-white/[0.08] bg-black/50 px-3 sm:px-4 py-2 text-xs">
-                      <div className="flex items-center gap-2 min-w-0">
-                        <Code2 className="h-3.5 w-3.5 text-blue-400 shrink-0" />
-                        <span className="font-mono text-zinc-400 text-[11px] truncate">
-                          {section.codeBlock.filename || `${section.codeBlock.language} excerpt`}
-                        </span>
-                      </div>
+                  <div className="my-6 rounded-xl border border-white/[0.08] bg-[#07090e] overflow-hidden max-w-full min-w-0">
+                    <div className="flex items-center justify-between border-b border-white/[0.06] bg-black/40 px-4 py-2">
+                      <span className="font-mono text-xs text-zinc-400">
+                        {section.codeBlock.filename || `${section.codeBlock.language} configuration`}
+                      </span>
                       <button
                         type="button"
                         onClick={() => copyCode(idx, section.codeBlock!.code)}
-                        className="flex items-center gap-1 font-mono text-[11px] text-zinc-400 hover:text-white transition-colors shrink-0 ml-2"
+                        className="font-mono text-[11px] text-zinc-400 hover:text-white transition-colors"
                       >
                         {copiedCodeIdx === idx ? (
-                          <>
-                            <Check className="h-3 w-3 text-emerald-400" />
-                            <span className="text-emerald-400">Copied</span>
-                          </>
+                          <span className="text-emerald-400 font-semibold">Copied</span>
                         ) : (
-                          <>
-                            <Copy className="h-3 w-3" />
-                            <span>Copy Snippet</span>
-                          </>
+                          <span>Copy</span>
                         )}
                       </button>
                     </div>
-                    <pre className="overflow-x-auto p-3 sm:p-4 text-[11px] sm:text-xs font-mono text-zinc-300 leading-relaxed max-w-full">
+                    <pre className="overflow-x-auto p-4 sm:p-5 text-[12px] sm:text-[13px] font-mono text-zinc-300 leading-relaxed max-w-full">
                       <code>{section.codeBlock.code}</code>
                     </pre>
                   </div>
                 )}
 
+                {/* Resource Links / Action Buttons */}
+                {section.links && section.links.length > 0 && (
+                  <div className="my-6 grid gap-2.5 sm:grid-cols-2">
+                    {section.links.map((link, lIdx) => (
+                      <a
+                        key={lIdx}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex flex-col justify-between p-3.5 rounded-xl border border-white/[0.08] bg-[#0c0e14] hover:border-white/20 transition-all text-left"
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="font-mono text-xs font-semibold text-white group-hover:text-blue-400 transition-colors">
+                            {link.label}
+                          </span>
+                          <ExternalLink className="h-3.5 w-3.5 text-zinc-500 group-hover:text-blue-400 transition-colors shrink-0" />
+                        </div>
+                        {link.description && (
+                          <p className="text-[11px] text-zinc-400 mt-1 line-clamp-1 font-mono">
+                            {link.description}
+                          </p>
+                        )}
+                      </a>
+                    ))}
+                  </div>
+                )}
+
+                {/* Clean Key Takeaway */}
                 {section.keyTakeaway && (
-                  <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/[0.04] p-3 sm:p-3.5 text-xs text-emerald-300 leading-relaxed">
-                    <strong className="text-emerald-200">Key Engineering Takeaway:</strong>{" "}
-                    {section.keyTakeaway}
+                  <div className="my-6 border-l-2 border-emerald-500/60 pl-4 py-1.5 space-y-1 bg-white/[0.01] rounded-r-lg">
+                    <div className="font-mono text-xs font-semibold text-emerald-400 uppercase tracking-wider">
+                      Key Takeaway
+                    </div>
+                    <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                      {section.keyTakeaway}
+                    </p>
                   </div>
                 )}
               </section>
             ))}
 
-            {/* FAQ section — visible content + schema (PAA eligibility) */}
-            {post.faq && post.faq.length > 0 && (
-              <section className="space-y-4 pt-2">
-                <h2 className="text-lg sm:text-xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
-                  <HelpCircle className="h-5 w-5 text-blue-400" />
-                  Frequently Asked Questions
-                </h2>
-                <div className="space-y-3">
-                  {post.faq.map((f, fIdx) => (
-                    <div
-                      key={fIdx}
-                      className="rounded-lg border border-white/[0.08] bg-black/30 p-3.5 sm:p-4"
-                    >
-                      <h3 className="text-sm sm:text-base font-semibold text-white">
-                        {f.question}
-                      </h3>
-                      <p className="mt-1.5 text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                        {f.answer}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* Contextual CTA: blog → case study (internal relevance transfer) */}
+            {/* Contextual Case Study Link */}
             {PROJECT_CTA[post.slug] && (
-              <div className="rounded-xl border border-blue-500/25 bg-gradient-to-r from-blue-950/25 via-[#0a0d14] to-black/50 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="mt-8 rounded-xl border border-white/[0.08] bg-[#0c0e14] p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <span className="font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-blue-400">
-                    Need this built or fixed in production?
-                  </span>
-                  <p className="mt-1 text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                    This article mirrors real work shipped for a live platform — see the{" "}
+                  <div className="font-mono text-xs text-blue-400 font-semibold uppercase tracking-wider">
+                    Production Implementation
+                  </div>
+                  <p className="text-xs sm:text-sm text-zinc-300 mt-1 leading-relaxed">
+                    Review the verified telemetry in the{" "}
                     <Link
-                      to="/projects"
+                      to="/case-studies"
                       hash={PROJECT_CTA[post.slug].anchor}
-                      className="text-blue-400 hover:underline font-medium"
+                      className="text-white hover:text-blue-400 underline underline-offset-4 font-medium"
                     >
                       {PROJECT_CTA[post.slug].label}
                     </Link>
                     .
                   </p>
                 </div>
-                <Link
-                  to="/contact"
-                  className="shrink-0 inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-500 transition-colors"
-                >
-                  Discuss a Project <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
               </div>
             )}
 
-            {/* Related Field Notes (same-cluster internal linking) */}
+            {/* Frequently Asked Questions */}
+            {post.faq && post.faq.length > 0 && (
+              <section className="pt-8 border-t border-white/[0.08] space-y-6">
+                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                  Frequently Asked Questions
+                </h2>
+                <dl className="space-y-6">
+                  {post.faq.map((f, fIdx) => (
+                    <div key={fIdx} className="space-y-1.5">
+                      <dt className="text-sm sm:text-base font-semibold text-white">
+                        {f.question}
+                      </dt>
+                      <dd className="text-sm text-zinc-400 leading-relaxed">
+                        {f.answer}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
+            )}
+
+            {/* Related Field Notes */}
             {relatedPosts.length > 0 && (
-              <div className="mt-2">
-                <h3 className="font-mono text-xs uppercase tracking-wider text-zinc-300 font-semibold flex items-center gap-2 pb-3 border-b border-white/[0.08]">
-                  <BookOpen className="h-4 w-4 text-blue-400" /> Related Field Notes
+              <div className="pt-8 border-t border-white/[0.08]">
+                <h3 className="font-mono text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-4">
+                  Related Field Notes
                 </h3>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div className="grid gap-4 sm:grid-cols-2">
                   {relatedPosts.map((rp) => (
                     <Link
                       key={rp.slug}
                       to="/blogs/$slug"
                       params={{ slug: rp.slug }}
-                      className="group rounded-xl border border-white/[0.08] bg-black/30 p-4 transition-all hover:border-blue-500/40 hover:bg-[#0f121a]"
+                      className="group rounded-xl border border-white/[0.08] bg-[#0c0e14] p-5 transition-all hover:border-white/20 flex flex-col justify-between"
                     >
-                      <span className="font-mono text-[10px] text-blue-400 uppercase tracking-wider">
-                        {rp.categoryLabel}
-                      </span>
-                      <div className="mt-1.5 text-sm font-bold text-white group-hover:text-blue-300 transition-colors leading-snug">
-                        {rp.title}
+                      <div>
+                        <span className="font-mono text-[10px] text-blue-400 uppercase tracking-wider">
+                          {rp.categoryLabel}
+                        </span>
+                        <div className="mt-1.5 text-sm font-semibold text-white group-hover:text-blue-400 transition-colors leading-snug">
+                          {rp.title}
+                        </div>
+                        <p className="mt-1.5 text-xs text-zinc-400 line-clamp-2 leading-relaxed">
+                          {rp.subtitle}
+                        </p>
                       </div>
-                      <span className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-blue-400">
+                      <span className="mt-3 inline-flex items-center gap-1 font-mono text-xs text-zinc-400 group-hover:text-blue-400 transition-colors">
                         Read Field Note <ArrowRight className="h-3 w-3" />
                       </span>
                     </Link>
@@ -584,13 +517,13 @@ function BlogPostDetail() {
             )}
 
             {/* Tags footer */}
-            <div className="mt-8 pt-6 border-t border-white/[0.08]">
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span className="font-mono text-xs text-zinc-400 mr-2">Filed under:</span>
+            <div className="pt-6 border-t border-white/[0.08]">
+              <div className="flex flex-wrap items-center gap-1.5 font-mono text-xs text-zinc-500">
+                <span className="mr-1">Tags:</span>
                 {post.tags.map((t) => (
                   <span
                     key={t}
-                    className="rounded-md border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 font-mono text-xs text-zinc-300"
+                    className="rounded border border-white/[0.06] bg-white/[0.02] px-2 py-0.5 text-zinc-400"
                   >
                     #{t}
                   </span>
@@ -598,50 +531,34 @@ function BlogPostDetail() {
               </div>
             </div>
 
-            {/* Share & Discussion Box */}
-            <div className="rounded-xl border border-white/10 bg-[#111318] p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            {/* Author Footer Sign-off */}
+            <footer className="pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h4 className="text-sm font-bold text-white">Share or Discuss this Field Note</h4>
+                <div className="text-sm font-semibold text-white">Abdullah Al Mamun</div>
                 <p className="text-xs text-zinc-400 mt-0.5">
-                  Spread high-integrity engineering blueprints with other systems builders.
+                  Systems Architect &amp; Founder of SubsDrop, QuickMation, and MoneTrix.
                 </p>
               </div>
-              <div className="flex flex-wrap items-center gap-2">
-                <button
-                  type="button"
-                  onClick={shareOnTwitter}
-                  className="flex-1 sm:flex-none text-center rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white hover:bg-white/10"
-                >
-                  Share on 𝕏
-                </button>
-                <button
-                  type="button"
-                  onClick={shareOnLinkedIn}
-                  className="flex-1 sm:flex-none text-center rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white hover:bg-white/10"
-                >
-                  LinkedIn
-                </button>
-                <Link
-                  to="/contact"
-                  className="w-full sm:w-auto text-center rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-blue-500"
-                >
-                  Reach Out
-                </Link>
-              </div>
-            </div>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors self-start sm:self-auto"
+              >
+                Discuss Systems <ArrowRight className="h-3 w-3" />
+              </Link>
+            </footer>
 
             {/* Prev & Next Post Navigation */}
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 pt-6 border-t border-white/[0.08]">
+            <div className="grid gap-4 sm:grid-cols-2 pt-6 border-t border-white/[0.08]">
               {prevPost ? (
                 <Link
                   to="/blogs/$slug"
                   params={{ slug: prevPost.slug }}
-                  className="rounded-xl border border-white/[0.08] bg-black/30 p-3.5 sm:p-4 transition-all hover:border-white/20 flex flex-col justify-between"
+                  className="rounded-xl border border-white/[0.08] bg-[#0c0e14] p-4 transition-all hover:border-white/20 flex flex-col justify-between group"
                 >
-                  <span className="font-mono text-[10px] text-zinc-400 uppercase tracking-wider flex items-center gap-1">
-                    <ArrowLeft className="h-3 w-3" /> Previous Field Note
+                  <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-wider flex items-center gap-1">
+                    <ArrowLeft className="h-3 w-3" /> Previous Note
                   </span>
-                  <div className="mt-2 text-xs font-bold text-white hover:text-blue-300">
+                  <div className="mt-2 text-xs font-medium text-white group-hover:text-blue-400 transition-colors">
                     {prevPost.title}
                   </div>
                 </Link>
@@ -653,58 +570,66 @@ function BlogPostDetail() {
                 <Link
                   to="/blogs/$slug"
                   params={{ slug: nextPost.slug }}
-                  className="rounded-xl border border-white/[0.08] bg-black/30 p-3.5 sm:p-4 transition-all hover:border-white/20 flex flex-col justify-between text-left sm:text-right"
+                  className="rounded-xl border border-white/[0.08] bg-[#0c0e14] p-4 transition-all hover:border-white/20 flex flex-col justify-between text-left sm:text-right group"
                 >
-                  <span className="font-mono text-[10px] text-zinc-400 uppercase tracking-wider flex items-center sm:justify-end gap-1">
-                    Next Field Note <ArrowRight className="h-3 w-3" />
+                  <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-wider flex items-center sm:justify-end gap-1">
+                    Next Note <ArrowRight className="h-3 w-3" />
                   </span>
-                  <div className="mt-2 text-xs font-bold text-white hover:text-blue-300">
+                  <div className="mt-2 text-xs font-medium text-white group-hover:text-blue-400 transition-colors">
                     {nextPost.title}
                   </div>
                 </Link>
               )}
             </div>
-          </main>
+          </div>
 
-          {/* Sticky Sidebar: Table of Contents & Author Profile */}
-          <aside className="lg:col-span-4 space-y-6">
-            {/* Table of Contents */}
-            <div className="sticky top-24 rounded-xl border border-white/10 bg-[#111318] p-5 shadow-lg">
-              <h3 className="font-mono text-xs uppercase tracking-wider text-zinc-300 font-semibold pb-3 border-b border-white/[0.08]">
-                Table of Contents
-              </h3>
-              <nav className="mt-3 space-y-1.5">
-                {post.toc.map((item) => (
-                  <a
-                    key={item.id}
-                    href={`#${item.id}`}
-                    className="block text-xs text-zinc-400 hover:text-blue-400 transition-colors py-1 leading-snug"
-                  >
-                    {item.title}
-                  </a>
-                ))}
-              </nav>
-
-              {/* Author Box in Sidebar */}
-              <div className="mt-6 pt-5 border-t border-white/[0.08]">
-                <div className="text-xs font-bold text-white">Written by Abdullah Al Mamun</div>
-                <p className="mt-1 text-[11px] text-zinc-400 leading-relaxed">
-                  Systems Architect &amp; CEO of SubsDrop. Specializing in high-throughput backend
-                  infrastructure, dual-rail payments, and Linux incident response.
-                </p>
-                <div className="mt-3 flex items-center gap-2">
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-500"
-                  >
-                    Contact Author <ArrowRight className="h-3 w-3" />
-                  </Link>
+          {/* Minimalist Floating Table of Contents Sidebar */}
+          <aside className="hidden lg:block lg:col-span-4 relative">
+            <div className="sticky top-28 z-20 space-y-6">
+              <div>
+                <div className="flex items-center justify-between pb-2.5">
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-zinc-500 font-semibold">
+                    On this page
+                  </span>
+                  <span className="font-mono text-[10px] text-zinc-500">
+                    {Math.round(scrollProgress)}%
+                  </span>
                 </div>
+                <nav className="mt-2 space-y-1.5 border-l border-white/[0.08]">
+                  {post.toc.map((item) => {
+                    const isActive = activeId === item.id;
+                    return (
+                      <a
+                        key={item.id}
+                        href={`#${item.id}`}
+                        className={`block text-xs font-mono transition-colors pl-3.5 -ml-px border-l py-0.5 leading-snug ${
+                          isActive
+                            ? "border-blue-400 text-blue-400 font-semibold"
+                            : "border-transparent text-zinc-400 hover:text-zinc-200"
+                        }`}
+                      >
+                        {item.title.replace(/^[0-9]+\.\s*/, "")}
+                      </a>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* Share & Actions */}
+              <div className="pt-4 border-t border-white/[0.06]">
+                <button
+                  type="button"
+                  onClick={copyArticleLink}
+                  className="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-400 hover:text-white transition-colors"
+                >
+                  {copiedLink ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+                  <span>{copiedLink ? "Link Copied" : "Copy Article Link"}</span>
+                </button>
               </div>
             </div>
           </aside>
         </div>
-      </div>
+      </article>
     </>
   );
 }

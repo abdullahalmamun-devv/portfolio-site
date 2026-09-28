@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Github, Linkedin, Mail, Download, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowUpRight } from "lucide-react";
 
 export function Footer() {
   return (
@@ -42,13 +42,18 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/projects" className="hover:text-white transition-colors">
+                  <Link to="/case-studies" className="hover:text-white transition-colors">
                     Incident Post-Mortems &amp; Code
                   </Link>
                 </li>
                 <li>
                   <Link to="/skills" className="hover:text-white transition-colors">
                     Stack &amp; Linux Hardening
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/tools" className="hover:text-white transition-colors">
+                    Developer Tools &amp; Stack
                   </Link>
                 </li>
                 <li>
@@ -127,7 +132,7 @@ export function Footer() {
                     temp.subsdrop.com <ArrowUpRight className="h-3 w-3 text-zinc-500" />
                   </a>
                   <span className="block text-[11px] text-zinc-400">
-                    Open-Source Disposable Email
+                    Disposable Email Utility
                   </span>
                 </li>
               </ul>
@@ -164,14 +169,6 @@ export function Footer() {
                 className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-400 transition-colors hover:text-white hover:border-white/20"
               >
                 <Mail className="h-4 w-4" />
-              </a>
-              <a
-                href="/Abdullah_Resume.pdf"
-                download="Abdullah_Al_Mamun_Resume.pdf"
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-zinc-300 transition-colors hover:text-white hover:bg-white/10"
-              >
-                <Download className="h-3 w-3" />
-                Resume PDF
               </a>
             </div>
           </div>

@@ -13,6 +13,11 @@ export interface BlogSection {
     code: string;
   };
   keyTakeaway?: string;
+  links?: {
+    label: string;
+    url: string;
+    description?: string;
+  }[];
 }
 
 export interface BlogPost {
@@ -47,6 +52,197 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "stop-sharing-env-files-inboxes-envlink-guide",
+    slug: "stop-sharing-env-files-inboxes-envlink-guide",
+    title:
+      "Stop Sharing .env Files via Inboxes: How to Securely Share Environment Secrets with Envlink",
+    subtitle:
+      "Sending production secrets through Slack, WhatsApp, or Telegram is a critical security vulnerability. Here is how EnvLink encrypts and synchronizes environment variables in two commands.",
+    date: "October 12, 2025",
+    isoDate: "2025-10-12T10:00:00Z",
+    readTime: "5 min read",
+    category: "security",
+    categoryLabel: "Developer Security & Tooling",
+    featured: true,
+    tags: [
+      "Secrets Management",
+      "CLI Tooling",
+      "AES-256",
+      "DevOps",
+      "Envlink",
+      "Node.js",
+    ],
+    imageAlt:
+      "Title card for the EnvLink guide — securely sharing environment variables across developer teams without inbox leaks",
+    relatedSlugs: [
+      "air-gapping-mongodb-production-ufw-payment-proxy",
+      "surviving-react2shell-cve-2025-55182-vps-recovery",
+    ],
+    seo: {
+      metaTitle:
+        "Stop Sharing .env Files via Inboxes: Secure Secrets with Envlink — Abdullah Al Mamun",
+      metaDescription:
+        "Learn how to securely share .env files across developer teams using EnvLink CLI. End-to-end AES-256 encryption, password protection, and auto-expiration without inbox leaks.",
+      keywords: [
+        "envlink CLI",
+        "how to share env files securely",
+        "share .env file with team",
+        "stop sharing env in slack",
+        "secure environment variables sharing",
+        "env file sharing tool",
+        "secrets management CLI",
+        "npx envlink create",
+        "npx envlink install",
+        "dotenv secure share",
+        "client-side encrypted env sharing",
+        "AES-256-GCM secrets transfer",
+        "developer security tooling",
+        "share secrets without hashicorp vault",
+        "ephemeral env file sharing",
+      ],
+    },
+    summary:
+      "Almost every developer team has committed the cardinal security sin: copying a .env file or pasting production database passwords into a Slack thread, WhatsApp group, or Telegram direct message. Once shared, those plaintext secrets live permanently in device caches, chat backups, and third-party servers. EnvLink solves this anti-pattern completely by providing an open-source, client-side encrypted CLI workflow to create and install environment secrets in two commands with zero account setup.",
+    faq: [
+      {
+        question: "Why is sharing .env files via messaging apps or email dangerous?",
+        answer:
+          "Messaging applications like Slack, WhatsApp, and Telegram store messages on device storage, cloud backups (iCloud/Google Drive), and corporate audit logs. If an employee's device is lost, a backup is compromised, or an account is breached, all your production database passwords, Stripe secrets, and API tokens are exposed in clear text.",
+      },
+      {
+        question: "How does EnvLink protect my environment variables?",
+        answer:
+          "EnvLink uses client-side AES-256-GCM encryption with mandatory user passwords and configurable expiration times. The payload is encrypted before leaving your machine and can only be decrypted by a teammate who possesses both the unique link ID and the encryption password.",
+      },
+      {
+        question: "Do team members need to create an account or install dependencies?",
+        answer:
+          "No. EnvLink requires zero account creation or vendor subscription. It can be run on-demand via standard package runners including npx, bunx, or pnpm dlx without permanently installing global dependencies.",
+      },
+    ],
+    toc: [
+      { id: "the-inbox-env-anti-pattern", title: "1. The 'Inbox .env' Anti-Pattern & Why It Kills Security" },
+      { id: "what-is-envlink", title: "2. What is EnvLink & How It Works" },
+      { id: "creating-secrets-workflow", title: "3. Creating & Sharing Encrypted Secrets: The create Workflow" },
+      { id: "installing-secrets-workflow", title: "4. Recipient Decryption & One-Command Installation" },
+      { id: "security-guarantees", title: "5. Architecture & Security Guarantees (AES-256-GCM)" },
+      { id: "tooling-links-community", title: "6. Official Resources & Command Reference" },
+    ],
+    sections: [
+      {
+        id: "the-inbox-env-anti-pattern",
+        title: "1. The 'Inbox .env' Anti-Pattern & Why It Kills Security",
+        paragraphs: [
+          "It is 2:00 PM on a sprint onboarding day. A new developer joins the engineering team, pulls the repository main branch, and asks the inevitable question in team chat: 'Can someone send me the .env file?'",
+          "Within minutes, a teammate zips the project's .env file or pastes a raw text dump of MongoDB connection strings, Stripe test keys, and third-party webhook secrets directly into a Slack channel, WhatsApp group, or Telegram DM. The new hire gets their environment running, and everyone moves on.",
+          "This practice—what security engineers call the 'Inbox .env Anti-Pattern'—is one of the most common causes of silent credential leakage in modern tech companies. Unlike code committed to Git, which can be protected by pre-commit hooks and secret scanners (like GitGuardian or TruffleHog), inbox messages have zero auditing. Chat histories are cached on personal laptops, synced to unencrypted phone backups, and accessible by workplace administrators indefinitely.",
+        ],
+        alert: {
+          type: "security",
+          title: "The Danger of Chat History Secret Persistence",
+          content:
+            "When credentials are sent via chat apps, revoking them requires rotating every single key manually. If a team member leaves the company six months later, those production connection strings often still reside in their local message cache.",
+        },
+      },
+      {
+        id: "what-is-envlink",
+        title: "2. What is EnvLink & How It Works",
+        paragraphs: [
+          "Enterprise secret managers like HashiCorp Vault, AWS Secrets Manager, or Doppler are excellent for enterprise orchestration, but they are heavy, require complex IAM role configurations, and often feel like overkill when you simply need to transfer development credentials to a teammate.",
+          "EnvLink is an open-source, lightweight CLI developer tool engineered specifically for fast, anonymous, and encrypted environment file sharing. It enables developers to package and transfer .env files directly from the command line without creating accounts, paying monthly SaaS subscriptions, or exposing secrets in plaintext.",
+          "With EnvLink, your environment variables are encrypted locally using AES-256-GCM before transmission, locked behind a mandatory passphrase, assigned a short-lived expiration window, and assigned a unique retrieval ID.",
+        ],
+      },
+      {
+        id: "creating-secrets-workflow",
+        title: "3. Creating & Sharing Encrypted Secrets: The create Workflow",
+        paragraphs: [
+          "Using EnvLink requires zero permanent installation or complex configuration. You can run it on-demand through any modern JavaScript package runner—including npx, bunx, or pnpm dlx—directly in your project root.",
+          "EnvLink automatically scans your project root and detects existing environment files (.env, .env.local, .env.development, .env.production). You can choose to bundle all of them or interactively select specific files to share.",
+          "Next, follow the interactive terminal prompts: specify an optional expiration period (e.g., 1 hour, 24 hours, or 7 days) and choose a secure encryption passphrase. Once processed, EnvLink generates a short, unique link ID (for example: el_a872bc91ef) that you can safely forward to your teammate.",
+        ],
+        codeBlock: {
+          language: "bash",
+          filename: "Terminal (Sender Machine)",
+          code: `# Run in your project directory
+npx envlink create
+
+# Or if using Bun:
+bunx envlink create
+
+# Or if using pnpm:
+pnpm dlx envlink create`,
+        },
+        keyTakeaway:
+          "EnvLink auto-detects .env variants, encrypts them client-side with your chosen passphrase, and produces an ephemeral share ID.",
+      },
+      {
+        id: "installing-secrets-workflow",
+        title: "4. Recipient Decryption & One-Command Installation",
+        paragraphs: [
+          "Once the sender shares the unique ID and passphrase, the recipient teammate doesn't need to manually download, unzip, or copy-paste variables line-by-line.",
+          "The teammate simply navigates into their local project directory and runs the install command with the unique ID. EnvLink decrypts the payload in memory and writes the verified environment files directly to their project directory with zero manual copy-pasting.",
+        ],
+        codeBlock: {
+          language: "bash",
+          filename: "Terminal (Recipient Machine)",
+          code: `# Install environment files directly into project root
+npx envlink install <unique-id>
+
+# Example:
+npx envlink install el_a872bc91ef`,
+        },
+        keyTakeaway:
+          "Two commands replace the entire error-prone ritual of manual file sharing. Secrets are never persisted in plaintext chat databases.",
+      },
+      {
+        id: "security-guarantees",
+        title: "5. Architecture & Security Guarantees (AES-256-GCM)",
+        paragraphs: [
+          "From a systems architecture standpoint, what makes EnvLink reliable for engineering teams is its adherence to zero-knowledge principles:",
+          "1. Client-Side AES-256-GCM: The contents of your .env files are encrypted with authenticated encryption before leaving your local machine. The server storing the temporary payload never sees plaintext values.",
+          "2. Mandatory Passphrase Barrier: Even if a malicious actor intercepts the unique EnvLink ID, the encrypted blob cannot be decrypted without the secret passphrase.",
+          "3. Automatic Ephemeral Expiration: Shared payloads self-destruct upon expiration or maximum retrieval thresholds, ensuring secrets do not linger on remote servers.",
+          "4. Zero Identity Footprint: No registration, no tracking pixels, and no user accounts. Your team's intellectual property and project structures remain completely anonymous.",
+        ],
+        keyTakeaway:
+          "Zero-knowledge client-side encryption ensures remote servers only hold encrypted blobs that cannot be read without the user's private passphrase.",
+      },
+      {
+        id: "tooling-links-community",
+        title: "6. Official Resources & Command Reference",
+        paragraphs: [
+          "If your team is looking to eliminate plaintext secret sharing and establish clean developer security hygiene, EnvLink is an essential addition to your developer toolbox.",
+          "Check out the official project links below to explore the full CLI documentation, flags, and open-source codebase:",
+        ],
+        links: [
+          {
+            label: "NPM Package (envlink)",
+            url: "https://www.npmjs.com/package/envlink",
+            description: "View version history or run directly with npx",
+          },
+          {
+            label: "GitHub Repository (AbabilCore/envlink)",
+            url: "https://github.com/AbabilCore/envlink",
+            description: "Star the repo, report issues, and view source code",
+          },
+          {
+            label: "Official Command Guide",
+            url: "https://envlink.ababilspark.com/commands",
+            description: "Interactive documentation for all CLI commands & flags",
+          },
+          {
+            label: "Frequently Asked Questions (FAQ)",
+            url: "https://envlink.ababilspark.com/faq",
+            description: "Cryptographic specs, expiration rules, and edge cases",
+          },
+        ],
+        keyTakeaway:
+          "Good security hygiene isn't about complex enterprise policies—it's about making the secure path the easiest path for your team.",
+      },
+    ],
+  },
+  {
     id: "postmortem-react2shell-cve-2025-55182",
     slug: "surviving-react2shell-cve-2025-55182-vps-recovery",
     title:
@@ -58,7 +254,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "8 min read",
     category: "security",
     categoryLabel: "Incident Recovery & Security",
-    featured: true,
+    featured: false,
     tags: [
       "CVE-2025-55182",
       "Linux Hardening",
@@ -72,6 +268,7 @@ export const blogPosts: BlogPost[] = [
     relatedSlugs: [
       "air-gapping-mongodb-production-ufw-payment-proxy",
       "singleflight-redis-cache-stampede-prevention-nodejs",
+      "stop-sharing-env-files-inboxes-envlink-guide",
     ],
     seo: {
       metaTitle:
@@ -620,6 +817,7 @@ export async function fetchTieredWithSingleFlight<T>(
     relatedSlugs: [
       "surviving-react2shell-cve-2025-55182-vps-recovery",
       "engineering-server-side-meta-capi-sgtm-tracking",
+      "stop-sharing-env-files-inboxes-envlink-guide",
     ],
     seo: {
       metaTitle: "Air-Gapping MongoDB: UFW Whitelisting + Payment Proxy — Abdullah Al Mamun",
@@ -861,4 +1059,5 @@ sudo ufw status verbose`,
       },
     ],
   },
-];
+].sort((a, b) => new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime());
+

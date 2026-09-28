@@ -365,7 +365,7 @@ function ContactPage() {
                   {isDropdownOpen && (
                     <div
                       role="listbox"
-                      className="absolute left-0 right-0 z-30 mt-1.5 max-h-72 w-full overflow-y-auto rounded-xl border border-white/15 bg-[#12151c]/98 p-1.5 shadow-[0_16px_36px_rgba(0,0,0,0.85)] backdrop-blur-2xl ring-1 ring-white/10 animate-in fade-in zoom-in-95 duration-150"
+                      className="absolute left-0 right-0 z-30 mt-1.5 max-h-72 w-full overflow-y-auto rounded-xl border border-white/15 bg-[#12151c]/98 p-1.5 shadow-[0_16px_36px_rgba(0,0,0,0.85)] backdrop-blur-2xl ring-1 ring-white/10"
                     >
                       <div className="space-y-1">
                         {INQUIRY_OPTIONS.map((opt) => {
