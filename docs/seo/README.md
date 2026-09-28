@@ -17,6 +17,7 @@ Complete audit + long-term organic growth strategy, delivered September 2026. Th
 3. **[03-content-clusters-linking-roadmap.md](./03-content-clusters-linking-roadmap.md)** — 5 topical clusters, 12-month calendar (4–6 posts/mo), 4 service-page blueprints, internal-linking rules + map, safe backlink strategy, quick wins, phased 6–12 month roadmap, KPIs.
 4. **[04-complete-issue-register.md](./04-complete-issue-register.md)** — Complete itemized register of Critical, High, Medium, Low, and Strategic issues.
 5. **[05-deep-verification-and-action-report.md](./05-deep-verification-and-action-report.md)** — Independent deep verification report, factual index check, self-hosted fonts, schema audit, and 90-day execution plan.
+6. **[06-phase1-qa-and-phase2-strategic-plan.md](./06-phase1-qa-and-phase2-strategic-plan.md)** — Phase 1 final production QA, code fixes, raw live curl validations, and Phase 2 strategic planning.
 
 ## ⚡ Start here (this week)
 
