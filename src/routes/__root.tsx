@@ -153,11 +153,8 @@ gtag('config', '${GA4_ID}', { anonymize_ip: true });
             "@type": "WebSite",
             name: "Abdullah Al Mamun",
             url: "https://iamabdullah.dev",
-            potentialAction: {
-              "@type": "SearchAction",
-              target: "https://iamabdullah.dev/blogs?q={search_term_string}",
-              "query-input": "required name=search_term_string",
-            },
+            description:
+              "Senior full-stack engineer and tech founder operating 4 live platforms.",
           },
           {
             "@context": "https://schema.org",

@@ -233,12 +233,25 @@ function HomePage() {
           </Reveal>
 
           <Reveal delay={0.24}>
-            <div className="mt-4 sm:mt-5 flex items-center gap-2 sm:gap-2.5">
+            <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-2 sm:gap-2.5">
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-500"
+              >
+                Hire / Contract Me
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+              <Link
+                to="/projects"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-zinc-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white shadow-sm"
+              >
+                Production Cases
+              </Link>
               <a
                 href="https://github.com/abdullahalmamun-devv"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-medium text-zinc-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white shadow-sm"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-zinc-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white shadow-sm"
               >
                 <Github className="h-4 w-4 text-zinc-300" />
                 GitHub
@@ -248,7 +261,7 @@ function HomePage() {
                 href="https://www.linkedin.com/in/abdullah-al-mamun-b07295329/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-medium text-zinc-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-blue-400 shadow-sm"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-zinc-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-blue-400 shadow-sm"
               >
                 <Linkedin className="h-4 w-4 text-blue-400" />
                 LinkedIn

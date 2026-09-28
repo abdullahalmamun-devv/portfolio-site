@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Database,
   CreditCard,
@@ -10,6 +10,7 @@ import {
   Code2,
   Copy,
   Check,
+  ArrowRight,
   ArrowUpRight,
   Flame,
   ShieldAlert,
@@ -116,11 +117,13 @@ interface CaseStudy {
   stack: string[];
   codeSnippet: string;
   links?: CaseStudyLink[];
+  blogSlug?: string;
 }
 
 const caseStudies: CaseStudy[] = [
   {
     id: "cve-react2shell-postmortem",
+    blogSlug: "surviving-react2shell-cve-2025-55182-vps-recovery",
     category: "postmortem" as const,
     icon: Flame,
     codeBadge: "INCIDENT POST-MORTEM: CVE-2025-55182",
@@ -177,6 +180,7 @@ docker compose -f docker-compose.prod.yml up -d --build`,
   },
   {
     id: "monetrix-vpc-proxy",
+    blogSlug: "air-gapping-mongodb-production-ufw-payment-proxy",
     category: "security" as const,
     icon: Lock,
     codeBadge: "SECURITY & VPC ARCHITECTURE",
@@ -237,6 +241,7 @@ export async function paymentProxyHandler(req: Request, res: Response) {
   },
   {
     id: "server-side-meta-capi",
+    blogSlug: "engineering-server-side-meta-capi-sgtm-tracking",
     category: "tracking" as const,
     icon: LineChart,
     codeBadge: "MARKETING ENGINEERING & ANALYTICS",
@@ -317,6 +322,7 @@ export async function dispatchServerSidePurchase(params: PurchaseEventParams) {
   },
   {
     id: "caching-fabric",
+    blogSlug: "singleflight-redis-cache-stampede-prevention-nodejs",
     category: "infra" as const,
     icon: Database,
     codeBadge: "ARCHITECTURE: TIERED-CACHE",
@@ -376,6 +382,7 @@ export async function getTieredCached<T>(
   },
   {
     id: "quickmation-automation-engine",
+    blogSlug: "building-proprietary-ai-automation-engines-vs-saas-tax",
     category: "automation" as const,
     icon: Bot,
     codeBadge: "AI & WORKFLOW AUTOMATION",
@@ -437,6 +444,7 @@ export async function processIncomingMessage(event: OmnichannelEvent) {
   },
   {
     id: "tempmail-open-source",
+    blogSlug: "architecting-ultra-lightweight-disposable-email-platform-28kb",
     category: "opensource" as const,
     icon: Mail,
     codeBadge: "OPEN-SOURCE DEVELOPER TOOLING",
@@ -702,6 +710,20 @@ function ProjectsPage() {
                       <TechChip key={t}>{t}</TechChip>
                     ))}
                   </div>
+
+                  {/* Contextual link to matching deep engineering article */}
+                  {item.blogSlug && (
+                    <div className="pt-2">
+                      <Link
+                        to="/blogs/$slug"
+                        params={{ slug: item.blogSlug }}
+                        className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors"
+                      >
+                        <span>Read Deep Field Note &amp; Architecture</span>
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </Link>
+                    </div>
+                  )}
                 </div>
 
                 {/* Production Code Snippet Preview */}
@@ -742,6 +764,35 @@ function ProjectsPage() {
             </article>
           );
         })}
+      </div>
+
+      {/* High-Impact Consultation CTA */}
+      <div className="mt-12 rounded-xl border border-white/10 bg-[#0e1015] p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-blue-400">
+            Systems Engineering Collaboration
+          </span>
+          <h2 className="mt-1 text-xl sm:text-2xl font-bold text-white">
+            Need High-Concurrency Systems or Incident Response?
+          </h2>
+          <p className="mt-1 max-w-xl text-xs sm:text-sm text-zinc-400 leading-relaxed">
+            I help high-growth ventures build fault-tolerant backend infrastructure, server-side tracking, and payment gateways with zero downtime.
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Link
+            to="/contact"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-blue-500"
+          >
+            Initiate Consultation <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+          <Link
+            to="/skills"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-medium text-zinc-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white shadow-sm"
+          >
+            Review Technical Stack
+          </Link>
+        </div>
       </div>
     </div>
   );
