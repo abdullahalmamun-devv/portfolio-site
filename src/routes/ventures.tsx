@@ -45,8 +45,100 @@ export const Route = createFileRoute("/ventures")({
           "Operating leadership, product strategy, and technical architecture across 4 live platforms.",
       },
       { property: "og:url", content: "https://iamabdullah.dev/ventures" },
+      { property: "og:locale", content: "en_US" },
     ],
     links: [{ rel: "canonical", href: "https://iamabdullah.dev/ventures" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify([
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://iamabdullah.dev/" },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Ventures",
+                item: "https://iamabdullah.dev/ventures",
+              },
+            ],
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: "Ventures founded or operated by Abdullah Al Mamun",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                item: {
+                  "@type": "Organization",
+                  name: "SubsDrop",
+                  url: "https://subsdrop.com",
+                  description:
+                    "Digital subscription marketplace offering 25+ premium tools with automated credential delivery and multi-rail payments in Bangladesh.",
+                  founder: {
+                    "@type": "Person",
+                    name: "Abdullah Al Mamun",
+                    url: "https://iamabdullah.dev",
+                  },
+                },
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                item: {
+                  "@type": "Organization",
+                  name: "QuickMation",
+                  url: "https://quickmation.online",
+                  description:
+                    "Enterprise AI & automation agency building custom chatbots, messaging systems, and proprietary automation infrastructure.",
+                  founder: {
+                    "@type": "Person",
+                    name: "Abdullah Al Mamun",
+                    url: "https://iamabdullah.dev",
+                  },
+                },
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                item: {
+                  "@type": "Organization",
+                  name: "Pro Trainer IT",
+                  url: "https://protrainerit.com",
+                  description:
+                    "National IT academy headquartered in Chapainawabganj, Bangladesh offering live cohorts in MERN, Python & Machine Learning, and DevOps.",
+                  employee: {
+                    "@type": "Person",
+                    name: "Abdullah Al Mamun",
+                    url: "https://iamabdullah.dev",
+                  },
+                },
+              },
+              {
+                "@type": "ListItem",
+                position: 4,
+                item: {
+                  "@type": "Organization",
+                  name: "MoneTrix",
+                  url: "https://www.monetrix.shop",
+                  description:
+                    "E-commerce and digital product delivery SaaS with hardened payment proxy architecture and server-side tracking.",
+                  creator: {
+                    "@type": "Person",
+                    name: "Abdullah Al Mamun",
+                    url: "https://iamabdullah.dev",
+                  },
+                },
+              },
+            ],
+          },
+        ]),
+      },
+    ],
   }),
   component: VenturesPage,
 });
@@ -142,6 +234,15 @@ function VenturesPage() {
                   our open-source temporary email service (temp.subsdrop.com), and multi-rail
                   payment reconciliation over bKash, Nagad, Rocket, and global cards.
                 </p>
+                <div className="mt-3 flex flex-wrap gap-3">
+                  <Link
+                    to="/blogs/$slug"
+                    params={{ slug: "singleflight-redis-cache-stampede-prevention-nodejs" }}
+                    className="inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 underline underline-offset-4 font-mono transition-colors"
+                  >
+                    → How I engineered 22ms P99 reads for SubsDrop
+                  </Link>
+                </div>
               </div>
 
               <div>
@@ -291,6 +392,15 @@ function VenturesPage() {
                   TikTok, and custom web chatbots, alongside bespoke business automation software
                   for education, industrial supply chains, and e-commerce.
                 </p>
+                <div className="mt-3 flex flex-wrap gap-3">
+                  <Link
+                    to="/blogs/$slug"
+                    params={{ slug: "building-proprietary-ai-automation-engines-vs-saas-tax" }}
+                    className="inline-flex items-center gap-1 text-xs text-purple-400 hover:text-purple-300 underline underline-offset-4 font-mono transition-colors"
+                  >
+                    → Why we build proprietary automation engines
+                  </Link>
+                </div>
               </div>
 
               <div>
@@ -564,6 +674,22 @@ function VenturesPage() {
                   requires a resilient, zero-compromise security posture. I designed a 3-tier
                   hardened architecture to protect our customer transactions and persistent data:
                 </p>
+                <div className="mt-3 flex flex-wrap gap-3">
+                  <Link
+                    to="/blogs/$slug"
+                    params={{ slug: "engineering-server-side-meta-capi-sgtm-tracking" }}
+                    className="inline-flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300 underline underline-offset-4 font-mono transition-colors"
+                  >
+                    → Our server-side tracking architecture
+                  </Link>
+                  <Link
+                    to="/blogs/$slug"
+                    params={{ slug: "air-gapping-mongodb-production-ufw-payment-proxy" }}
+                    className="inline-flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300 underline underline-offset-4 font-mono transition-colors"
+                  >
+                    → Database security design
+                  </Link>
+                </div>
                 <div className="mt-3.5 grid gap-3 sm:grid-cols-3">
                   <div className="rounded-lg border border-white/[0.06] bg-black/20 p-3.5">
                     <div className="flex items-center gap-1.5 text-xs font-semibold text-white">

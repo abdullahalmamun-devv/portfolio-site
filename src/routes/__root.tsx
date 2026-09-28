@@ -20,6 +20,7 @@ import "@fontsource/jetbrains-mono/400.css";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { GA4_ID, GSC_VERIFICATION } from "../lib/seo";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 
@@ -93,14 +94,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Full-stack developer & founder of SubsDrop, QuickMation, MoneTrix. Hire me for Node.js, Next.js, server architecture & enterprise automation projects.",
       },
       { name: "author", content: "Abdullah Al Mamun" },
+      ...(GSC_VERIFICATION
+        ? [{ name: "google-site-verification", content: GSC_VERIFICATION }]
+        : []),
       { property: "og:site_name", content: "Abdullah Al Mamun" },
       { property: "og:type", content: "website" },
+      { property: "og:locale", content: "en_US" },
       { property: "og:image", content: "https://iamabdullah.dev/og-image.png" },
       { property: "og:image:secure_url", content: "https://iamabdullah.dev/og-image.png" },
       { property: "og:image:type", content: "image/png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder" },
+      {
+        property: "og:image:alt",
+        content: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder",
+      },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder" },
       {
@@ -109,7 +117,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Full-stack developer & founder of SubsDrop, QuickMation, MoneTrix. Hire me for Node.js, Next.js, server architecture & enterprise automation projects.",
       },
       { name: "twitter:image", content: "https://iamabdullah.dev/og-image.png" },
-      { name: "twitter:image:alt", content: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder" },
+      {
+        name: "twitter:image:alt",
+        content: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder",
+      },
     ],
     links: [
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
@@ -124,6 +135,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
     ],
     scripts: [
+      // GA4 — enabled only when VITE_GA4_ID is set (see docs/seo/01-technical-audit.md)
+      ...(GA4_ID
+        ? [
+            {
+              type: "text/javascript",
+              children: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA4_ID}', { anonymize_ip: true });
+(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=${GA4_ID}';document.head.appendChild(s);})();`,
+            },
+          ]
+        : []),
       {
         type: "application/ld+json",
         children: JSON.stringify([
@@ -145,6 +169,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             alternateName: "Abdullah",
             jobTitle: "Full-Stack Developer & Tech Founder",
             url: "https://iamabdullah.dev",
+            image: "https://iamabdullah.dev/icon_site_match_1024.png",
             email: "hello@iamabdullah.dev",
             sameAs: [
               "https://github.com/abdullahalmamun-devv",

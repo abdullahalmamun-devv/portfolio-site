@@ -22,6 +22,12 @@ export interface BlogPost {
   subtitle: string;
   date: string;
   isoDate: string;
+  /** ISO date of the last meaningful content update; falls back to isoDate for schema/sitemap. */
+  dateModified?: string;
+  /** Descriptive alt text for the article header/social image (accessibility + image SEO). */
+  imageAlt: string;
+  /** Internal-linking layer: slugs of related posts shown in "Related Field Notes". */
+  relatedSlugs: string[];
   readTime: string;
   category: "systems" | "security" | "tracking" | "venture";
   categoryLabel: string;
@@ -33,6 +39,8 @@ export interface BlogPost {
     metaDescription: string;
     keywords: string[];
   };
+  /** Optional FAQ pairs — rendered as visible content + FAQPage schema for PAA eligibility. */
+  faq?: { question: string; answer: string }[];
   toc: { id: string; title: string }[];
   sections: BlogSection[];
 }
@@ -59,11 +67,17 @@ export const blogPosts: BlogPost[] = [
       "Docker",
       "DevOps",
     ],
+    imageAlt:
+      "Title card for the React2Shell incident post-mortem — recovering a 100% CPU Linux VPS after the CVE-2025-55182 zero-day exploit",
+    relatedSlugs: [
+      "air-gapping-mongodb-production-ufw-payment-proxy",
+      "singleflight-redis-cache-stampede-prevention-nodejs",
+    ],
     seo: {
       metaTitle:
-        "React2Shell (CVE-2025-55182) Incident Post-Mortem & 100% CPU Recovery — Abdullah Al Mamun",
+        "React2Shell CVE-2025-55182: VPS Recovery Post-Mortem — Abdullah Al Mamun",
       metaDescription:
-        "Full forensic analysis of surviving a zero-day React2Shell remote code execution intrusion on a live Linux VPS running SubsDrop and Pro Trainer IT without data loss.",
+        "A real post-mortem: zero-day RCE pinned our VPS at 100% CPU mid-traffic. VNC rescue, cron persistence purge, container hardening — zero data loss.",
       keywords: [
         "CVE-2025-55182",
         "React2Shell",
@@ -77,6 +91,23 @@ export const blogPosts: BlogPost[] = [
     },
     summary:
       "A forensic engineering breakdown of how an unpatched zero-day vulnerability in an upstream web framework allowed an unauthorized actor to deploy a persistent cryptominer, driving CPU and RAM to 100% on our co-located production host. Here is how we regained root control via out-of-band VNC, eradicated malware persistence, and restored full uptime with zero data loss in under 45 minutes.",
+    faq: [
+      {
+        question: "What is React2Shell CVE-2025-55182?",
+        answer:
+          "React2Shell (CVE-2025-55182) is a critical zero-day remote code execution vulnerability in certain React SSR frameworks that allowed attackers to execute arbitrary shell commands on the host server, typically deploying persistent cryptominers that consume 100% CPU.",
+      },
+      {
+        question: "How do I check for cryptominer persistence on Linux?",
+        answer:
+          "Check crontabs (crontab -l and /var/spool/cron/), systemd timers (systemctl list-timers), /etc/rc.local, and inspect running processes with top or htop for disguised binaries. Also check for immutable file attributes using lsattr on suspicious files in /tmp and /var/tmp.",
+      },
+      {
+        question: "Does Docker CPU limiting prevent cryptominer damage?",
+        answer:
+          "Docker CPU limits (--cpus flag or deploy.resources.limits in Compose) contain cryptominer impact by capping the container's CPU share. While it won't prevent infection, it ensures the miner cannot starve the host OS and other containers, buying time for detection and remediation.",
+      },
+    ],
     toc: [
       {
         id: "incident-discovery",
@@ -239,11 +270,17 @@ networks:
     categoryLabel: "Marketing Engineering & Data",
     featured: false,
     tags: ["Meta CAPI", "sGTM", "Stape", "GA4 DataLayer", "Ad-Blocker Bypass", "FinTech Tracking"],
+    imageAlt:
+      "Title card for the server-side tracking guide — Meta CAPI and sGTM pipeline with event deduplication replacing client-side pixels",
+    relatedSlugs: [
+      "building-proprietary-ai-automation-engines-vs-saas-tax",
+      "singleflight-redis-cache-stampede-prevention-nodejs",
+    ],
     seo: {
       metaTitle:
-        "Engineering Server-Side Meta CAPI & sGTM with Event Deduplication — Abdullah Al Mamun",
+        "Meta CAPI + sGTM: Event Deduplication Guide (Real Numbers) — Abdullah Al Mamun",
       metaDescription:
-        "Comprehensive architectural guide on building a resilient server-side conversion tracking pipeline using Stape, Google Tag Manager server container, and Meta Conversions API.",
+        "Production blueprint for server-side Meta CAPI via sGTM: deterministic event_id dedup, SHA-256 PII hashing, 99.4% match rate, EMQ 8.8/10.",
       keywords: [
         "Meta Conversions API",
         "Meta CAPI",
@@ -257,6 +294,23 @@ networks:
     },
     summary:
       "Modern client-side ad pixels lose 30–45% of purchase events due to Brave, uBlock Origin, Safari ITP cookie expirations, and iOS privacy prompts. Here is our end-to-end architecture blueprint using Meta Conversions API and server GTM to achieve 99.4% attribution accuracy on MoneTrix.",
+    faq: [
+      {
+        question: "What is Meta CAPI event deduplication?",
+        answer:
+          "Event deduplication is the process of sending the same conversion event from both the browser (Meta Pixel) and your server (Conversions API) with an identical event_id. Meta's ingestion system merges duplicate events within a 48-hour window, giving you both cookie-rich browser data and 100% reliable server-side delivery.",
+      },
+      {
+        question: "How do I check my Event Match Quality score?",
+        answer:
+          "In Meta Business Manager, go to Events Manager → select your pixel → click the Data Sources tab → look for the EMQ column. A score of 6.0+ is considered good; 8.0+ is excellent. Improving EMQ requires sending correctly normalized and SHA-256 hashed customer parameters (email, phone, name) via CAPI.",
+      },
+      {
+        question: "Does sGTM replace the Meta Pixel?",
+        answer:
+          "No. Server-side GTM (sGTM) works alongside the Meta Pixel in a dual-stream architecture. The pixel fires from the browser when not blocked; sGTM fires from your server unconditionally. Together with event_id dedup, you get the best of both: cookie data from the pixel and 100% reliability from the server.",
+      },
+    ],
     toc: [
       {
         id: "the-client-pixel-breakdown",
@@ -404,6 +458,12 @@ export async function dispatchPurchaseCAPI(payload: PurchaseEventPayload) {
     categoryLabel: "Backend & Systems",
     featured: false,
     tags: ["Redis", "Node.js", "Cache Stampede", "ioredis", "Singleflight", "High Concurrency"],
+    imageAlt:
+      "Title card for the Redis singleflight guide — preventing cache stampedes with L1/L2 tiered caching in Node.js",
+    relatedSlugs: [
+      "engineering-server-side-meta-capi-sgtm-tracking",
+      "surviving-react2shell-cve-2025-55182-vps-recovery",
+    ],
     seo: {
       metaTitle:
         "Preventing Cache Stampedes with Singleflight in Node.js & Redis — Abdullah Al Mamun",
@@ -431,6 +491,7 @@ export async function dispatchPurchaseCAPI(payload: PurchaseEventPayload) {
         id: "the-thundering-herd",
         title: "1. Anatomy of a Cache Stampede",
         paragraphs: [
+          "A cache stampede (or thundering herd problem) occurs when high-concurrency requests hit an expired cache key simultaneously, triggering hundreds of identical database queries at once. Singleflight request coalescing eliminates this by intercepting concurrent in-flight reads, executing exactly one query, and broadcasting the result across all callers.",
           "Imagine a catalog item like 'ChatGPT Plus Subscription' cached in Redis with a 10-minute TTL. While valid, responses return in ~2ms.",
           "At minute 10:01, the key expires. In that exact millisecond, 400 concurrent incoming HTTP requests check Redis, find a cache miss, and all 400 requests trigger identical, heavy MongoDB aggregation queries simultaneously.",
           "This classic 'cache stampede' (or thundering herd) saturates the database connection pool, pegs database CPU to 95%, and causes response latencies to spike from 2ms to 240ms+.",
@@ -537,10 +598,16 @@ export async function fetchTieredWithSingleFlight<T>(
       "Reverse Proxy",
       "HMAC Signatures",
     ],
+    imageAlt:
+      "Title card for the MongoDB hardening guide — air-gapped database behind UFW firewall whitelisting with HMAC-verified payment webhooks",
+    relatedSlugs: [
+      "surviving-react2shell-cve-2025-55182-vps-recovery",
+      "engineering-server-side-meta-capi-sgtm-tracking",
+    ],
     seo: {
-      metaTitle: "Air-Gapping MongoDB & Payment Proxy Architecture — Abdullah Al Mamun",
+      metaTitle: "Air-Gapping MongoDB: UFW Whitelisting + Payment Proxy — Abdullah Al Mamun",
       metaDescription:
-        "Learn how to secure MongoDB with private VPC subnets and UFW firewall rules, alongside an idempotent payment reverse proxy for South Asian payment rails.",
+        "Close 0.0.0.0 exposure, whitelist app-only DB access via UFW, and route bKash/Nagad webhooks through HMAC-verified, idempotent proxies.",
       keywords: [
         "MongoDB air-gapped security",
         "UFW firewall database whitelist",
@@ -565,6 +632,7 @@ export async function fetchTieredWithSingleFlight<T>(
         id: "the-open-port-hazard",
         title: "1. The Open Port Hazard (0.0.0.0/0)",
         paragraphs: [
+          "Air-gapping MongoDB means eliminating public internet exposure by binding port 27017 strictly to a private VPC subnet or internal network interface. Combining this with kernel-level UFW firewall rules that whitelist only the application server's static IP completely protects databases from automated internet-wide port scans and ransomware attacks.",
           "Automated internet-wide port scans constantly probe for MongoDB port 27017. Binding a database to '0.0.0.0' or relying solely on user/password authentication is an invitation for automated ransomware scripts.",
           "On MoneTrix and SubsDrop, protecting customer credentials and transactions required an air-gapped private networking strategy.",
         ],
@@ -627,10 +695,16 @@ sudo ufw status verbose`,
       "Self-Hosted n8n",
       "Prisma",
     ],
+    imageAlt:
+      "Title card for the AI automation architecture article — replacing Zapier and n8n SaaS taxes with proprietary Node.js automation engines",
+    relatedSlugs: [
+      "architecting-ultra-lightweight-disposable-email-platform-28kb",
+      "engineering-server-side-meta-capi-sgtm-tracking",
+    ],
     seo: {
-      metaTitle: "Building Custom AI Automation vs SaaS Cloud Taxes — Abdullah Al Mamun",
+      metaTitle: "Self-Hosted AI Automation vs Zapier/n8n: $1,200→$15/mo — Abdullah Al Mamun",
       metaDescription:
-        "Why QuickMation eliminated monthly SaaS fees like Zapier and n8n cloud by engineering custom Node.js automation microservices and self-hosted instances.",
+        "Why we build proprietary Node.js automation engines + self-hosted n8n instead of paying per-task SaaS markups — architecture and real costs.",
       keywords: [
         "AI automation agency",
         "custom AI chatbots",
@@ -680,6 +754,12 @@ sudo ufw status verbose`,
     categoryLabel: "Backend & Systems",
     featured: false,
     tags: ["DNS MX", "Vanilla JS", "Vite 8", "Open Source", "TempMail", "Fast Web"],
+    imageAlt:
+      "Title card for the TempMail architecture article — a 28KB disposable email platform with DNS MX routing and real-time ingress",
+    relatedSlugs: [
+      "building-proprietary-ai-automation-engines-vs-saas-tax",
+      "singleflight-redis-cache-stampede-prevention-nodejs",
+    ],
     seo: {
       metaTitle: "Architecting an Open-Source 28KB Disposable Email Platform — Abdullah Al Mamun",
       metaDescription:

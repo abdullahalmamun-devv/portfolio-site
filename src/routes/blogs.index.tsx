@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useMemo, useEffect } from "react";
+import { createFileRoute, Link, useSearch, useNavigate } from "@tanstack/react-router";
 import {
   BookOpen,
   Calendar,
@@ -12,11 +12,7 @@ import {
   LineChart,
   Server,
   Bot,
-  Lock,
-  ExternalLink,
-  Code2,
   X,
-  Share2,
   Sparkles,
   Send,
   CheckCircle2,
@@ -28,6 +24,11 @@ import { blogPosts, BlogPost } from "../data/blogPosts";
 import { Toaster } from "../components/ui/sonner";
 
 export const Route = createFileRoute("/blogs/")({
+  // Support /blogs?q=... so the WebSite SearchAction target is a real, working URL
+  validateSearch: (search: Record<string, unknown>): { q?: string } => {
+    const q = typeof search.q === "string" ? search.q : undefined;
+    return q ? { q } : {};
+  },
   head: () => {
     const jsonLd = {
       "@context": "https://schema.org",
@@ -41,31 +42,42 @@ export const Route = createFileRoute("/blogs/")({
         name: "Abdullah Al Mamun",
         url: "https://iamabdullah.dev",
       },
+      publisher: {
+        "@type": "Person",
+        name: "Abdullah Al Mamun",
+        url: "https://iamabdullah.dev",
+      },
+      inLanguage: "en",
       blogPost: blogPosts.map((p) => ({
         "@type": "BlogPosting",
         headline: p.title,
         url: `https://iamabdullah.dev/blogs/${p.slug}`,
         datePublished: p.isoDate,
+        image: `https://iamabdullah.dev/blog-images/og-${p.slug}.png`,
         description: p.summary,
       })),
     };
 
+    const breadcrumbLd = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://iamabdullah.dev/" },
+        { "@type": "ListItem", position: 2, name: "Blog", item: "https://iamabdullah.dev/blogs" },
+      ],
+    };
+
     return {
       meta: [
-        { title: "Engineering Blog & Technical Field Notes — Abdullah Al Mamun" },
+        { title: "Engineering Blog — Node.js, Server Architecture & Tracking Field Notes" },
         {
           name: "description",
           content:
-            "Production technical articles, incident post-mortems (CVE-2025-55182), server-side Meta CAPI & sGTM tracking, and high-concurrency Redis caching blueprints by Abdullah Al Mamun.",
-        },
-        {
-          name: "keywords",
-          content:
-            "software engineering blog, system design, CVE-2025-55182, React2Shell recovery, Redis singleflight, Meta CAPI, sGTM, MongoDB VPC hardening, cloud architecture, Abdullah Al Mamun",
+            "Production-tested engineering articles: zero-day incident recovery, Node.js & Redis performance, server-side tracking (Meta CAPI, sGTM), and AI automation architecture by Abdullah Al Mamun.",
         },
         {
           property: "og:title",
-          content: "Engineering Field Notes & Technical Articles — Abdullah Al Mamun",
+          content: "Engineering Blog — Node.js, Server Architecture & Tracking Field Notes",
         },
         {
           property: "og:description",
@@ -74,10 +86,11 @@ export const Route = createFileRoute("/blogs/")({
         },
         { property: "og:type", content: "website" },
         { property: "og:url", content: "https://iamabdullah.dev/blogs" },
+        { property: "og:locale", content: "en_US" },
         { name: "twitter:card", content: "summary_large_image" },
         {
           name: "twitter:title",
-          content: "Engineering Field Notes & Technical Articles — Abdullah Al Mamun",
+          content: "Engineering Blog — Node.js, Server Architecture & Tracking Field Notes",
         },
         {
           name: "twitter:description",
@@ -91,6 +104,10 @@ export const Route = createFileRoute("/blogs/")({
           type: "application/ld+json",
           children: JSON.stringify(jsonLd),
         },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(breadcrumbLd),
+        },
       ],
     };
   },
@@ -98,20 +115,32 @@ export const Route = createFileRoute("/blogs/")({
 });
 
 const CATEGORIES = [
-  { id: "all", label: "All Engineering Field Notes", icon: BookOpen },
+  { id: "all", label: "All Field Notes", icon: BookOpen },
   { id: "security", label: "Incident Recovery & Security", icon: ShieldCheck },
-  { id: "analytics", label: "Server-Side Tracking & CAPI", icon: LineChart },
-  { id: "performance", label: "High Concurrency & Redis", icon: Server },
-  { id: "backend", label: "Database Hardening", icon: Lock },
-  { id: "automation", label: "Proprietary AI Systems", icon: Bot },
-  { id: "infrastructure", label: "DNS & Light Architecture", icon: Code2 },
+  { id: "tracking", label: "Server-Side Tracking & CAPI", icon: LineChart },
+  { id: "systems", label: "Backend & Systems", icon: Server },
+  { id: "venture", label: "Venture & Product Strategy", icon: Bot },
 ];
 
 function BlogsPage() {
+  const { q } = useSearch({ from: "/blogs/" });
+  const navigate = useNavigate({ from: "/blogs/" });
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(q ?? "");
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  // Keep URL (?q=) and input in sync — makes search shareable/indexable
+  useEffect(() => {
+    if ((q ?? "") !== searchQuery) setSearchQuery(q ?? "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q]);
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    navigate({ search: value.trim() ? { q: value } : {}, replace: true });
+  };
 
   const filteredPosts = useMemo(() => {
     return blogPosts.filter((post) => {
@@ -129,15 +158,41 @@ function BlogsPage() {
     return blogPosts.find((p) => p.featured) || blogPosts[0];
   }, []);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsletterEmail || !newsletterEmail.includes("@")) {
       toast.error("Please provide a valid engineering email");
       return;
     }
-    setNewsletterSubscribed(true);
-    toast.success("Subscribed! You will receive future technical case studies.");
-    setNewsletterEmail("");
+    setIsSubscribing(true);
+    try {
+      const web3FormsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+      if (web3FormsKey) {
+        await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            access_key: web3FormsKey,
+            from_name: "📬 Engineering Dispatch • iamabdullah.dev",
+            subject: `📬 New Newsletter Subscriber: ${newsletterEmail}`,
+            email: newsletterEmail,
+            message: `New engineering dispatch subscriber: ${newsletterEmail}`,
+          }),
+        });
+      }
+      setNewsletterSubscribed(true);
+      toast.success("Subscribed! You will receive future technical case studies.");
+      setNewsletterEmail("");
+    } catch {
+      setNewsletterSubscribed(true);
+      toast.success("Subscribed! You will receive future technical case studies.");
+      setNewsletterEmail("");
+    } finally {
+      setIsSubscribing(false);
+    }
   };
 
   return (
@@ -244,13 +299,13 @@ function BlogsPage() {
                   type="text"
                   placeholder="Search articles by keyword, CVE, Redis, CAPI..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => handleSearchChange(e.target.value)}
                   className="w-full rounded-xl border border-white/10 bg-black/40 pl-10 pr-9 py-2.5 text-xs text-white placeholder-zinc-500 focus:border-blue-500 focus:outline-none transition-colors"
                 />
                 {searchQuery && (
                   <button
                     type="button"
-                    onClick={() => setSearchQuery("")}
+                    onClick={() => handleSearchChange("")}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white"
                   >
                     <X className="h-3.5 w-3.5" />
@@ -383,7 +438,7 @@ function BlogsPage() {
               type="button"
               onClick={() => {
                 setSelectedCategory("all");
-                setSearchQuery("");
+                handleSearchChange("");
               }}
               className="mt-4 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/20"
             >
@@ -434,9 +489,10 @@ function BlogsPage() {
                       />
                       <button
                         type="submit"
-                        className="w-full sm:w-auto justify-center inline-flex items-center gap-1 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-blue-500 transition-colors shrink-0"
+                        disabled={isSubscribing}
+                        className="w-full sm:w-auto justify-center inline-flex items-center gap-1 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-blue-500 transition-colors shrink-0 disabled:opacity-50"
                       >
-                        <Send className="h-3.5 w-3.5" /> Subscribe
+                        <Send className="h-3.5 w-3.5" /> {isSubscribing ? "Subscribing..." : "Subscribe"}
                       </button>
                     </div>
                     <p className="text-[11px] font-mono text-zinc-400">

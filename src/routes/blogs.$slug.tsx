@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { postImagePath, postOgImagePath, postLastmod, absUrl } from "../lib/seo";
 import {
   Calendar,
   Clock,
@@ -19,12 +20,19 @@ import {
   Linkedin,
   Github,
   Mail,
+  HelpCircle,
 } from "lucide-react";
 import { toast } from "sonner";
 import { blogPosts, BlogPost } from "../data/blogPosts";
 import { Toaster } from "../components/ui/sonner";
 
 export const Route = createFileRoute("/blogs/$slug")({
+  // True HTTP 404 for unknown slugs (prevents Google soft-404 classification)
+  beforeLoad: ({ params }) => {
+    if (!blogPosts.some((p) => p.slug === params.slug)) {
+      throw notFound();
+    }
+  },
   head: ({ params }) => {
     const post = blogPosts.find((p) => p.slug === params.slug);
     if (!post) {
@@ -33,15 +41,21 @@ export const Route = createFileRoute("/blogs/$slug")({
       };
     }
 
-    const jsonLd = {
+    const postUrl = absUrl(`/blogs/${post.slug}`);
+    const headerImage = absUrl(postImagePath(post.slug));
+    const ogImage = absUrl(postOgImagePath(post.slug));
+
+    const techArticleLd = {
       "@context": "https://schema.org",
       "@type": "TechArticle",
       headline: post.title,
       description: post.seo.metaDescription,
+      image: [ogImage, headerImage],
       author: {
         "@type": "Person",
         name: "Abdullah Al Mamun",
         url: "https://iamabdullah.dev",
+        image: "https://iamabdullah.dev/icon_site_match_1024.png",
         sameAs: [
           "https://github.com/abdullahalmamun-devv",
           "https://www.linkedin.com/in/abdullah-al-mamun-b07295329/",
@@ -51,41 +65,115 @@ export const Route = createFileRoute("/blogs/$slug")({
       publisher: {
         "@type": "Person",
         name: "Abdullah Al Mamun",
+        url: "https://iamabdullah.dev",
       },
       datePublished: post.isoDate,
+      dateModified: postLastmod(post.isoDate, post.dateModified),
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": `https://iamabdullah.dev/blogs/${post.slug}`,
+        "@id": postUrl,
       },
       keywords: post.seo.keywords.join(", "),
+      articleSection: post.categoryLabel,
+      inLanguage: "en",
+    };
+
+    const breadcrumbLd = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: absUrl("/") },
+        { "@type": "ListItem", position: 2, name: "Blog", item: absUrl("/blogs") },
+        { "@type": "ListItem", position: 3, name: post.title, item: postUrl },
+      ],
     };
 
     return {
       meta: [
         { title: `${post.title} — Abdullah Al Mamun` },
         { name: "description", content: post.seo.metaDescription },
-        { name: "keywords", content: post.seo.keywords.join(", ") },
         { property: "og:title", content: post.title },
         { property: "og:description", content: post.subtitle },
         { property: "og:type", content: "article" },
-        { property: "og:url", content: `https://iamabdullah.dev/blogs/${post.slug}` },
+        { property: "og:url", content: postUrl },
+        { property: "og:image", content: ogImage },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { property: "og:image:alt", content: post.imageAlt },
+        { property: "og:locale", content: "en_US" },
         { property: "article:published_time", content: post.isoDate },
+        {
+          property: "article:modified_time",
+          content: postLastmod(post.isoDate, post.dateModified),
+        },
         { property: "article:author", content: "Abdullah Al Mamun" },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: post.title },
         { name: "twitter:description", content: post.subtitle },
+        { name: "twitter:image", content: ogImage },
       ],
-      links: [{ rel: "canonical", href: `https://iamabdullah.dev/blogs/${post.slug}` }],
+      links: [{ rel: "canonical", href: postUrl }],
       scripts: [
         {
           type: "application/ld+json",
-          children: JSON.stringify(jsonLd),
+          children: JSON.stringify(techArticleLd),
         },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(breadcrumbLd),
+        },
+        ...(post.faq && post.faq.length > 0
+          ? [
+              {
+                type: "application/ld+json" as const,
+                children: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: post.faq.map((f) => ({
+                    "@type": "Question",
+                    name: f.question,
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: f.answer,
+                    },
+                  })),
+                }),
+              },
+            ]
+          : []),
       ],
     };
   },
   component: BlogPostDetail,
 });
+
+/** Contextual blog → case-study CTA (internal linking / relevance transfer). */
+const PROJECT_CTA: Record<string, { anchor: string; label: string }> = {
+  "surviving-react2shell-cve-2025-55182-vps-recovery": {
+    anchor: "react2shell-postmortem",
+    label: "React2Shell incident case study",
+  },
+  "air-gapping-mongodb-production-ufw-payment-proxy": {
+    anchor: "monetrix-vpc-proxy",
+    label: "MongoDB isolation & payment proxy case study",
+  },
+  "engineering-server-side-meta-capi-sgtm-tracking": {
+    anchor: "server-side-meta-capi",
+    label: "server-side tracking case study",
+  },
+  "singleflight-redis-cache-stampede-prevention-nodejs": {
+    anchor: "caching-fabric",
+    label: "Redis caching fabric case study",
+  },
+  "building-proprietary-ai-automation-engines-vs-saas-tax": {
+    anchor: "quickmation-automation-engine",
+    label: "AI automation engine case study",
+  },
+  "architecting-ultra-lightweight-disposable-email-platform-28kb": {
+    anchor: "tempmail-open-source",
+    label: "TempMail architecture case study",
+  },
+};
 
 function BlogPostDetail() {
   const { slug } = Route.useParams();
@@ -151,6 +239,9 @@ function BlogPostDetail() {
   const currentIndex = blogPosts.findIndex((p) => p.slug === slug);
   const prevPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
   const nextPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
+  const relatedPosts = post.relatedSlugs
+    .map((s) => blogPosts.find((p) => p.slug === s))
+    .filter((p): p is BlogPost => Boolean(p));
 
   return (
     <>
@@ -234,6 +325,18 @@ function BlogPostDetail() {
           <p className="mt-2.5 sm:mt-3 text-sm sm:text-lg text-zinc-300 leading-relaxed max-w-3xl">
             {post.subtitle}
           </p>
+
+          {/* Article Header Image (in-article visual + image SEO) */}
+          <figure className="mt-5 sm:mt-6">
+            <img
+              src={postImagePath(post.slug)}
+              alt={post.imageAlt}
+              width={1200}
+              height={675}
+              loading="eager"
+              className="w-full rounded-xl border border-white/[0.08] bg-[#0c0e14]"
+            />
+          </figure>
 
           {/* Author Byline */}
           <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row sm:items-center justify-between border-y border-white/[0.08] py-3.5 sm:py-4 gap-3">
@@ -397,6 +500,88 @@ function BlogPostDetail() {
                 )}
               </section>
             ))}
+
+            {/* FAQ section — visible content + schema (PAA eligibility) */}
+            {post.faq && post.faq.length > 0 && (
+              <section className="space-y-4 pt-2">
+                <h2 className="text-lg sm:text-xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
+                  <HelpCircle className="h-5 w-5 text-blue-400" />
+                  Frequently Asked Questions
+                </h2>
+                <div className="space-y-3">
+                  {post.faq.map((f, fIdx) => (
+                    <div
+                      key={fIdx}
+                      className="rounded-lg border border-white/[0.08] bg-black/30 p-3.5 sm:p-4"
+                    >
+                      <h3 className="text-sm sm:text-base font-semibold text-white">
+                        {f.question}
+                      </h3>
+                      <p className="mt-1.5 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                        {f.answer}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Contextual CTA: blog → case study (internal relevance transfer) */}
+            {PROJECT_CTA[post.slug] && (
+              <div className="rounded-xl border border-blue-500/25 bg-gradient-to-r from-blue-950/25 via-[#0a0d14] to-black/50 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <span className="font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-blue-400">
+                    Need this built or fixed in production?
+                  </span>
+                  <p className="mt-1 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                    This article mirrors real work shipped for a live platform — see the{" "}
+                    <Link
+                      to="/projects"
+                      hash={PROJECT_CTA[post.slug].anchor}
+                      className="text-blue-400 hover:underline font-medium"
+                    >
+                      {PROJECT_CTA[post.slug].label}
+                    </Link>
+                    .
+                  </p>
+                </div>
+                <Link
+                  to="/contact"
+                  className="shrink-0 inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-500 transition-colors"
+                >
+                  Discuss a Project <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            )}
+
+            {/* Related Field Notes (same-cluster internal linking) */}
+            {relatedPosts.length > 0 && (
+              <div className="mt-2">
+                <h3 className="font-mono text-xs uppercase tracking-wider text-zinc-300 font-semibold flex items-center gap-2 pb-3 border-b border-white/[0.08]">
+                  <BookOpen className="h-4 w-4 text-blue-400" /> Related Field Notes
+                </h3>
+                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  {relatedPosts.map((rp) => (
+                    <Link
+                      key={rp.slug}
+                      to="/blogs/$slug"
+                      params={{ slug: rp.slug }}
+                      className="group rounded-xl border border-white/[0.08] bg-black/30 p-4 transition-all hover:border-blue-500/40 hover:bg-[#0f121a]"
+                    >
+                      <span className="font-mono text-[10px] text-blue-400 uppercase tracking-wider">
+                        {rp.categoryLabel}
+                      </span>
+                      <div className="mt-1.5 text-sm font-bold text-white group-hover:text-blue-300 transition-colors leading-snug">
+                        {rp.title}
+                      </div>
+                      <span className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-blue-400">
+                        Read Field Note <ArrowRight className="h-3 w-3" />
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Tags footer */}
             <div className="mt-8 pt-6 border-t border-white/[0.08]">

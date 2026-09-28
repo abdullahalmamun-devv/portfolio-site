@@ -5,11 +5,20 @@
 //     error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { sitemapGenerator, sitemapGeneratorDev } from "./plugins/sitemap-generator";
 
 export default defineConfig({
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+  },
+  vite: {
+    plugins: [
+      // Auto-generate public/sitemap.xml from src/data/blogPosts.ts on every
+      // build and dev startup — the sitemap can never go stale again.
+      sitemapGenerator(),
+      sitemapGeneratorDev(),
+    ],
   },
 });

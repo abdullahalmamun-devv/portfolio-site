@@ -23,38 +23,43 @@ import {
 import { Reveal, StaggerGroup, StaggerItem } from "../components/Reveal";
 import { TechChip } from "../components/TechChip";
 import { ArchitectureDiagram } from "../components/ArchitectureDiagram";
+import { blogPosts } from "../data/blogPosts";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder" },
+      { title: "Abdullah Al Mamun — Senior Node.js & Full-Stack Developer for Hire" },
       {
         name: "description",
         content:
-          "Full-stack developer & founder of SubsDrop, QuickMation, MoneTrix. Hire me for Node.js, Next.js, server architecture & enterprise automation projects.",
+          "Senior full-stack engineer & founder of 4 live platforms. Hire me for Node.js/Next.js architecture, server-side tracking (CAPI/sGTM), payment systems & AI automation.",
       },
       {
         property: "og:title",
-        content: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder",
+        content: "Abdullah Al Mamun — Senior Node.js & Full-Stack Developer for Hire",
       },
       {
         property: "og:description",
         content:
-          "Available for global remote contracts. Founder of SubsDrop & QuickMation, architecting production systems with zero downtime.",
+          "Senior full-stack engineer & founder of 4 live platforms. Hire me for Node.js/Next.js architecture, server-side tracking, payment systems & AI automation.",
       },
       { property: "og:url", content: "https://iamabdullah.dev/" },
+      { property: "og:locale", content: "en_US" },
       { property: "og:image", content: "https://iamabdullah.dev/og-image.png" },
       { property: "og:image:secure_url", content: "https://iamabdullah.dev/og-image.png" },
       { property: "og:image:type", content: "image/png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder" },
+      {
+        property: "og:image:alt",
+        content: "Abdullah Al Mamun — Senior Node.js & Full-Stack Developer for Hire",
+      },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Abdullah Al Mamun — Full-Stack Developer & Tech Founder" },
+      { name: "twitter:title", content: "Abdullah Al Mamun — Senior Node.js & Full-Stack Developer for Hire" },
       {
         name: "twitter:description",
         content:
-          "Full-stack developer & founder of SubsDrop, QuickMation, MoneTrix. Available for global remote contracts.",
+          "Senior full-stack engineer & founder of 4 live platforms. Hire me for Node.js/Next.js architecture, server-side tracking, payment systems & AI automation.",
       },
       { name: "twitter:image", content: "https://iamabdullah.dev/og-image.png" },
     ],
@@ -469,6 +474,60 @@ function HomePage() {
 
         <div className="mt-5">
           <ArchitectureDiagram />
+        </div>
+      </section>
+
+      {/* LATEST FIELD NOTES — internal links from homepage to blog posts (crawl depth 1) */}
+      <section
+        id="field-notes"
+        className="mx-auto max-w-6xl px-4 sm:px-6 py-6 sm:py-10 border-b border-white/[0.06]"
+      >
+        <div className="flex flex-wrap items-end justify-between gap-3 max-w-3xl">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-blue-400">
+                Latest Field Notes
+              </span>
+            </div>
+            <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              Fresh From Production
+            </h2>
+            <p className="mt-1.5 text-zinc-400 text-xs sm:text-sm">
+              Incident post-mortems, architecture decisions, and performance engineering — written
+              from live systems, not theory.
+            </p>
+          </div>
+          <Link
+            to="/blogs"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3.5 py-2 text-xs font-semibold text-zinc-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
+          >
+            View All Field Notes <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+
+        <div className="mt-5 grid gap-4 md:grid-cols-3">
+          {blogPosts.slice(0, 3).map((post) => (
+            <Link
+              key={post.slug}
+              to="/blogs/$slug"
+              params={{ slug: post.slug }}
+              className="group flex flex-col rounded-xl border border-white/[0.08] bg-[#0c0e14]/70 p-4 sm:p-5 transition-all hover:border-blue-500/40 hover:bg-[#0f121a]"
+            >
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-blue-400">
+                {post.categoryLabel}
+              </span>
+              <h3 className="mt-2 text-sm sm:text-base font-bold text-white leading-snug group-hover:text-blue-300 transition-colors">
+                {post.title}
+              </h3>
+              <p className="mt-2 text-xs text-zinc-400 leading-relaxed line-clamp-2">
+                {post.subtitle}
+              </p>
+              <span className="mt-auto pt-3 inline-flex items-center gap-1 text-xs font-semibold text-blue-400">
+                Read Field Note <ArrowRight className="h-3 w-3" />
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
 

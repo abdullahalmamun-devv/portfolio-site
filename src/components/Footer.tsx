@@ -179,9 +179,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-8 border-t border-white/[0.06] pt-5 text-center text-[11px] text-zinc-400">
-          <div>
-            © {new Date().getFullYear()} Abdullah Al Mamun. All rights reserved.
-          </div>
+          <div>© {new Date().getFullYear()} Abdullah Al Mamun. All rights reserved.</div>
         </div>
       </div>
     </footer>

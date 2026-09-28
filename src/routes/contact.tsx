@@ -40,8 +40,37 @@ export const Route = createFileRoute("/contact")({
           "Direct communication channel for senior engineering advisory, architecture, and partnerships.",
       },
       { property: "og:url", content: "https://iamabdullah.dev/contact" },
+      { property: "og:locale", content: "en_US" },
     ],
     links: [{ rel: "canonical", href: "https://iamabdullah.dev/contact" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify([
+          {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "Contact Abdullah Al Mamun",
+            description:
+              "Direct communication channel for senior engineering advisory, architecture, and partnerships.",
+            url: "https://iamabdullah.dev/contact",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://iamabdullah.dev/" },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Contact",
+                item: "https://iamabdullah.dev/contact",
+              },
+            ],
+          },
+        ]),
+      },
+    ],
   }),
   component: ContactPage,
 });

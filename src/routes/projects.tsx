@@ -29,24 +29,58 @@ import { TechChip } from "../components/TechChip";
 export const Route = createFileRoute("/projects")({
   head: () => ({
     meta: [
-      { title: "Systems, Incident Post-Mortems & Code — Abdullah Al Mamun" },
+      { title: "Production Case Studies — Node.js, Redis, Security Post-Mortems" },
       {
         name: "description",
         content:
-          "Production technical case studies, zero-day CVE post-mortems (React2Shell CVE-2025-55182), isolated private VPC database architecture, Server-Side Meta CAPI tracking, and open-source disposable email engine (TempMail).",
+          "Real production engineering: zero-day CVE recovery, Redis caching at 22ms P99, air-gapped MongoDB, server-side CAPI tracking, and 28KB email infra — with telemetry.",
       },
       {
         property: "og:title",
-        content: "Systems, Incident Post-Mortems & Code — Abdullah Al Mamun",
+        content: "Production Case Studies — Node.js, Redis, Security Post-Mortems",
       },
       {
         property: "og:description",
         content:
-          "Hard-won engineering post-mortems, telemetry, and architectural blueprints for production systems.",
+          "Real production engineering: zero-day CVE recovery, Redis caching at 22ms P99, air-gapped MongoDB, server-side CAPI tracking — with telemetry.",
       },
       { property: "og:url", content: "https://iamabdullah.dev/projects" },
+      { property: "og:locale", content: "en_US" },
     ],
     links: [{ rel: "canonical", href: "https://iamabdullah.dev/projects" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify([
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Production Case Studies",
+            description:
+              "Real production engineering: zero-day CVE recovery, Redis caching at 22ms P99, air-gapped MongoDB, server-side CAPI tracking, and 28KB email infra.",
+            url: "https://iamabdullah.dev/projects",
+            author: {
+              "@type": "Person",
+              name: "Abdullah Al Mamun",
+              url: "https://iamabdullah.dev",
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://iamabdullah.dev/" },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Case Studies",
+                item: "https://iamabdullah.dev/projects",
+              },
+            ],
+          },
+        ]),
+      },
+    ],
   }),
   component: ProjectsPage,
 });
@@ -542,7 +576,8 @@ function ProjectsPage() {
           return (
             <article
               key={item.id}
-              className={`rounded-xl border p-4 sm:p-6 lg:p-7 shadow-lg transition-all ${
+              id={item.id}
+              className={`rounded-xl border p-4 sm:p-6 lg:p-7 shadow-lg transition-all scroll-mt-24 ${
                 isPostMortem
                   ? "border-amber-500/40 bg-gradient-to-b from-[#18130b] to-[#100e0b]"
                   : "border-white/10 bg-[#111318]"
