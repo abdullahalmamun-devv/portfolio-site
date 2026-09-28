@@ -73,7 +73,7 @@ export function Footer() {
                   <a
                     href="https://subsdrop.com"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-zinc-300 font-medium hover:text-white"
                   >
                     SubsDrop.com <ArrowUpRight className="h-3 w-3 text-zinc-500" />
@@ -84,7 +84,7 @@ export function Footer() {
                   <a
                     href="https://quickmation.online"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-zinc-300 font-medium hover:text-white"
                   >
                     QuickMation.online <ArrowUpRight className="h-3 w-3 text-zinc-500" />
@@ -95,7 +95,7 @@ export function Footer() {
                   <a
                     href="https://www.protrainerit.com"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-zinc-300 font-medium hover:text-white"
                   >
                     ProTrainerIT.com <ArrowUpRight className="h-3 w-3 text-zinc-500" />
@@ -108,7 +108,7 @@ export function Footer() {
                   <a
                     href="https://www.monetrix.shop"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-zinc-300 font-medium hover:text-white"
                   >
                     MoneTrix.shop <ArrowUpRight className="h-3 w-3 text-zinc-500" />
@@ -121,7 +121,7 @@ export function Footer() {
                   <a
                     href="https://temp.subsdrop.com"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-zinc-300 font-medium hover:text-white"
                   >
                     temp.subsdrop.com <ArrowUpRight className="h-3 w-3 text-zinc-500" />
@@ -143,7 +143,7 @@ export function Footer() {
               <a
                 href="https://github.com/abdullahalmamun-devv"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 aria-label="GitHub Profile"
                 className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-400 transition-colors hover:text-white hover:border-white/20"
               >
@@ -152,7 +152,7 @@ export function Footer() {
               <a
                 href="https://www.linkedin.com/in/abdullah-al-mamun-b07295329/"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn Profile"
                 className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-zinc-400 transition-colors hover:text-white hover:border-white/20"
               >

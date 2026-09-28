@@ -12,22 +12,32 @@ import type { Plugin } from "vite";
 import { blogPosts } from "../src/data/blogPosts";
 import { SITE_URL, postLastmod } from "../src/lib/seo";
 
-const STATIC_ROUTES: { path: string; changefreq: string; priority: string }[] = [
-  { path: "/", changefreq: "weekly", priority: "1.0" },
-  { path: "/ventures", changefreq: "monthly", priority: "0.8" },
-  { path: "/projects", changefreq: "monthly", priority: "0.8" },
-  { path: "/skills", changefreq: "monthly", priority: "0.7" },
-  { path: "/blogs", changefreq: "weekly", priority: "0.9" },
-  { path: "/contact", changefreq: "yearly", priority: "0.6" },
+interface StaticRoute {
+  path: string;
+  changefreq: string;
+  priority: string;
+  lastmod?: string;
+}
+
+const STATIC_ROUTES: StaticRoute[] = [
+  { path: "/", changefreq: "weekly", priority: "1.0", lastmod: "2026-09-28" },
+  { path: "/ventures", changefreq: "monthly", priority: "0.8", lastmod: "2025-09-18" },
+  { path: "/projects", changefreq: "monthly", priority: "0.8", lastmod: "2025-09-18" },
+  { path: "/skills", changefreq: "monthly", priority: "0.7", lastmod: "2025-09-18" },
+  { path: "/blogs", changefreq: "weekly", priority: "0.9" }, // Dynamically calculated from latest blog post
+  { path: "/contact", changefreq: "yearly", priority: "0.6", lastmod: "2025-06-01" },
 ];
 
 function buildSitemap(): string {
-  const today = new Date().toISOString().slice(0, 10);
+  const latestPostDate =
+    blogPosts.length > 0
+      ? postLastmod(blogPosts[0].isoDate, blogPosts[0].dateModified)
+      : "2025-09-18";
 
   const staticUrls = STATIC_ROUTES.map(
     (r) => `  <url>
     <loc>${SITE_URL}${r.path === "/" ? "/" : r.path}</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${r.lastmod ?? latestPostDate}</lastmod>
     <changefreq>${r.changefreq}</changefreq>
     <priority>${r.priority}</priority>
   </url>`,

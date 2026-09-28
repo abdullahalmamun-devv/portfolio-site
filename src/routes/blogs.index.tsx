@@ -87,6 +87,13 @@ export const Route = createFileRoute("/blogs/")({
         { property: "og:type", content: "website" },
         { property: "og:url", content: "https://iamabdullah.dev/blogs" },
         { property: "og:locale", content: "en_US" },
+        { property: "og:image", content: "https://iamabdullah.dev/og-image.png" },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        {
+          property: "og:image:alt",
+          content: "Engineering Blog — Node.js, Server Architecture & Tracking Field Notes",
+        },
         { name: "twitter:card", content: "summary_large_image" },
         {
           name: "twitter:title",
@@ -97,6 +104,7 @@ export const Route = createFileRoute("/blogs/")({
           content:
             "Hard-won production blueprints, zero-day CVE recovery, and real-world system architecture field notes.",
         },
+        { name: "twitter:image", content: "https://iamabdullah.dev/og-image.png" },
       ],
       links: [{ rel: "canonical", href: "https://iamabdullah.dev/blogs" }],
       scripts: [

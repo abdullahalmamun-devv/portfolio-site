@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Server,
   Database,
@@ -14,6 +14,8 @@ import {
   Bot,
   Lock,
   LineChart,
+  ArrowRight,
+  ArrowUpRight,
 } from "lucide-react";
 import { SectionHeader } from "../components/SectionHeader";
 import { Reveal } from "../components/Reveal";
@@ -35,6 +37,14 @@ export const Route = createFileRoute("/skills")({
       },
       { property: "og:url", content: "https://iamabdullah.dev/skills" },
       { property: "og:locale", content: "en_US" },
+      { property: "og:image", content: "https://iamabdullah.dev/og-image.png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Technical Stack & Capabilities — Abdullah Al Mamun" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Technical Stack & Capabilities — Abdullah Al Mamun" },
+      { name: "twitter:description", content: "A disciplined, battle-tested technology stack with automated testing, Linux hardening, and observability." },
+      { name: "twitter:image", content: "https://iamabdullah.dev/og-image.png" },
     ],
     links: [{ rel: "canonical", href: "https://iamabdullah.dev/skills" }],
     scripts: [
@@ -94,6 +104,11 @@ const skillGroups = [
         role: "High-performance <30KB web utilities (Vite 8) delivering instant cold loads without framework weight",
       },
     ],
+    caseStudy: { to: "/projects", hash: "tempmail-open-source", label: "28KB Ingress Platform" },
+    fieldNote: {
+      slug: "architecting-ultra-lightweight-disposable-email-platform-28kb",
+      label: "28KB Email Engine",
+    },
   },
   {
     category: "VPC Security, Firewalls & Payment Proxy",
@@ -121,6 +136,11 @@ const skillGroups = [
         role: "Strict CPU/RAM container limits preventing rogue processes from freezing host servers",
       },
     ],
+    caseStudy: { to: "/projects", hash: "cve-react2shell-postmortem", label: "React2Shell Incident" },
+    fieldNote: {
+      slug: "air-gapping-mongodb-production-ufw-payment-proxy",
+      label: "Air-Gapping MongoDB",
+    },
   },
   {
     category: "Marketing Engineering & Server-Side Tracking",
@@ -149,6 +169,11 @@ const skillGroups = [
         role: "Client-side normalization and SHA-256 cryptographic hashing of customer PII",
       },
     ],
+    caseStudy: { to: "/projects", hash: "server-side-meta-capi", label: "sGTM & Meta CAPI" },
+    fieldNote: {
+      slug: "engineering-server-side-meta-capi-sgtm-tracking",
+      label: "CAPI Deduplication Guide",
+    },
   },
   {
     category: "AI & Enterprise Automation",
@@ -176,6 +201,15 @@ const skillGroups = [
         role: "Context-aware embedded assistants connected directly to client databases & CRMs",
       },
     ],
+    caseStudy: {
+      to: "/projects",
+      hash: "quickmation-automation-engine",
+      label: "QuickMation Engine",
+    },
+    fieldNote: {
+      slug: "building-proprietary-ai-automation-engines-vs-saas-tax",
+      label: "Proprietary AI vs SaaS Tax",
+    },
   },
   {
     category: "Databases, Caching & Cloud Storage",
@@ -203,6 +237,11 @@ const skillGroups = [
         role: "Eliminating cache stampedes during concurrent traffic bursts",
       },
     ],
+    caseStudy: { to: "/projects", hash: "caching-fabric", label: "Redis Caching Fabric" },
+    fieldNote: {
+      slug: "singleflight-redis-cache-stampede-prevention-nodejs",
+      label: "Singleflight 22ms P99",
+    },
   },
   {
     category: "Automated Testing & CI/CD",
@@ -230,6 +269,11 @@ const skillGroups = [
         role: "Enforcing test passes and peer review before production deployment",
       },
     ],
+    caseStudy: {
+      to: "/projects",
+      hash: "monetrix-vpc-proxy",
+      label: "Idempotent Payment Testing",
+    },
   },
 ];
 
@@ -278,6 +322,32 @@ function SkillsPage() {
                     </div>
                   ))}
                 </div>
+
+                {/* Contextual Case Study & Field Note Links */}
+                {(group.caseStudy || group.fieldNote) && (
+                  <div className="mt-4 pt-3 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-2">
+                    {group.caseStudy && (
+                      <Link
+                        to={group.caseStudy.to}
+                        hash={group.caseStudy.hash}
+                        className="inline-flex items-center gap-1 font-mono text-[11px] text-blue-400 hover:text-blue-300 transition-colors"
+                      >
+                        <span>Case Study: {group.caseStudy.label}</span>
+                        <ArrowUpRight className="h-3 w-3" />
+                      </Link>
+                    )}
+                    {group.fieldNote && (
+                      <Link
+                        to="/blogs/$slug"
+                        params={{ slug: group.fieldNote.slug }}
+                        className="inline-flex items-center gap-1 font-mono text-[11px] text-emerald-400 hover:text-emerald-300 transition-colors"
+                      >
+                        <span>Field Note: {group.fieldNote.label}</span>
+                        <ArrowRight className="h-3 w-3" />
+                      </Link>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           );

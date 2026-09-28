@@ -64,6 +64,98 @@ export const Route = createFileRoute("/")({
       { name: "twitter:image", content: "https://iamabdullah.dev/og-image.png" },
     ],
     links: [{ rel: "canonical", href: "https://iamabdullah.dev/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify([
+          {
+            "@context": "https://schema.org",
+            "@type": "ProfilePage",
+            mainEntity: {
+              "@type": "Person",
+              name: "Abdullah Al Mamun",
+              url: "https://iamabdullah.dev",
+              jobTitle: "Senior Full-Stack Developer & Tech Founder",
+              description: "Senior full-stack engineer & founder of 4 live platforms. Specializing in Node.js/Next.js architecture, server-side tracking, payment systems & AI automation.",
+              image: "https://iamabdullah.dev/icon_site_match_1024.png",
+              sameAs: [
+                "https://github.com/abdullahalmamun-devv",
+                "https://www.linkedin.com/in/abdullah-al-mamun-b07295329/",
+              ],
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: "Professional Services by Abdullah Al Mamun",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                item: {
+                  "@type": "Service",
+                  name: "Full-Stack Web Development",
+                  description: "Production-grade Node.js, Next.js, and React application architecture with Redis caching, MongoDB optimization, and Docker containerization.",
+                  provider: { "@type": "Person", name: "Abdullah Al Mamun", url: "https://iamabdullah.dev" },
+                  serviceType: "Web Development",
+                },
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                item: {
+                  "@type": "Service",
+                  name: "Server-Side Tracking & Analytics",
+                  description: "Meta CAPI, sGTM, and GA4 server-side implementation with event deduplication and ad-blocker bypass for accurate e-commerce attribution.",
+                  provider: { "@type": "Person", name: "Abdullah Al Mamun", url: "https://iamabdullah.dev" },
+                  serviceType: "Marketing Technology",
+                },
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                item: {
+                  "@type": "Service",
+                  name: "Enterprise AI Automation",
+                  description: "Custom omnichannel AI chatbots, workflow automation engines, and self-hosted n8n deployments replacing expensive SaaS subscriptions.",
+                  provider: { "@type": "Person", name: "Abdullah Al Mamun", url: "https://iamabdullah.dev" },
+                  serviceType: "AI & Automation",
+                },
+              },
+              {
+                "@type": "ListItem",
+                position: 4,
+                item: {
+                  "@type": "Service",
+                  name: "VPS Security & Infrastructure Hardening",
+                  description: "Linux server hardening, UFW firewall configuration, MongoDB air-gapping, incident response, and Docker container isolation.",
+                  provider: { "@type": "Person", name: "Abdullah Al Mamun", url: "https://iamabdullah.dev" },
+                  serviceType: "DevOps & Security",
+                },
+              },
+              {
+                "@type": "ListItem",
+                position: 5,
+                item: {
+                  "@type": "Service",
+                  name: "Payment Gateway Integration",
+                  description: "Dual-rail FinTech payment systems with bKash, Nagad, UddoktaPay, and international card processing with HMAC webhook verification.",
+                  provider: { "@type": "Person", name: "Abdullah Al Mamun", url: "https://iamabdullah.dev" },
+                  serviceType: "FinTech Development",
+                },
+              },
+            ],
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://iamabdullah.dev/" },
+            ],
+          },
+        ]),
+      },
+    ],
   }),
   component: HomePage,
 });
@@ -112,7 +204,7 @@ function HomePage() {
               <a
                 href="https://subsdrop.com"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="text-blue-400 hover:underline font-medium"
               >
                 SubsDrop
@@ -121,7 +213,7 @@ function HomePage() {
               <a
                 href="https://quickmation.online"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="text-purple-400 hover:underline font-medium"
               >
                 QuickMation
@@ -130,7 +222,7 @@ function HomePage() {
               <a
                 href="https://www.protrainerit.com"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="text-emerald-400 hover:underline font-medium"
               >
                 Pro Trainer IT
@@ -145,7 +237,7 @@ function HomePage() {
               <a
                 href="https://github.com/abdullahalmamun-devv"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-medium text-zinc-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-white shadow-sm"
               >
                 <Github className="h-4 w-4 text-zinc-300" />
@@ -155,7 +247,7 @@ function HomePage() {
               <a
                 href="https://www.linkedin.com/in/abdullah-al-mamun-b07295329/"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-medium text-zinc-200 transition-colors hover:border-white/20 hover:bg-white/[0.08] hover:text-blue-400 shadow-sm"
               >
                 <Linkedin className="h-4 w-4 text-blue-400" />
@@ -220,9 +312,9 @@ function HomePage() {
                   CVE-2025-55182
                 </span>
               </div>
-              <h3 className="mt-1 text-xs sm:text-base font-semibold text-white">
+              <h2 className="mt-1 text-xs sm:text-base font-semibold text-white">
                 How I Recovered a 100% CPU Frozen Production VPS Under Live Customer Traffic
-              </h3>
+              </h2>
               <p className="mt-1 max-w-2xl text-[11px] sm:text-xs leading-relaxed text-zinc-400">
                 When a zero-day React2Shell exploit pinned CPU &amp; RAM to 100% on our co-located
                 host (Pro Trainer IT &amp; SubsDrop), I recovered root access via VNC, purged
@@ -304,7 +396,7 @@ function HomePage() {
                 <a
                   href="https://temp.subsdrop.com"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="font-mono text-xs text-zinc-400 hover:text-white"
                 >
                   tempmail
@@ -313,7 +405,7 @@ function HomePage() {
                 <a
                   href="https://subsdrop.com"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 text-xs font-semibold text-blue-400 hover:text-blue-300"
                 >
                   Visit Platform <ExternalLink className="h-3 w-3" />
@@ -357,7 +449,7 @@ function HomePage() {
               <a
                 href="https://quickmation.online"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-xs font-semibold text-purple-400 hover:text-purple-300"
               >
                 Visit Agency <ExternalLink className="h-3 w-3" />
@@ -399,7 +491,7 @@ function HomePage() {
               <a
                 href="https://www.protrainerit.com"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-400 hover:text-emerald-300"
               >
                 Visit Academy <ExternalLink className="h-3 w-3" />
@@ -444,7 +536,7 @@ function HomePage() {
               <a
                 href="https://www.monetrix.shop"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-xs font-semibold text-amber-400 hover:text-amber-300"
               >
                 Visit MoneTrix <ExternalLink className="h-3 w-3" />

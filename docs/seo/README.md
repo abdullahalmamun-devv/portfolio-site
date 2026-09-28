@@ -15,6 +15,8 @@ Complete audit + long-term organic growth strategy, delivered September 2026. Th
 1. **[01-technical-audit.md](./01-technical-audit.md)** — 14 issues with What/Why/Priority/Fix/Owner/Impact. Code-level fixes are implemented; setup + operational steps remain.
 2. **[02-onpage-keywords-competitors.md](./02-onpage-keywords-competitors.md)** — per-page audits with exact new copy, categorized keyword research (money/service/commercial/informational/long-tail/brand/semantic), competitor gap analysis, keyword→page map.
 3. **[03-content-clusters-linking-roadmap.md](./03-content-clusters-linking-roadmap.md)** — 5 topical clusters, 12-month calendar (4–6 posts/mo), 4 service-page blueprints, internal-linking rules + map, safe backlink strategy, quick wins, phased 6–12 month roadmap, KPIs.
+4. **[04-complete-issue-register.md](./04-complete-issue-register.md)** — Complete itemized register of Critical, High, Medium, Low, and Strategic issues.
+5. **[05-deep-verification-and-action-report.md](./05-deep-verification-and-action-report.md)** — Independent deep verification report, factual index check, self-hosted fonts, schema audit, and 90-day execution plan.
 
 ## ⚡ Start here (this week)
 

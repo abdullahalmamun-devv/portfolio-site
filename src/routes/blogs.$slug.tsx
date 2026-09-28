@@ -150,7 +150,7 @@ export const Route = createFileRoute("/blogs/$slug")({
 /** Contextual blog → case-study CTA (internal linking / relevance transfer). */
 const PROJECT_CTA: Record<string, { anchor: string; label: string }> = {
   "surviving-react2shell-cve-2025-55182-vps-recovery": {
-    anchor: "react2shell-postmortem",
+    anchor: "cve-react2shell-postmortem",
     label: "React2Shell incident case study",
   },
   "air-gapping-mongodb-production-ufw-payment-proxy": {

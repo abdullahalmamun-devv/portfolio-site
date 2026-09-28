@@ -480,6 +480,23 @@ export async function dispatchPurchaseCAPI(payload: PurchaseEventPayload) {
     },
     summary:
       "When digital subscription batches like Canva Pro or ChatGPT Plus drop on SubsDrop, thousands of users hit catalog endpoints simultaneously. If a cache key expires, naive systems suffer catastrophic cache stampedes. Here is how we engineered singleflight request deduplication with tiered caching.",
+    faq: [
+      {
+        question: "What is a cache stampede in Node.js?",
+        answer:
+          "A cache stampede (thundering herd) occurs when a cached key expires and hundreds of concurrent requests simultaneously trigger identical database queries. In Node.js, this overwhelms the event loop and database connection pool, causing latency spikes from 2ms to 240ms+ and potential service degradation.",
+      },
+      {
+        question: "How does singleflight prevent cache stampedes?",
+        answer:
+          "Singleflight (request coalescing) uses an in-flight Promise registry. When a cache miss occurs, only the first request executes the database query. All subsequent concurrent requests for the same key await the same Promise, ensuring exactly one database query per cache miss regardless of concurrency level.",
+      },
+      {
+        question: "What is the difference between L1 and L2 cache in Node.js?",
+        answer:
+          "L1 cache is an in-process LRU (Least Recently Used) memory cache inside each Node.js process with ultra-short TTL (~15 seconds), resolving in <0.1ms without network I/O. L2 cache is a distributed Redis cache shared across all processes with longer TTL (~10 minutes), resolving in ~2ms via TCP. Together they eliminate most database queries.",
+      },
+    ],
     toc: [
       { id: "the-thundering-herd", title: "1. Anatomy of a Cache Stampede" },
       { id: "two-tier-architecture", title: "2. The L1 Memory + L2 Redis Architecture" },
@@ -618,6 +635,23 @@ export async function fetchTieredWithSingleFlight<T>(
     },
     summary:
       "A pragmatic security blueprint for protecting sensitive customer transactions, closing 0.0.0.0 exposure, isolating MongoDB behind application-only static IP whitelisting, and routing local payment webhooks through cryptographic proxy verification.",
+    faq: [
+      {
+        question: "What does air-gapping MongoDB mean?",
+        answer:
+          "Air-gapping MongoDB means binding the database to private internal network interfaces only (e.g., 10.0.1.x) and blocking all public internet access to port 27017 using kernel-level firewall rules (UFW/iptables). Only whitelisted application server IPs can connect, eliminating exposure to automated port scans and ransomware attacks.",
+      },
+      {
+        question: "How do I secure MongoDB port 27017 with UFW?",
+        answer:
+          "Run 'sudo ufw default deny incoming', then whitelist only your application server's IP with 'sudo ufw allow proto tcp from YOUR_APP_IP to any port 27017'. Finally enable UFW with 'sudo ufw enable'. This ensures only your application can reach the database, even if authentication is somehow bypassed.",
+      },
+      {
+        question: "How do HMAC webhook signatures prevent payment fraud?",
+        answer:
+          "When a payment gateway sends a webhook, it includes a cryptographic HMAC-SHA256 signature computed from the raw payload and a shared secret. Your server independently computes the same HMAC from the received payload. If the signatures don't match, the webhook is rejected, preventing attackers from forging fake payment confirmations.",
+      },
+    ],
     toc: [
       { id: "the-open-port-hazard", title: "1. The Open Port Hazard (0.0.0.0/0)" },
       { id: "ufw-isolation-blueprint", title: "2. Zero-Exposure UFW Firewall Configuration" },
@@ -715,6 +749,23 @@ sudo ufw status verbose`,
     },
     summary:
       "Most automation agencies act as middlemen for Zapier or n8n cloud, passing heavy recurring subscription bills to their clients. Here is why we decided to build custom automation infrastructure at QuickMation, giving clients full data sovereignty and zero markup on tasks.",
+    faq: [
+      {
+        question: "What is the SaaS tax in automation?",
+        answer:
+          "The SaaS tax refers to escalating monthly subscription costs charged by platforms like Zapier, Make.com, and n8n Cloud based on task volume. As messaging volume scales to thousands of conversations, monthly costs can reach $500–$2,000 just for basic webhook routing — costs that compound indefinitely with no ownership of the underlying infrastructure.",
+      },
+      {
+        question: "Is self-hosted n8n cheaper than Zapier for automation?",
+        answer:
+          "Yes, significantly. A self-hosted n8n instance on a dedicated VPS costs approximately $15/month for raw server runtime, regardless of task volume. Zapier's equivalent capacity for the same automation workflows would cost $500–$2,000/month depending on task count, representing a 92%+ cost reduction with self-hosting.",
+      },
+      {
+        question: "Can custom Node.js microservices replace Zapier?",
+        answer:
+          "Yes. Custom Node.js webhook handlers and state machines can connect directly to Meta Graph APIs, OpenAI endpoints, and other services with sub-100ms response latencies. Unlike Zapier, there are no per-task fees, rate limits, or vendor lock-in. Clients maintain 100% data ownership and can scale without additional SaaS costs.",
+      },
+    ],
     toc: [
       { id: "the-saas-tax-problem", title: "1. The Problem with Vendor Lock-In in Automation" },
       { id: "quickmation-hybrid-architecture", title: "2. The QuickMation Hybrid Engine" },
@@ -774,6 +825,18 @@ sudo ufw status verbose`,
     },
     summary:
       "A technical walkthrough of our open-source disposable email utility (temp.subsdrop.com) engineered with zero framework overhead, custom domain MX record routing, and non-blocking polling.",
+    faq: [
+      {
+        question: "How does a disposable email service work?",
+        answer:
+          "A disposable email service creates temporary inboxes by configuring DNS MX records to route incoming mail to a catch-all SMTP server. Users receive a random email address, and a polling mechanism checks for new messages every few seconds. Emails are automatically deleted after a set period, protecting user privacy.",
+      },
+      {
+        question: "Why is a 28KB bundle size important for web apps?",
+        answer:
+          "A sub-30KB JavaScript bundle ensures the application loads instantly even on 2G/3G mobile connections common in South Asia. By using Vanilla JavaScript instead of React or Vue frameworks, the disposable email interface renders in under 95ms on cold load, providing a native-app-like experience without runtime overhead.",
+      },
+    ],
     toc: [
       { id: "zero-framework-bloat", title: "1. Zero Framework Bloat (<28KB Production Bundle)" },
       { id: "dns-mx-routing-architecture", title: "2. DNS MX Configuration & Ingress" },

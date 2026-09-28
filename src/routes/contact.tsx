@@ -41,6 +41,18 @@ export const Route = createFileRoute("/contact")({
       },
       { property: "og:url", content: "https://iamabdullah.dev/contact" },
       { property: "og:locale", content: "en_US" },
+      { property: "og:image", content: "https://iamabdullah.dev/og-image.png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Direct Contact & Collaboration — Abdullah Al Mamun" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Direct Contact & Collaboration — Abdullah Al Mamun" },
+      {
+        name: "twitter:description",
+        content:
+          "Direct communication channel for senior engineering advisory, architecture, and partnerships.",
+      },
+      { name: "twitter:image", content: "https://iamabdullah.dev/og-image.png" },
     ],
     links: [{ rel: "canonical", href: "https://iamabdullah.dev/contact" }],
     scripts: [
