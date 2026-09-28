@@ -25,16 +25,17 @@ export function postOgImagePath(slug: string): string {
 }
 
 /** GA4 measurement ID injected via environment (VITE_GA4_ID). Empty string disables the tag. */
-// Guarded access: this module is also imported by build-time tooling (plugins/) where
-// import.meta.env may be undefined in the Node context.
-const ENV = (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env;
-export const GA4_ID = ENV?.VITE_GA4_ID ?? "";
+export const GA4_ID: string =
+  (import.meta.env?.VITE_GA4_ID as string | undefined) ??
+  (typeof process !== "undefined" ? process.env?.VITE_GA4_ID ?? "" : "");
 
 /**
  * Google Search Console HTML-file-free verification meta tag content
  * (the value inside content="...", from the "HTML tag" verification method).
  */
-export const GSC_VERIFICATION = ENV?.VITE_GSC_VERIFICATION ?? "";
+export const GSC_VERIFICATION: string =
+  (import.meta.env?.VITE_GSC_VERIFICATION as string | undefined) ??
+  (typeof process !== "undefined" ? process.env?.VITE_GSC_VERIFICATION ?? "" : "");
 
 /** ISO lastmod for a blog post (dateModified falls back to publish date). */
 export function postLastmod(isoDate: string, dateModified?: string): string {
